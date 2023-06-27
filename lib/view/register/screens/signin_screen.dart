@@ -9,6 +9,7 @@ import 'package:mom_app/view/register/screens/signup_screen.dart';
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 import '../widgets/divider.dart';
+import 'forget_password_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -68,13 +69,20 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(
                         height: context.height * 0.01,
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Text(
-                          'Forgot Password?',
-                          style: GoogleFonts.poppins(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
+                      InkWell(
+                        onTap:(){
+                          AppNavigator.push(
+                              context: context,
+                              screen: const ForgetPasswordScreen());
+                        } ,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            'Forgot Password?',
+                            style: GoogleFonts.poppins(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),

@@ -84,7 +84,7 @@ class BabyProfileScreen extends StatelessWidget {
                         color: AppColors.lightGreen,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(Icons.date_range),
+                      child: const Icon(Icons.date_range),
                     ),
                   ),
                 ],
@@ -100,7 +100,7 @@ class BabyProfileScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     'Wight',
                     style: GoogleFonts.poppins(
