@@ -175,7 +175,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                           TextButton(onPressed: (){
                             AppNavigator.push(context: context,
-                                screen: const SignupScreen());
+                                screen:  SignupScreen());
                           },
                             child:const Text('Sign up',
                               style:TextStyle(

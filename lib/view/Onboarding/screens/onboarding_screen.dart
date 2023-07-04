@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
+import 'package:mom_app/view/register/screens/signup_screen.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../register/screens/signin_screen.dart';
 
@@ -39,7 +40,11 @@ class OnBoardingScreen extends StatelessWidget {
                 height: context.height*0.05,
               ),
                CustomButton(
-                 onTap:(){} ,
+                 onTap:(){
+                   AppNavigator.push(context: context,
+                       screen:  SignupScreen(),
+                   );
+                 } ,
                 child:const Center(
                   child:Text('Sign up',
                   style:TextStyle(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mom_app/view/splash/splash_screen.dart';
 
+import 'core/network/dio_helper.dart';
+
 void main() {
+  DioHelper.init();
   runApp(const MyApp());
 }
 
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  SplashScreen(),
+      home:  const SplashScreen(),
     );
   }
 }

@@ -8,11 +8,13 @@ class CustomTextFormField extends StatelessWidget {
     this.width,
     required this.hintText,
     this.suffixIcon,
+    this.controller,
   }) : super(key: key);
 
   final double? width;
   final String hintText;
   final Widget? suffixIcon;
+  final  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
         color:AppColors.lightGreen,
       ),
       child:TextFormField(
+        controller:controller ,
         decoration:  InputDecoration(
           border:InputBorder.none,
           contentPadding: const EdgeInsets.only(left: 10),
