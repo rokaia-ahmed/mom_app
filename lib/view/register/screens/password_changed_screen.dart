@@ -39,7 +39,7 @@ class PasswordChangedScreen extends StatelessWidget {
                 CustomButton(
                   onTap: (){
                     AppNavigator.push(context: context,
-                        screen: const SignInScreen());
+                        screen:  SignInScreen());
                   },
                   child:Center(
                     child: Text('Login',

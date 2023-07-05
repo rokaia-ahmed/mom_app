@@ -54,7 +54,8 @@ class BabyProfileScreen extends StatelessWidget {
               SizedBox(
                 height: context.height * 0.01,
               ),
-              const CustomTextFormField(
+               CustomTextFormField(
+                 visible: false,
                 hintText: 'Baby name',
               ),
               SizedBox(
@@ -72,6 +73,7 @@ class BabyProfileScreen extends StatelessWidget {
               Row(
                 children: [
                   CustomTextFormField(
+                    visible: false,
                     hintText: 'DD/MM/YYYY',
                     width: context.width * 0.5,
                   ),
@@ -115,11 +117,13 @@ class BabyProfileScreen extends StatelessWidget {
               Row(
                 children: [
                   CustomTextFormField(
+                    visible: false,
                     hintText: 'Baby sex',
                     width: context.width * 0.5,
                   ),
                   const Spacer(),
                   CustomTextFormField(
+                    visible: false,
                     hintText: '12',
                     width: context.width * 0.12,
                   )

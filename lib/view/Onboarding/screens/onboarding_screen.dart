@@ -61,7 +61,7 @@ class OnBoardingScreen extends StatelessWidget {
                   ),
                   TextButton(onPressed: (){
                     AppNavigator.push(context: context,
-                        screen: const SignInScreen());
+                        screen:  SignInScreen());
                   },
                       child:const Text('login',
                         style:TextStyle(

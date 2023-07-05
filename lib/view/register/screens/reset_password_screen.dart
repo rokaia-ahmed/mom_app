@@ -39,14 +39,16 @@ class ResetPasswordScreen extends StatelessWidget {
               SizedBox(
                 height: context.height*0.07,
               ),
-              const CustomTextFormField(
+               CustomTextFormField(
+                 visible: false,
                 hintText: 'New password',
                 suffixIcon:Icon(Icons.visibility_off_rounded) ,
               ),
               SizedBox(
                 height: context.height*0.03,
               ),
-              const CustomTextFormField(
+               CustomTextFormField(
+                 visible: false,
                 hintText: 'Confirm new password',
                 suffixIcon:Icon(Icons.visibility_off_rounded) ,
               ),

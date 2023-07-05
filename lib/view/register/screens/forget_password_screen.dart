@@ -52,7 +52,10 @@ class ForgetPasswordScreen extends StatelessWidget {
             SizedBox(
               height: context.height*0.03,
             ),
-            const CustomTextFormField(hintText:'Email Address'),
+             CustomTextFormField(
+                 hintText:'Email Address',
+               visible: false,
+             ),
             SizedBox(
               height: context.height*0.03,
             ),
