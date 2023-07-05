@@ -61,19 +61,17 @@ class SignupScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                         Expanded(
+                        const Expanded(
                           child: CustomTextFormField(
                               hintText: 'First name',
-                            visible: false,
                           ),
                         ),
                         SizedBox(
                           width:context.width*0.03 ,
                         ),
-                         Expanded(
+                        const Expanded(
                           child: CustomTextFormField(
                             hintText: 'Last name',
-                            visible: false,
                           ),
                         ),
                       ],
@@ -81,16 +79,14 @@ class SignupScreen extends StatelessWidget {
                     SizedBox(
                       height:context.height*0.02 ,
                     ),
-                     CustomTextFormField(
-                       visible: false,
+                    const CustomTextFormField(
                         hintText: 'Email Address',
                         width: double.infinity,
                     ),
                     SizedBox(
                       height:context.height*0.02 ,
                     ),
-                     CustomTextFormField(
-                       visible: false,
+                    const CustomTextFormField(
                       hintText: 'Password',
                       width: double.infinity,
                       suffixIcon:Icon(Icons.visibility_off_rounded) ,
@@ -101,7 +97,7 @@ class SignupScreen extends StatelessWidget {
                     CustomButton(
                       onTap:(){
                         AppNavigator.push(context: context,
-                            screen:  SignInScreen());
+                            screen: const SignInScreen());
                       } ,
                       child:Center(
                         child: Text(
@@ -184,7 +180,7 @@ class SignupScreen extends StatelessWidget {
                         ),
                         TextButton(onPressed: (){
                           AppNavigator.push(context: context,
-                              screen:  SignInScreen());
+                              screen: const SignInScreen());
                         },
                           child:const Text('login',
                             style:TextStyle(
