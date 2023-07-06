@@ -6,10 +6,8 @@ import 'package:mom_app/core/widgets/custom_button.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 
 import '../../../core/widgets/custom_appbar.dart';
-
 class BabyProfileScreen extends StatelessWidget {
   const BabyProfileScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
