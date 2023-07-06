@@ -30,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       child:TextFormField(
         controller: controller,
+
         obscureText: visible,
         validator: valid,
         decoration:  InputDecoration(

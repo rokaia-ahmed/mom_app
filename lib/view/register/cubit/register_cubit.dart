@@ -5,10 +5,43 @@ import '../../../core/network/dio_helper.dart';
 import '../../../core/network/end_points.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
+
+  bool visible=true;
+  void changePasswordVisibility(){
+    visible=!visible;
+    emit(ChangePasswordVisibilityState());
+  }
+
   RegisterCubit() : super(InitRegisterState());
   static RegisterCubit get(context) => BlocProvider.of(context);
 
   UserModel ?userModel ;
+  void userSignIn({
+    required String email ,
+    required String password ,
+  }){
+    print('Done... ');
+    emit(SignInLoadingState());
+    DioHelper.postData(
+        url: LOGIN,
+        data:
+        {
+          'email': email,
+          'password':password,
+        }
+    ).then((value){
+      userModel= UserModel.fromJson(value.data);
+      print(userModel!.tokens!.accessToken);
+      emit(SignInSuccessState(userModel!));
+      print('success');
+    }
+    ).catchError((error){
+      print(error.toString());
+      emit(SignInErrorState(error.toString()));
+      print('error...');
+    });
+
+  }
   void userSignUp({
     required String firstName ,
     required String lastName ,

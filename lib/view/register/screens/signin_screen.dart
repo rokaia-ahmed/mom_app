@@ -30,6 +30,7 @@ class SignInScreen extends StatelessWidget {
       child:BlocConsumer<RegisterCubit,RegisterStates>(
         listener: (BuildContext context,RegisterStates state){
           if(state is SignInSuccessState){
+
             Fluttertoast.showToast(
                 msg: "Successful",
                 toastLength: Toast.LENGTH_LONG,
