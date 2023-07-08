@@ -5,18 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/view/Home/screens/bottomNavBarScreens/Learning.dart';
 import 'package:mom_app/view/Home/screens/bottomNavBarScreens/Tracking.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community.dart';
+import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/community.dart';
 import 'package:mom_app/view/Home/screens/cubit/states.dart';
-
-import '../../../../network/remote/dioHelper.dart';
-import '../../../../network/remote/endPoint.dart';
 import '../bottomNavBarScreens/Home.dart';
 import '../bottomNavBarScreens/Shop.dart';
 
 class HomeCubit extends Cubit<HomeStates>{
   HomeCubit():super(HomeInitialStates());
   static HomeCubit get(context)=>BlocProvider.of(context);
-
   int currentIndex=0;
   List<Widget> screens=[
     const Home(),
@@ -64,6 +60,11 @@ bool visible=true;
   void changeVisibility(){
     visible=!visible;
     emit(ChangeVisibilityState());
+  }
+int  communityIndex =0;
+  void changeCommunity(int index){
+    communityIndex=index;
+    emit(ChangeCommunityState());
   }
   // PlantRegisterModel? plantLoginModel;
   // void userLogin({required String email,required String password}){

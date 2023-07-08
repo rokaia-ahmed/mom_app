@@ -6,7 +6,6 @@ class UserModel {
   String? password;
   Tokens? tokens;
   String? message;
-
   UserModel({this.id,
     this.firstname,
     this.lastname,
@@ -14,7 +13,6 @@ class UserModel {
     this.password,
     this.tokens,
     this.message});
-
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstname = json['firstname'];

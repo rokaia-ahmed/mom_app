@@ -10,7 +10,9 @@ class CustomTextFormField extends StatelessWidget {
     required this.hintText,
     this.suffixIcon,
      this.valid,
-    required this.visible
+     this.height,
+    required this.visible,
+     this.backgroundcolor
   }) : super(key: key);
 
   final double? width;
@@ -19,14 +21,16 @@ class CustomTextFormField extends StatelessWidget {
   final controller;
   bool visible;
   final valid;
+  final height;
+   final backgroundcolor;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      height: context.height *0.065,
+      height: height==null? context.height *0.065:height,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color:AppColors.lightGreen,
+        color:backgroundcolor==null?AppColors.lightGreen:backgroundcolor,
       ),
       child:TextFormField(
         controller: controller,

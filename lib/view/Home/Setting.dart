@@ -39,51 +39,55 @@ class Setting extends StatelessWidget {
                     SizedBox(
                       width: context.width*0.30,
                     ),
-                    Column(
-                      children: [
-                         InkWell(
-                           onTap: (){},
-                           child: const CircleAvatar(
-                            radius: 50.0,
-                            backgroundColor: Colors.green, // sets the background color of the circle
-                            backgroundImage: AssetImage('assets/images/baby.png') ,
-                           // sets the icon for the circle
-                        ),
-                         ),
-                        SizedBox(
-                          height: context.height*0.05,
-                        ),
-                        Text(
-                          'Baby Profile',
-                          style: GoogleFonts.poppins(
-                            color: Colors.orange,
+                    Expanded(
+                      child: Column(
+                        children: [
+                           InkWell(
+                             onTap: (){},
+                             child: const CircleAvatar(
+                              radius: 50.0,
+                              backgroundColor: Colors.green, // sets the background color of the circle
+                              backgroundImage: AssetImage('assets/images/baby.png') ,
+                             // sets the icon for the circle
                           ),
-                        ),
+                           ),
+                          SizedBox(
+                            height: context.height*0.05,
+                          ),
+                          Text(
+                            'Baby Profile',
+                            style: GoogleFonts.poppins(
+                              color: Colors.orange,
+                            ),
+                          ),
 
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: context.width*0.1,
                     ),
-                    Column(
-                      children: [
-                        InkWell(
-                          onTap: (){},
-                          child: const CircleAvatar(
-                            radius: 50.0,
-                            backgroundColor: Colors.green, // sets the background color of the circle
-                            backgroundImage: AssetImage('assets/images/baby.png') ,
-                           ),// sets the icon for the circle
+                    Expanded(
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: (){},
+                            child: const CircleAvatar(
+                              radius: 50.0,
+                              backgroundColor: Colors.green, // sets the background color of the circle
+                              backgroundImage: AssetImage('assets/images/baby.png') ,
+                             ),// sets the icon for the circle
+                            ),
+
+                          SizedBox(
+                            height: context.height*0.05,
                           ),
+                           Text("Parent Profile",style: GoogleFonts.poppins(
+                             color: Colors.orange
+                           ),),
 
-                        SizedBox(
-                          height: context.height*0.05,
-                        ),
-                         Text("Parent Profile",style: GoogleFonts.poppins(
-                           color: Colors.orange
-                         ),),
-
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(
                       width: context.width*0.30,
