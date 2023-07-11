@@ -66,7 +66,7 @@ class WelcomeScreen extends StatelessWidget {
               CustomButton(
                 onTap:(){
                   AppNavigator.push(context: context,
-                      screen: const BabyProfileScreen(),
+                      screen:  BabyProfileScreen(),
                   );
                 },
                 child:Center(

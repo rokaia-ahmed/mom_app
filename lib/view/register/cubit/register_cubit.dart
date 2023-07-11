@@ -34,6 +34,8 @@ class RegisterCubit extends Cubit<RegisterStates>{
         }
     ).then((value){
       print(value.data['message']);
+      userModel= UserModel.fromJson(value.data);
+      print(userModel!.accessToken);
       emit(SignInSuccessState());
       print('success');
     }

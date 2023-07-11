@@ -36,9 +36,10 @@ class CustomTextFormField extends StatelessWidget {
         controller: controller,
         obscureText: visible,
         validator: valid,
+        textAlign: TextAlign.left,
         decoration:  InputDecoration(
           border:InputBorder.none,
-          contentPadding: const EdgeInsets.only(left: 10),
+          contentPadding: const EdgeInsets.all(10),
           hintText: hintText,
           suffixIcon: suffixIcon,
           hintStyle:const TextStyle(

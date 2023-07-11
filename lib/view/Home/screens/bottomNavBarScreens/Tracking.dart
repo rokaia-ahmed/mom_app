@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-import 'package:mom_app/view/Home/screens/home_screen.dart';
+import 'package:mom_app/view/layout/layout_screen.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/navigator.dart';
@@ -23,7 +23,7 @@ class Tracking extends StatelessWidget {
         ),
         leading: IconButton( onPressed: () {
           AppNavigator.push(context: context,
-            screen:  HomeScreen(),
+            screen:  LayoutScreen(),
           );
         }, icon:Icon( Icons.arrow_back_ios)),
       ),

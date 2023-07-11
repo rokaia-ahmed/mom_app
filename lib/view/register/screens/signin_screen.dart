@@ -28,7 +28,7 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (BuildContext context, RegisterStates state) {
         if (state is SignInSuccessState) {
-          //var cubit = RegisterCubit.get(context);
+          var cubit = RegisterCubit.get(context);
           Fluttertoast.showToast(
               msg: "Successful",
               toastLength: Toast.LENGTH_LONG,
@@ -37,8 +37,14 @@ class SignInScreen extends StatelessWidget {
               backgroundColor: Colors.green,
               textColor: Colors.white,
               fontSize: 16.0);
-          AppNavigator.push(context: context,
-              screen: const WelcomeScreen());
+          CacheHelper.saveData(key:'token',
+            value:cubit.userModel!.accessToken ,
+          );
+          CacheHelper.saveData(key:'email',
+            value:cubit.userModel!.email ,).then((value){
+            AppNavigator.push(context: context,
+                screen: const WelcomeScreen());
+          });
         } else if(state is SignInErrorState) {
           Fluttertoast.showToast(
               msg: "Wrong Data",

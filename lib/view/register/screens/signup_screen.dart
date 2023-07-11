@@ -28,9 +28,9 @@ class SignupScreen extends StatelessWidget {
         if(state is SignUpSuccessState) {
           CacheHelper.saveData(key:'token',
             value:cubit.userModel!.accessToken ,
-        );
+          );
           CacheHelper.saveData(key:'email',
-          value:cubit.userModel!.email ,).then((value){
+            value:cubit.userModel!.email ,).then((value){
             AppNavigator.push(context: context,
                 screen: SignInScreen());
           });
