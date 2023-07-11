@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/view/Home/screens/cubit/Cubit.dart';
-
-import '../../../core/utils/app_colors.dart';
-
-import '../../Onboarding/api_login/userData.dart';
 import 'cubit/states.dart';
 
 class HomeScreen extends StatelessWidget {
-   // HomeScreen({Key? key}) : super(key: key);
-  userData? response;
-   HomeScreen({this.response});
+   const HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
 

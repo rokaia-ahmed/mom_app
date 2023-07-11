@@ -1,15 +1,12 @@
-import 'dart:js';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/widgets/custom_text_form_field.dart';
+
 
 Widget groups(){
   return Padding(
-    padding:  EdgeInsets.all(20.0),
+    padding:  const EdgeInsets.all(20.0),
     child: Column(
       children: [
         Row(

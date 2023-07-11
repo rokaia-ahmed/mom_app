@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-
 import '../utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
+
    CustomTextFormField({Key? key,
     this.width,
      this.controller,
@@ -12,29 +12,28 @@ class CustomTextFormField extends StatelessWidget {
      this.valid,
      this.height,
     required this.visible,
-     this.backgroundcolor
+     this.backGroundColor
   }) : super(key: key);
 
-  final double? width;
-  final String hintText;
-  final Widget? suffixIcon;
-  final controller;
+   double? width;
+   String hintText;
+   Widget? suffixIcon;
+  TextEditingController? controller;
   bool visible;
-  final valid;
-  final height;
-   final backgroundcolor;
+  String? Function(String?)? valid;
+  double? height;
+   Color? backGroundColor;
   @override
   Widget build(BuildContext context) {
     return  Container(
       width: width,
-      height: height==null? context.height *0.065:height,
+      height: height ?? context.height *0.065,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color:backgroundcolor==null?AppColors.lightGreen:backgroundcolor,
+        color:backGroundColor ?? AppColors.lightGreen,
       ),
       child:TextFormField(
         controller: controller,
-
         obscureText: visible,
         validator: valid,
         decoration:  InputDecoration(

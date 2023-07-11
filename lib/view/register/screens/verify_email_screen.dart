@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
 import 'package:mom_app/core/widgets/custom_appbar.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
+import 'package:mom_app/view/register/cubit/register_cubit.dart';
+import 'package:mom_app/view/register/cubit/register_states.dart';
 import 'package:mom_app/view/register/screens/reset_password_screen.dart';
 import 'package:mom_app/view/register/widgets/verify_email_widget.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
-  const VerifyEmailScreen({Key? key}) : super(key: key);
-
+    VerifyEmailScreen({
+      required this.email,
+    Key? key}) : super(key: key);
+  final String email ;
+   final  num1 =TextEditingController();
+   final  num2 =TextEditingController();
+   final  num3 =TextEditingController();
+   final  num4 =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,24 +47,49 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                 height: context.height*0.12,
               ),
-              const VerifyEmailWidget(),
+               VerifyEmailWidget(
+                 num1: num1,
+                 num2:num2 ,
+                 num3: num3,
+                 num4: num4,
+               ),
               SizedBox(
                 height: context.height*0.06,
               ),
-              CustomButton(
-                onTap: (){
-                  AppNavigator.push(
-                      context: context,
-                      screen: const ResetPasswordScreen());
-                },
-                child:Center(
-                  child: Text('Verify',
-                    textAlign:TextAlign.center ,
-                    style:GoogleFonts.poppins(
-                      fontSize: 18,
+              BlocConsumer<RegisterCubit,RegisterStates>(
+                listener:(context,state){
+                  String code =
+                      num1.text+num2.text+num3.text+num4.text;
+                  if(state is VerifyEmailSuccessState){
+                    AppNavigator.push(
+                        context: context,
+                        screen:  ResetPasswordScreen(
+                          code:code ,
+                        ));
+                  }
+                } ,
+                builder:(context,state){
+                  var cubit = RegisterCubit.get(context);
+                  return CustomButton(
+                    onTap: (){
+                      String code =
+                          num1.text+num2.text+num3.text+num4.text;
+                      print(code);
+                      cubit.verifyEmail(
+                          email: email,
+                          code: code,
+                      );
+                    },
+                    child:Center(
+                      child: Text('Verify',
+                        textAlign:TextAlign.center ,
+                        style:GoogleFonts.poppins(
+                          fontSize: 18,
+                        ) ,
+                      ),
                     ) ,
-                  ),
-                ) ,
+                  );
+                } ,
               ),
               SizedBox(
                 height: context.height*0.012,
