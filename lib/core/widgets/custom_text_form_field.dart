@@ -4,7 +4,7 @@ import '../utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
 
-   CustomTextFormField({Key? key,
+   const CustomTextFormField({Key? key,
     this.width,
      this.controller,
     required this.hintText,
@@ -15,14 +15,14 @@ class CustomTextFormField extends StatelessWidget {
      this.backGroundColor
   }) : super(key: key);
 
-   double? width;
-   String hintText;
-   Widget? suffixIcon;
-  TextEditingController? controller;
-  bool visible;
-  String? Function(String?)? valid;
-  double? height;
-   Color? backGroundColor;
+  final double? width;
+   final String hintText;
+   final  Widget? suffixIcon;
+   final TextEditingController? controller;
+   final bool visible;
+   final String? Function(String?)? valid;
+   final double? height;
+   final Color? backGroundColor;
   @override
   Widget build(BuildContext context) {
     return  Container(

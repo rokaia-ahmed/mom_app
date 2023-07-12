@@ -1,13 +1,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
 import 'package:mom_app/view/register/screens/signup_screen.dart';
+import '../../../core/utils/component.dart';
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 import '../../Baby_Info/screens/welcome_screen.dart';
@@ -29,14 +29,10 @@ class SignInScreen extends StatelessWidget {
       listener: (BuildContext context, RegisterStates state) {
         if (state is SignInSuccessState) {
           var cubit = RegisterCubit.get(context);
-          Fluttertoast.showToast(
-              msg: "Successful",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Colors.green,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          showToast(
+            text: 'login is success',
+            state: ToastStates.success,
+          );
           CacheHelper.saveData(key:'token',
             value:cubit.userModel!.accessToken ,
           );
@@ -46,14 +42,10 @@ class SignInScreen extends StatelessWidget {
                 screen: const WelcomeScreen());
           });
         } else if(state is SignInErrorState) {
-          Fluttertoast.showToast(
-              msg: "Wrong Data",
-              toastLength: Toast.LENGTH_LONG,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 5,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          showToast(
+            text: 'login is failed',
+            state: ToastStates.error,
+          );
         }
       },
       builder: (BuildContext context, RegisterStates state) {
@@ -180,7 +172,9 @@ class SignInScreen extends StatelessWidget {
                               ),
                               fallback: (BuildContext context) =>
                                   const Center(
-                                      child: CircularProgressIndicator()),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )),
                             ),
                             SizedBox(
                               height: context.height * 0.02,

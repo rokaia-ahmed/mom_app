@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/register/screens/signin_screen.dart';
 import '../../../core/network/cache_helper.dart';
+import '../../../core/utils/component.dart';
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../cubit/register_cubit.dart';
@@ -26,6 +28,10 @@ class SignupScreen extends StatelessWidget {
       listener: (context, state) {
         RegisterCubit cubit = BlocProvider.of(context);
         if(state is SignUpSuccessState) {
+          showToast(
+            text: 'Signup is success',
+            state: ToastStates.success,
+          );
           CacheHelper.saveData(key:'token',
             value:cubit.userModel!.accessToken ,
           );
@@ -34,6 +40,11 @@ class SignupScreen extends StatelessWidget {
             AppNavigator.push(context: context,
                 screen: SignInScreen());
           });
+        }else if(state is SignUpErrorState){
+          showToast(
+            text: 'Signup is failed',
+            state: ToastStates.error,
+          );
         }
       },
       builder: (context, state) {
@@ -157,26 +168,36 @@ class SignupScreen extends StatelessWidget {
                           SizedBox(
                             height: context.height * 0.03,
                           ),
-                          CustomButton(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                cubit.userSignUp(
-                                  firstName: fNameController.text,
-                                  lastName: lNameController.text,
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                );
-                              }
-                            },
-                            child: Center(
-                              child: Text(
-                                'Sign up',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
+                          ConditionalBuilder(
+                            condition:(state is !SignInLoadingState) ,
+                            builder:(context){
+                              return CustomButton(
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    cubit.userSignUp(
+                                      firstName: fNameController.text,
+                                      lastName: lNameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                  }
+                                },
+                                child: Center(
+                                  child: Text(
+                                    'Sign up',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            } ,
+                           fallback:(context)=>const Center(
+                               child: CircularProgressIndicator(
+                                 color: Colors.white,
+                               ),
+                           ) ,
                           ),
                           SizedBox(
                             height: context.height * 0.02,

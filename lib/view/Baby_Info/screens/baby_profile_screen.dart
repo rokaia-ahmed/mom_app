@@ -1,12 +1,15 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/utils/navigator.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_cubit.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
+import 'package:mom_app/view/layout/layout_screen.dart';
 
 import '../../../core/widgets/custom_appbar.dart';
 
@@ -34,7 +37,9 @@ class BabyProfileScreen extends StatelessWidget {
             child: BlocConsumer<BabyCubit, BabyStates>(
               listener: (context, state) {
                 if(state is AddBabySuccessState){
-
+                 AppNavigator.push(
+                     context: context,
+                     screen: const LayoutScreen());
                 }
               },
               builder: (context, state) {
@@ -65,7 +70,8 @@ class BabyProfileScreen extends StatelessWidget {
                       ],
                       ):
                       CircleAvatar(
-                        backgroundImage:FileImage(cubit.image!) ,
+                        backgroundColor: AppColors.gray,
+                        backgroundImage:FileImage(cubit.imageShow!) ,
                         radius: 50,
                       ),
                     ),
@@ -156,7 +162,6 @@ class BabyProfileScreen extends StatelessWidget {
                     CustomButton(
                       onTap: () {
                         cubit.addBaby(
-                            image: cubit.image!,
                             babyName: nameBabyController.text,
                             gender: genderController.text,
                             birthDate: birthDateController.text,
@@ -172,6 +177,12 @@ class BabyProfileScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    if(state is AddBabyLoadingState)
+                      const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      ),
                   ],
                 );
               },
