@@ -150,7 +150,7 @@ class SignInScreen extends StatelessWidget {
                               height: context.height * 0.01,
                             ),
                             ConditionalBuilder(
-                              condition: state is! SignInLoadingState,
+                              condition: state is!  SignInLoadingState,
                               builder: (BuildContext context) => CustomButton(
                                 onTap: () {
                                   if (formKey.currentState!.validate()) {

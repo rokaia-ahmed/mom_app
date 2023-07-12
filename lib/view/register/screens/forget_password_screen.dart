@@ -105,7 +105,16 @@ class ForgetPasswordScreen extends StatelessWidget {
                     SizedBox(
                       width: context.width * 0.03,
                     ),
-                    BlocBuilder<RegisterCubit, RegisterStates>(
+                    BlocConsumer<RegisterCubit, RegisterStates>(
+                      listener:(context, state){
+                        if(state is SendEmailSuccessState){
+                          AppNavigator.push(context: context,
+                              screen:  VerifyEmailScreen(
+                                email:emailController.text ,
+                              ),
+                          );
+                        }
+                      } ,
                       builder: (context, state) {
                         RegisterCubit cubit = RegisterCubit.get(context);
                         return Expanded(
@@ -113,12 +122,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                             onTap: () {
                               if(formKey.currentState!.validate()) {
                                 cubit.sendEmail(email: emailController.text,
-                              ).then((value){
-                                AppNavigator.push(context: context,
-                                    screen:  VerifyEmailScreen(
-                                      email:emailController.text ,
-                                    ));
-                              });
+                              );
                               }
                             },
                             child: Container(

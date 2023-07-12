@@ -169,7 +169,7 @@ class SignupScreen extends StatelessWidget {
                             height: context.height * 0.03,
                           ),
                           ConditionalBuilder(
-                            condition:(state is !SignInLoadingState) ,
+                            condition:(state is! SignUpLoadingState) ,
                             builder:(context){
                               return CustomButton(
                                 onTap: () {

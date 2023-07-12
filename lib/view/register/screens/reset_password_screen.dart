@@ -64,7 +64,6 @@ class ResetPasswordScreen extends StatelessWidget {
               ),
               BlocConsumer<RegisterCubit, RegisterStates>(
                 listener:(context, state){
-                  var cubit = RegisterCubit.get(context);
                   if(state is RestPasswordSuccessState){
                     AppNavigator.push(
                       context: context,
