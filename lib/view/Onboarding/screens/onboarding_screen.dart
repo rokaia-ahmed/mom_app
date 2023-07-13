@@ -39,7 +39,7 @@ class OnBoardingScreen extends StatelessWidget {
               ),
               Image.asset('assets/images/on_boarding.png'),
               SizedBox(
-                height: context.height * 0.05,
+                height: context.height * 0.1,
               ),
               CustomButton(
                 onTap: () {
@@ -48,7 +48,7 @@ class OnBoardingScreen extends StatelessWidget {
                   );
                 },
                 child: const Center(
-                  child: Text('Sign up',
+                  child: Text('Signup',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,

@@ -255,7 +255,7 @@ class SignInScreen extends StatelessWidget {
                                         screen: SignupScreen());
                                   },
                                   child: const Text(
-                                    'Sign up',
+                                    'Signup',
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Colors.black,
