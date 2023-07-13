@@ -1,5 +1,5 @@
 
-const BASEURL='https://13.51.206.195:';
+const BASEURL='https://newMommy.mooo.com:';
 
 const SIGNUP ='3001/api/auth/register' ;
 const LOGIN ='3001/api/auth/login' ;

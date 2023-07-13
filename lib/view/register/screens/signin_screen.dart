@@ -164,7 +164,7 @@ class SignInScreen extends StatelessWidget {
                                   child: Text(
                                     'Login',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 22,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -200,7 +200,7 @@ class SignInScreen extends StatelessWidget {
                                     Text(
                                       'Login with google',
                                       style: GoogleFonts.poppins(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -227,7 +227,7 @@ class SignInScreen extends StatelessWidget {
                                   Text(
                                     'Login with Facebook',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),

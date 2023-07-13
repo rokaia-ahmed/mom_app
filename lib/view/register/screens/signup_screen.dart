@@ -184,9 +184,9 @@ class SignupScreen extends StatelessWidget {
                                 },
                                 child: Center(
                                   child: Text(
-                                    'Sign up',
+                                    'Signup',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 22,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -222,7 +222,7 @@ class SignupScreen extends StatelessWidget {
                                   Text(
                                     'Signup with google',
                                     style: GoogleFonts.poppins(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -248,7 +248,7 @@ class SignupScreen extends StatelessWidget {
                                 Text(
                                   'Signup with Facebook',
                                   style: GoogleFonts.poppins(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
