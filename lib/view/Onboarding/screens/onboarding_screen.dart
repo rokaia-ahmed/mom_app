@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
-import 'package:mom_app/view/register/cubit/register_cubit.dart';
 import 'package:mom_app/view/register/screens/signup_screen.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../register/screens/signin_screen.dart';
