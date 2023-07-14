@@ -144,10 +144,10 @@ class Community extends StatelessWidget {
                       color: Colors.grey.shade400,
                     ),
                      //search
-                    if(cubit.communityIndex==0) Posts(searchcontroller)
-                    else if (cubit.communityIndex==1) groups()
-                    else if (cubit.communityIndex==2) event()
-                      else if (cubit.communityIndex==3) friends()
+                    if(cubit.communityIndex==0) Posts(searchcontroller,context)
+                    else if (cubit.communityIndex==1) groups(context)
+                    else if (cubit.communityIndex==2) event(context)
+                      else if (cubit.communityIndex==3) friends(context)
                   ],
                 ),
               )

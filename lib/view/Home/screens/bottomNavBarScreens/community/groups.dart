@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/navigator.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
+import '../../chats.dart';
 
-Widget groups(){
+Widget groups(context){
   return Padding(
     padding:  EdgeInsets.all(20.0),
     child: Column(
@@ -22,7 +24,12 @@ Widget groups(){
             Spacer(),
             IconButton(onPressed: (){}, icon:Icon(Icons.search,color: AppColors.green,)),
             SizedBox(width: 5.0,),
-            IconButton(onPressed: (){}, icon:Icon(Icons.message_outlined, color: AppColors.green)),
+            IconButton(onPressed: (){
+
+              AppNavigator.push(context: context,
+                screen:  Chats(),
+              );
+            }, icon:Icon(Icons.message_outlined, color: AppColors.green)),
 
           ],
         ),
@@ -131,7 +138,7 @@ Widget groups(){
               crossAxisCount: 2,children:List.generate(5, (index) => buildGridView()
           )
           ),
-        )
+        ),
         //group style
 
   ]
