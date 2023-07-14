@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-import 'package:mom_app/view/Home/screens/babyTrackerSreens/reminder.dart';
 import 'package:mom_app/view/Home/screens/home_screen.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -42,11 +41,7 @@ class Tracking extends StatelessWidget {
                 ),
                 //Reminder
                 TextButton(
-                  onPressed: () {
-                    AppNavigator.push(context: context,
-                      screen:  Reminder(),
-                    );
-                  },
+                  onPressed: () {  },
                   child:DecoratedBox(
 
                     decoration: BoxDecoration(

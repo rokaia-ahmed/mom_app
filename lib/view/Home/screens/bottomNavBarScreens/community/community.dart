@@ -11,7 +11,7 @@ import '../../../../../core/utils/navigator.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
 import '../../cubit/Cubit.dart';
 import '../../cubit/states.dart';
-import '../../home_screen.dart';
+import '../../../../layout/layout_screen.dart';
 import 'freinds.dart';
 var searchcontroller = TextEditingController();
 class Community extends StatelessWidget {
@@ -35,7 +35,7 @@ class Community extends StatelessWidget {
                 ),
                 leading: IconButton( onPressed: () {
                   AppNavigator.push(context: context,
-                    screen:  HomeScreen(),
+                    screen:  LayoutScreen(),
                   );
                 }, icon:Icon( Icons.arrow_back_ios)),
               ),

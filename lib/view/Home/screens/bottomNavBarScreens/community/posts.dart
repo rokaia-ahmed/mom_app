@@ -28,7 +28,7 @@ Widget Posts(searchcontroller,context){
                 child: CustomTextFormField(
                   hintText: 'Write something...',
                   controller: searchcontroller,
-                  backgroundcolor: Colors.grey.shade200,
+                  backGroundColor: Colors.grey.shade200,
                   height: 40,
                   visible: false,
                 ),

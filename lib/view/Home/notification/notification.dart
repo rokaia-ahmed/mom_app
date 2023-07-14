@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/view/Home/notification/HaveNotification.dart';
 import 'package:mom_app/view/Home/screens/cubit/Cubit.dart';
 import 'package:mom_app/view/Home/screens/cubit/states.dart';
-import 'package:mom_app/view/Home/screens/home_screen.dart';
+import 'package:mom_app/view/layout/layout_screen.dart';
 
 import '../../../core/utils/navigator.dart';
 
@@ -27,14 +27,13 @@ class Notifications extends StatelessWidget {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              title: Center(
+              title: const Center(
                 child: Text("Notification",style: TextStyle(
-
                 ),),
               ),
               leading: IconButton( onPressed: () {
                 AppNavigator.push(context: context,
-                  screen:  HomeScreen(),
+                  screen:  LayoutScreen(),
                 );
               }, icon:Icon( Icons.arrow_back_ios)),
             ),

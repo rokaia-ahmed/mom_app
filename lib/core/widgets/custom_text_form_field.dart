@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-
 import '../utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
-   CustomTextFormField({Key? key,
+
+   const CustomTextFormField({Key? key,
     this.width,
      this.controller,
     required this.hintText,
@@ -12,34 +12,34 @@ class CustomTextFormField extends StatelessWidget {
      this.valid,
      this.height,
     required this.visible,
-     this.backgroundcolor
+     this.backGroundColor
   }) : super(key: key);
 
   final double? width;
-  final String hintText;
-  final Widget? suffixIcon;
-  final controller;
-  bool visible;
-  final valid;
-  final height;
-   final backgroundcolor;
+   final String hintText;
+   final  Widget? suffixIcon;
+   final TextEditingController? controller;
+   final bool visible;
+   final String? Function(String?)? valid;
+   final double? height;
+   final Color? backGroundColor;
   @override
   Widget build(BuildContext context) {
     return  Container(
       width: width,
-      height: height==null? context.height *0.065:height,
+      height: height ?? context.height *0.065,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color:backgroundcolor==null?AppColors.lightGreen:backgroundcolor,
+        color:backGroundColor ?? AppColors.lightGreen,
       ),
       child:TextFormField(
         controller: controller,
-
         obscureText: visible,
         validator: valid,
+        textAlign: TextAlign.left,
         decoration:  InputDecoration(
           border:InputBorder.none,
-          contentPadding: const EdgeInsets.only(left: 10),
+          contentPadding: const EdgeInsets.all(10),
           hintText: hintText,
           suffixIcon: suffixIcon,
           hintStyle:const TextStyle(

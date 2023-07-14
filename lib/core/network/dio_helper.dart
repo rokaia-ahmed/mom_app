@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mom_app/core/network/end_points.dart';
 
 class DioHelper {
 
@@ -7,24 +8,22 @@ class DioHelper {
   static init(){
     dio = Dio(
       BaseOptions(
-        baseUrl: 'https://children-production.up.railway.app/api/auth/',
+        baseUrl: BASEURL,
         receiveDataWhenStatusError: true,
-         headers: {
+         /*headers: {
            'Content-Type':'application/json',
-         }
+         }*/
       ),
     );
   }
   static Future<Response> getData ({
     required String url,
      Map<String,dynamic>? query,
-    String lang = 'en',
     String? token ,
   }) async
   {
     dio.options.headers= {
       'Content-Type' : 'application/json',
-      'lang' : lang,
       'Authorization': token,
     };
     return await dio.get(url, queryParameters : query ,);
@@ -34,18 +33,32 @@ class DioHelper {
     required String url,
     Map<String,dynamic>? query,
     required Map<String,dynamic> data,
-    String lang = 'en',
     String token = '' ,
   }) async{
-    dio.options.headers={
-      'Content-Type' : 'application/json',
-      'lang' : lang,
-      'Authorization': token,
-    };
     return await dio.post(
         url,
         queryParameters: query,
         data: data);
+  }
+
+  static Future<Response> postFormData({
+    required String url,
+    required FormData  data,
+    required String token ,
+  }) async{
+    /*dio.options.headers={
+      'Content-Type' :'multipart/form-data',
+      'Authorization': 'Bearer $token',
+    };*/
+    return await dio.post(
+        url,
+        data: data,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+    );
   }
 
   static Future<Response> putData({

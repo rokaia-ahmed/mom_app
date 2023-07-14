@@ -14,21 +14,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return BlocConsumer<HomeCubit,HomeStates>(
-      listener: (BuildContext context,HomeStates state){},
-      builder: (BuildContext context,HomeStates state){
-        var cubit=HomeCubit.get(context);
-        return  Scaffold(
-          body: cubit.screens[cubit.currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: cubit.currentIndex,
+    return BlocProvider(
+      create: (BuildContext context) =>HomeCubit(),
+      child:BlocConsumer<HomeCubit,HomeStates>(
+        listener: (BuildContext context,HomeStates state){},
+        builder: (BuildContext context,HomeStates state){
+          var cubit=HomeCubit.get(context);
+          return  Scaffold(
+            body: cubit.screens[cubit.currentIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: cubit.currentIndex,
 
-           onTap: (index){
-             cubit.ChangeIndex(index);
-           }, items:cubit.screenItems
-          ),
-        );
-      },
+             onTap: (index){
+               cubit.ChangeIndex(index);
+             }, items:cubit.screenItems
+            ),
+          );
+        },
+      ),
     );
   }
 }
