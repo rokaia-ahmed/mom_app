@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
-import '../home_screen.dart';
-import 'community/groups.dart';
-var searchcontroller = TextEditingController();
-class Learning extends StatelessWidget {
-  const Learning({super.key});
+import '../../../layout/layout_screen.dart';
+import 'community/community.dart';
 
+
+class Learning extends StatelessWidget {
+   Learning({super.key});
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -23,7 +23,7 @@ class Learning extends StatelessWidget {
         ),
         leading: IconButton( onPressed: () {
           AppNavigator.push(context: context,
-            screen:  HomeScreen(),
+            screen:  const LayoutScreen(),
           );
         },
             icon:Icon( Icons.arrow_back_ios)),
@@ -41,9 +41,8 @@ class Learning extends StatelessWidget {
                 Expanded(
                   child: CustomTextFormField(
                     hintText: 'Search...',
-
                     controller: searchcontroller,
-                    backgroundcolor: Colors.grey.shade200,
+                    //backgroundcolor: Colors.grey.shade200,
                     height: 40,
                     visible: false,
                     suffixIcon:Icon(Icons.search_outlined,color: AppColors.green,) ,

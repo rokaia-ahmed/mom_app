@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/navigator.dart';
-import 'home_screen.dart';
+import '../../layout/layout_screen.dart';
+
 
 class Chats extends StatelessWidget {
   const Chats({Key? key}) : super(key: key);
@@ -21,10 +22,10 @@ class Chats extends StatelessWidget {
   ),
         leading: IconButton( onPressed: () {
         AppNavigator.push(context: context,
-        screen:  HomeScreen(),
+        screen:  LayoutScreen(),
   );
   },
-         icon:Icon( Icons.arrow_back_ios)),
+         icon:const Icon( Icons.arrow_back_ios)),
   ),
       body: Column(
         children: [

@@ -16,7 +16,7 @@ class HomeCubit extends Cubit<HomeStates>{
     const Home(),
     const Community(),
     const Tracking(),
-    const Learning(),
+     Learning(),
     const Shop(),
   ];
   List<String>titles=[

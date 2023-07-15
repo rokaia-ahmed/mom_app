@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/navigator.dart';
-import '../home_screen.dart';
 
 class Reminder extends StatelessWidget {
   const Reminder({Key? key}) : super(key: key);

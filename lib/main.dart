@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
-import 'package:mom_app/view/Home/screens/home_screen.dart';
-import 'package:mom_app/view/register/screens/signin_screen.dart';
 import 'package:mom_app/view/splash/splash_screen.dart';
 
 
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner:false ,
       title: 'My Baby',
       theme: ThemeData(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           elevation: 0.0,
           foregroundColor: AppColors.green

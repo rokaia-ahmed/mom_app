@@ -38,7 +38,7 @@ class SignupScreen extends StatelessWidget {
           CacheHelper.saveData(key:'email',
             value:cubit.userModel!.email ,).then((value){
             AppNavigator.push(context: context,
-                screen: SignInScreen());
+                screen: const SignInScreen());
           });
         }else if(state is SignUpErrorState){
           showToast(
@@ -270,7 +270,7 @@ class SignupScreen extends StatelessWidget {
                               ),
                               TextButton(onPressed: () {
                                 AppNavigator.push(context: context,
-                                    screen:  SignInScreen());
+                                    screen:  const SignInScreen());
                               },
                                 child: const Text('login',
                                   style: TextStyle(

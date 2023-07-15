@@ -6,12 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
-import 'package:mom_app/view/Baby_Info/screens/welcome_screen.dart';
-import 'package:mom_app/view/Home/screens/home_screen.dart';
 import 'package:mom_app/view/register/screens/signup_screen.dart';
-
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
+import '../../layout/layout_screen.dart';
 import '../cubit/register_cubit.dart';
 import '../cubit/register_states.dart';
 import '../widgets/divider.dart';
@@ -121,7 +119,9 @@ class SignInScreen extends StatelessWidget {
                                 controller: passwordcontroller,
                                 hintText: 'Password',
                                 width: double.infinity,
-                                suffixIcon:IconButton(icon:cubit.visible?Icon( Icons.visibility_outlined):Icon( Icons.visibility_off_outlined),
+                                suffixIcon:IconButton(icon:cubit.visible?
+                                const Icon( Icons.visibility_outlined):
+                                const Icon( Icons.visibility_off_outlined),
                                  onPressed: () {
                                   cubit.changePasswordVisibility();
                                 },) ,
@@ -133,7 +133,7 @@ class SignInScreen extends StatelessWidget {
                                 onTap:(){
                                   AppNavigator.push(
                                       context: context,
-                                      screen: const ForgetPasswordScreen());
+                                      screen:  ForgetPasswordScreen());
                                 } ,
                                 child: Align(
                                   alignment: Alignment.topRight,
@@ -155,9 +155,10 @@ class SignInScreen extends StatelessWidget {
                                 builder: (BuildContext context)=>CustomButton(
                                   onTap:(){
                                     if (formkey.currentState!.validate()) {
-                                      cubit.userSignIn(email: emailcontroller.text, password: passwordcontroller.text);
+                                      cubit.userSignIn(email: emailcontroller.text,
+                                          password: passwordcontroller.text);
                                       AppNavigator.push(context: context,
-                                          screen:  HomeScreen());
+                                          screen:  const LayoutScreen());
                                     }
 
                                   } ,
@@ -171,7 +172,8 @@ class SignInScreen extends StatelessWidget {
                                     ),
                                   ) ,
                                 ) ,
-                                fallback: (BuildContext context) =>Center(child: CircularProgressIndicator()),
+                                fallback: (BuildContext context) =>const Center(
+                                    child: CircularProgressIndicator()),
 
                               ),
                               SizedBox(
@@ -245,7 +247,7 @@ class SignInScreen extends StatelessWidget {
                                   ),
                                   TextButton(onPressed: (){
                                     AppNavigator.push(context: context,
-                                        screen: const SignupScreen());
+                                        screen:  SignupScreen());
                                   },
                                     child:const Text('Sign up',
                                       style:TextStyle(
