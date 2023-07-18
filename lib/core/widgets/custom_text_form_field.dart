@@ -4,14 +4,14 @@ import '../utils/app_colors.dart';
 
 class CustomTextFormField extends StatelessWidget {
 
-    const CustomTextFormField({Key? key,
+   const CustomTextFormField({Key? key,
     this.width,
      this.controller,
     required this.hintText,
     this.suffixIcon,
      this.valid,
      this.height,
-     this.visible = false,
+    required this.visible,
      this.backGroundColor
   }) : super(key: key);
 
@@ -19,7 +19,7 @@ class CustomTextFormField extends StatelessWidget {
    final String hintText;
    final  Widget? suffixIcon;
    final TextEditingController? controller;
-   final  bool visible ;
+   final bool visible;
    final String? Function(String?)? valid;
    final double? height;
    final Color? backGroundColor;
@@ -34,7 +34,7 @@ class CustomTextFormField extends StatelessWidget {
       ),
       child:TextFormField(
         controller: controller,
-        obscureText: visible ,
+        obscureText: visible,
         validator: valid,
         textAlign: TextAlign.left,
         decoration:  InputDecoration(
@@ -42,7 +42,6 @@ class CustomTextFormField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(10),
           hintText: hintText,
           suffixIcon: suffixIcon,
-          suffixIconColor:Colors.black ,
           hintStyle:const TextStyle(
             color: AppColors.green,
             fontSize: 14,
