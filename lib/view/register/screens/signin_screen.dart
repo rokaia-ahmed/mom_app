@@ -101,7 +101,6 @@ class SignInScreen extends StatelessWidget {
                               },
                               controller: emailController,
                               width: double.infinity,
-                              visible: false,
                             ),
                             SizedBox(
                               height: context.height * 0.02,
