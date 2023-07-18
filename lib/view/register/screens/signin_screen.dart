@@ -96,6 +96,8 @@ class SignInScreen extends StatelessWidget {
                               valid: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Email must not be empty';
+                                }else if(!value.contains('@gmail.com')){
+                                  return 'email should be email';
                                 }
                                 return null;
                               },
@@ -110,6 +112,8 @@ class SignInScreen extends StatelessWidget {
                               valid: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Password must not be empty';
+                                }else if(value.length<8){
+                                  return 'password must be >= 8';
                                 }
                                 return null;
                               },
