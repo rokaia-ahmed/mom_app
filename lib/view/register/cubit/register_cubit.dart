@@ -1,5 +1,6 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/view/register/cubit/register_states.dart';
@@ -23,7 +24,6 @@ class RegisterCubit extends Cubit<RegisterStates>{
     required String email ,
     required String password ,
   })async{
-    print('Done... ');
     emit(SignInLoadingState());
    await DioHelper.postData(
         url: LOGIN,
@@ -40,9 +40,11 @@ class RegisterCubit extends Cubit<RegisterStates>{
       print('success');
     }
     ).catchError((error){
-      print(error.toString());
-      emit(SignInErrorState(error.toString()));
-      print('error...');
+     if(error is DioException){
+       print(error.response!.data['message'].toString());
+       emit(SignInErrorState(error.toString()));
+     }
+
     });
 
   }
@@ -71,11 +73,12 @@ class RegisterCubit extends Cubit<RegisterStates>{
       print('success');
     }
     ).catchError((error){
-      print(error.toString());
-      emit(SignUpErrorState(error.toString()));
-      print('error...');
-    });
+      error is DioException;
+        print(error.response!.data['message'].toString());
+        emit(SignUpErrorState(error.toString()));
+        print('error...');
 
+    });
   }
 
  //TODO FORGET PASSWORD

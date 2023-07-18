@@ -101,7 +101,6 @@ class SignupScreen extends StatelessWidget {
                               Expanded(
                                 child: CustomTextFormField(
                                   hintText: 'First name',
-                                  visible: false,
                                   controller: fNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
@@ -118,7 +117,6 @@ class SignupScreen extends StatelessWidget {
                               Expanded(
                                 child: CustomTextFormField(
                                   hintText: 'Last name',
-                                  visible: false,
                                   controller: lNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
@@ -135,14 +133,16 @@ class SignupScreen extends StatelessWidget {
                             height: context.height * 0.02,
                           ),
                           CustomTextFormField(
-                            visible: false,
                             hintText: 'Email Address',
                             controller: emailController,
                             width: double.infinity,
                             valid: (v) {
                               if (v!.isEmpty) {
                                 return 'email should not empty';
-                              } else {
+                              }else if(!v.contains('@gmail.com')){
+                                return 'email should be email';
+                              }
+                              else {
                                 return null;
                               }
                             },
@@ -151,16 +151,25 @@ class SignupScreen extends StatelessWidget {
                             height: context.height * 0.02,
                           ),
                           CustomTextFormField(
-                            visible: false,
+                            visible: cubit.visible,
                             hintText: 'Password',
                             controller: passwordController,
                             width: double.infinity,
-                            suffixIcon: const Icon(
-                                Icons.visibility_off_rounded),
+                            suffixIcon:  IconButton(
+                              icon: cubit.visible
+                                  ? const Icon(Icons.visibility_outlined)
+                                  : const Icon(Icons.visibility_off_outlined),
+                              onPressed: () {
+                                cubit.changePasswordVisibility();
+                              },
+                            ),
                             valid: (v) {
                               if (v!.isEmpty) {
                                 return 'password should not empty';
-                              } else {
+                              }else if(v.length<8){
+                                return 'password must be >= 8';
+                              }
+                              else {
                                 return null;
                               }
                             },
