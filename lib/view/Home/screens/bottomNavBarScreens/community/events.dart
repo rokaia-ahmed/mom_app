@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/utils/navigator.dart';
+import '../../../../../core/widgets/custom_icon_button.dart';
+import '../../chats.dart';
 
-Widget event(){
+Widget event({required BuildContext context}){
   return Padding(
     padding: const EdgeInsets.all(20.0),
     child: Column(
@@ -17,9 +20,11 @@ Widget event(){
               fontSize: 16,
             ),),
             Spacer(),
-            IconButton(onPressed: (){}, icon:Icon(Icons.search,color: AppColors.green,)),
+            customIconButton(isIcon: true, icon:Icons.search_outlined,onTap: (){}),
             SizedBox(width: 5.0,),
-            IconButton(onPressed: (){}, icon:Icon(Icons.message_outlined, color: AppColors.green)),
+            customIconButton(isIcon: true, icon:Icons.message_outlined,onTap: (){
+              AppNavigator.push(context: context, screen: Chats());
+            }),
 
           ],
         ),
@@ -32,32 +37,24 @@ Widget event(){
                 fontSize: 16
             ),),
             Spacer(),
-            TextButton(onPressed: () {
-
-            }, child: Text("see all",style: GoogleFonts.poppins(
-              // fontWeight: FontWeight.bold,
-                fontSize: 10,
-                color: Colors.green
-            )),),
+            customIconButton(isIcon: false,text: "see all",color: AppColors.primaryColor,fontSize: 12.0, onTap: (){}),
             // SizedBox(width: 10.0,),
-
           ],
         ),
         SizedBox(height: 20.0,),
         //Event card
-        SizedBox(
-          height: 335*5,
-          child: ListView.separated(itemBuilder: (context, index) => EventCard(), separatorBuilder: (context,index)=>
-              Container(
-            height: 10.0,
-          ), itemCount: 5),
-        ),
+        ListView.separated(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => EventCard(), separatorBuilder: (context,index)=>
+            Container(
+          height: 10.0,
+        ), itemCount: 5),
   ],
   ),
 
   );
 }
-
 Widget EventCard(){
   return Container(
     decoration: BoxDecoration(
@@ -67,8 +64,8 @@ Widget EventCard(){
         BoxShadow(
           color: Colors.grey.shade200,
           // spreadRadius: 5,
-          blurRadius: 3,
-          // offset: Offset(0, 3), // changes position of shadow
+          blurRadius: 1,
+          offset: Offset(0, 1), // changes position of shadow
         ),
       ],
     ),
@@ -102,7 +99,7 @@ Widget EventCard(){
               Text("Fri, 8 JUL AT 10 am",
                 style: GoogleFonts.poppins(
 
-                    color: Colors.green,
+                    color:AppColors.primaryColor,
                     fontSize: 14.0
                 ),
                 maxLines: 1,

@@ -3,11 +3,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mom_app/core/utils/navigator.dart';
+import 'package:mom_app/view/Home/screens/chats.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
 
-Widget friends(){
+Widget friends({required BuildContext context}){
   return Padding(
       padding:  EdgeInsets.all(20.0),
       child: Column(
@@ -20,10 +23,11 @@ Widget friends(){
                   fontSize: 16,
                 ),),
                 Spacer(),
-                IconButton(onPressed: (){}, icon:Icon(Icons.search,color: AppColors.green,)),
+                customIconButton(isIcon: true,icon: Icons.search_outlined,onTap: (){}),
                 SizedBox(width: 5.0,),
-                IconButton(onPressed: (){}, icon:Icon(Icons.message_outlined, color: AppColors.green)),
-
+                customIconButton(isIcon: true,icon: Icons.message_outlined,onTap: (){
+                  AppNavigator.push(context: context, screen: Chats());
+                }),
               ],
             ),
             SizedBox(height: 20.0,),
@@ -35,29 +39,21 @@ Widget friends(){
                     fontSize: 16
                 ),),
                 Spacer(),
-                TextButton(onPressed: () {
-
-                }, child: Text("see all",style: GoogleFonts.poppins(
-                  // fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.green
-                )),),
+                customIconButton(isIcon: false,text: "see all",fontSize: 12.0,color: AppColors.primaryColor,onTap: (){}),
                 // SizedBox(width: 10.0,),
 
               ],
             ),
             SizedBox(height: 20.0,),
             //you freinds list
-            SizedBox(
-              height:100*4 ,
-
-              child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) =>
-              friendsList(), separatorBuilder: (context, index) => Container(
-                height: 16.0,
-              ) , itemCount: 4),
-            ),
+            ListView.separated(
+              shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) =>
+            friendsList(), separatorBuilder: (context, index) => Container(
+              height: 16.0,
+            ) , itemCount: 4),
+            SizedBox(height: 20.0,),
             //friends requist
             Row(
               children: [
@@ -67,23 +63,18 @@ Widget friends(){
                   fontWeight: FontWeight.bold
                 ),),
                 Spacer(),
-                TextButton(onPressed: (){}, child: Text("See all",style: GoogleFonts.poppins(
-                  color: Colors.green,
-                  fontSize: 12.0,
-                ),),),
+                customIconButton(isIcon: false,text: "see all",fontSize: 12.0,color: AppColors.primaryColor,onTap: (){}),
               ],
             ),
             SizedBox(height: 20.0,),
             //grid view
-            SizedBox(
-              height:100*3 ,
-              child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) =>
-                  friendsRequestList(), separatorBuilder: (context, index) => Container(
-                height: 16.0,
-              ) , itemCount: 3),
-            ),
+            ListView.separated(
+              shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) =>
+                friendsRequestList(), separatorBuilder: (context, index) => Container(
+              height: 16.0,
+            ) , itemCount: 3),
             //group style
 
           ]
@@ -104,7 +95,7 @@ Widget friendsList(){
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1),
-          offset: Offset(0, 3),
+          offset: Offset(0, 1),
           // blurRadius: 4,
           // spreadRadius: 0,
         ),
@@ -116,8 +107,8 @@ Widget friendsList(){
         children: [
           InkWell(
             onTap: (){},
-            child: CircleAvatar(
-              radius: 30.0,
+            child: const CircleAvatar(
+              radius: 18.0,
               backgroundImage: NetworkImage("https://th.bing.com/th/id/OIP.2_wYPt9NQjmLngMPv9WXuQHaE8?w=270&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
               ),
             ),
@@ -129,7 +120,7 @@ Widget friendsList(){
 
           ),),
           Spacer(),
-          IconButton(onPressed: (){}, icon:Icon(Icons.message_rounded,color: AppColors.primaryColor,)),
+          customIconButton(isIcon: true, icon:Icons.message_rounded,color: AppColors.primaryColor,onTap: (){}),
         ],
       ),
     ),
@@ -148,7 +139,7 @@ Widget friendsRequestList(){
       boxShadow: [
         BoxShadow(
           color: Colors.black.withOpacity(0.1),
-          offset: Offset(0, 3),
+          offset: Offset(0, 1),
           // blurRadius: 4,
           // spreadRadius: 0,
         ),
@@ -158,10 +149,11 @@ Widget friendsRequestList(){
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children: [
+          //image
           InkWell(
             onTap: (){},
             child: CircleAvatar(
-              radius: 30.0,
+              radius: 18.0,
               backgroundImage: NetworkImage("https://th.bing.com/th/id/OIP.2_wYPt9NQjmLngMPv9WXuQHaE8?w=270&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7",
               ),
             ),
@@ -174,46 +166,10 @@ Widget friendsRequestList(){
           ),),
           Spacer(),
     //accept friend request
-          InkWell(
-            onTap: (){},
-            child: Container(
-              // width: 200,
-              // height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: Colors.green, // set the border color to green
-                    width: 2, // set the border width to 2
-                  ),
-                ),
-                child: Icon(
-                  Icons.check,
-                  color: AppColors.primaryColor,
-                )// your widget or child here
-            ),
-          ),
-          SizedBox(width: 20.0,),
+          customIconButton(isIcon: true, icon:Icons.check_circle_outline,color: AppColors.primaryColor,onTap: (){}),
+          SizedBox(width: 10.0,),
           //reject friend request
-          InkWell(
-      onTap: (){},
-      child: Container(
-          // width: 200,
-          // height: 200,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(
-              color: Colors.green, // set the border color to green
-              width: 2, // set the border width to 2
-            ),
-          ),
-          child: Icon(
-            Icons.clear,
-            color: AppColors.primaryColor,
-          )// your widget or child here
-      ),
-    ),
+          customIconButton(isIcon: true, icon:Icons.highlight_remove,color: AppColors.primaryColor,onTap: (){}),
           SizedBox(width: 10.0,),
         ],
       ),

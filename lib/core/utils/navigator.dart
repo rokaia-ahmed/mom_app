@@ -37,4 +37,9 @@ class AppNavigator {
       result: (Route <dynamic>route) => false,
     );
   }
+  static void pop({
+    required BuildContext context,
+  }) {
+    Navigator.pop(context);
+  }
 }

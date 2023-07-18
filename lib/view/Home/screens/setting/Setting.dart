@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/widgets/app_bar.dart';
 import 'package:mom_app/view/layout/layout_screen.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -15,18 +16,7 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Center(
-          child: Text("Setting",style: TextStyle(
-
-          ),),
-        ),
-        leading: IconButton( onPressed: () {
-          AppNavigator.push(context: context,
-            screen:  LayoutScreen(),
-          );
-        }, icon:Icon( Icons.arrow_back_ios)),
-      ),
+      appBar: defaultAppBar(context: context, title: "Setting"),
       body:  SafeArea(
         child: Padding(
           padding: EdgeInsets.all(20.0),
