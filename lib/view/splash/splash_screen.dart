@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import '../../core/network/cache_helper.dart';
 import '../../core/utils/navigator.dart';
+import '../Baby_Info/screens/welcome_screen.dart';
 import '../Onboarding/screens/onboarding_screen.dart';
 
 
@@ -13,16 +15,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Widget? startScreen ;
+
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5),
-          ()=>AppNavigator.push(
-        context: context,
-        screen: const OnBoardingScreen(),
-      ),
-    );
+    if(CacheHelper.getData() != null) {
+      startScreen = const WelcomeScreen();
+    }else{
+      startScreen = const OnBoardingScreen();
+    }
+      Timer(const Duration(seconds: 5),
+            () =>
+            AppNavigator.push(
+              context: context,
+              screen:  startScreen!,
+            ),
+      );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 
@@ -31,26 +32,29 @@ class CustomTextFormField extends StatelessWidget {
   final Color? backGroundColor;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: visible,
-      validator: valid,
-      textAlign: TextAlign.left,
-      decoration: InputDecoration(
-        filled: true,
-        enabledBorder: _defaultBorder,
-        focusedBorder: _defaultBorder,
-        errorBorder: _defaultBorder,
-        border: _defaultBorder,
-        focusedErrorBorder: _defaultBorder,
-        fillColor: backGroundColor ?? AppColors.lightGreen,
-        contentPadding: const EdgeInsets.all(10),
-        hintText: hintText,
-        suffixIcon: suffixIcon,
-        suffixIconColor: Colors.black,
-        hintStyle: const TextStyle(
-          color: AppColors.green,
-          fontSize: 14,
+    return SizedBox(
+      width:width ,
+      child: TextFormField(
+        controller: controller,
+        obscureText: visible,
+        validator: valid,
+        textAlign: TextAlign.left,
+        decoration: InputDecoration(
+          filled: true,
+          enabledBorder: _defaultBorder,
+          focusedBorder: _defaultBorder,
+          errorBorder: _defaultBorder,
+          border: _defaultBorder,
+          focusedErrorBorder: _defaultBorder,
+          fillColor: backGroundColor ?? AppColors.lightGreen,
+          contentPadding: const EdgeInsets.all(10),
+          hintText: hintText,
+          suffixIcon: suffixIcon,
+          suffixIconColor: Colors.black,
+          hintStyle: const TextStyle(
+            color: AppColors.green,
+            fontSize: 14,
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,15 +11,34 @@ import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_cubit.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
 import 'package:mom_app/view/layout/layout_screen.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../../core/widgets/custom_appbar.dart';
 
-class BabyProfileScreen extends StatelessWidget {
-   BabyProfileScreen({Key? key}) : super(key: key);
+class BabyProfileScreen extends StatefulWidget {
+    BabyProfileScreen({Key? key, }) : super(key: key);
+
+  @override
+  State<BabyProfileScreen> createState() => _BabyProfileScreenState();
+}
+
+class _BabyProfileScreenState extends State<BabyProfileScreen> {
   final nameBabyController =TextEditingController();
+
   final birthDateController =TextEditingController();
-  final genderController =TextEditingController();
+
   final wightController =TextEditingController();
+
+  void buildDatePicker (){
+  showDatePicker(context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2018),
+      lastDate: DateTime(2025),
+  ).then((value){
+    birthDateController.text = formatDate(value!, [yyyy, '-', mm, '-', dd]);
+    print(formatDate(value, [yyyy, '-', mm, '-', dd]));
+  });
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +64,7 @@ class BabyProfileScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 var cubit = BabyCubit.get(context);
+                  String gender ='girl';
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -109,7 +130,10 @@ class BabyProfileScreen extends StatelessWidget {
                       visible: false,
                       hintText: 'DD/MM/YYYY',
                       suffixIcon: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          print('done');
+                          buildDatePicker();
+                        },
                         child: const Icon(Icons.date_range,
                           size: 22,
                           color: Colors.black,
@@ -141,11 +165,24 @@ class BabyProfileScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        CustomTextFormField(
-                          controller:genderController ,
-                          visible: false,
-                          hintText: 'Baby sex',
-                          width: context.width * 0.5,
+                        ToggleSwitch(
+                          minWidth: 120.0,
+                          initialLabelIndex: 1,
+                          cornerRadius: 8.0,
+                          activeFgColor: AppColors.green,
+                          inactiveBgColor: AppColors.lightGreen,
+                          inactiveFgColor: Colors.grey,
+                          totalSwitches: 2,
+                          labels: const ['Boy', 'Girl'],
+                          activeBgColors: const [[Colors.white],[Colors.white]],
+                          onToggle: (index) {
+                            if(index==0){
+                              gender = 'boy';
+                            }else{
+                              gender = 'girl';
+                            }
+                            print('switched to: $index,$gender');
+                          },
                         ),
                         const Spacer(),
                         CustomTextFormField(
@@ -163,7 +200,7 @@ class BabyProfileScreen extends StatelessWidget {
                       onTap: () {
                         cubit.addBaby(
                             babyName: nameBabyController.text,
-                            gender: genderController.text,
+                            gender: gender,
                             birthDate: birthDateController.text,
                             wight: wightController.text,
                         );
