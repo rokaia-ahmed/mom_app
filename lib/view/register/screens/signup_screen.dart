@@ -6,7 +6,6 @@ import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/register/screens/signin_screen.dart';
-import '../../../core/network/cache_helper.dart';
 import '../../../core/utils/component.dart';
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_button.dart';
@@ -26,20 +25,13 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
-        RegisterCubit cubit = BlocProvider.of(context);
         if(state is SignUpSuccessState) {
           showToast(
             text: 'Signup is success',
             state: ToastStates.success,
           );
-          CacheHelper.saveData(key:'token',
-            value:cubit.userModel!.accessToken ,
-          );
-          CacheHelper.saveData(key:'email',
-            value:cubit.userModel!.email ,).then((value){
-            AppNavigator.push(context: context,
-                screen: SignInScreen());
-          });
+          AppNavigator.push(context: context,
+              screen: SignInScreen());
         }else if(state is SignUpErrorState){
           showToast(
             text: 'Signup is failed',
@@ -101,7 +93,6 @@ class SignupScreen extends StatelessWidget {
                               Expanded(
                                 child: CustomTextFormField(
                                   hintText: 'First name',
-                                  visible: false,
                                   controller: fNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
@@ -118,7 +109,6 @@ class SignupScreen extends StatelessWidget {
                               Expanded(
                                 child: CustomTextFormField(
                                   hintText: 'Last name',
-                                  visible: false,
                                   controller: lNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
@@ -135,14 +125,16 @@ class SignupScreen extends StatelessWidget {
                             height: context.height * 0.02,
                           ),
                           CustomTextFormField(
-                            visible: false,
                             hintText: 'Email Address',
                             controller: emailController,
                             width: double.infinity,
                             valid: (v) {
                               if (v!.isEmpty) {
                                 return 'email should not empty';
-                              } else {
+                              }else if(!v.contains('@gmail.com')){
+                                return 'email should be email';
+                              }
+                              else {
                                 return null;
                               }
                             },
@@ -151,16 +143,25 @@ class SignupScreen extends StatelessWidget {
                             height: context.height * 0.02,
                           ),
                           CustomTextFormField(
-                            visible: false,
+                            visible: cubit.visible,
                             hintText: 'Password',
                             controller: passwordController,
                             width: double.infinity,
-                            suffixIcon: const Icon(
-                                Icons.visibility_off_rounded),
+                            suffixIcon:  IconButton(
+                              icon: cubit.visible
+                                  ? const Icon(Icons.visibility_outlined)
+                                  : const Icon(Icons.visibility_off_outlined),
+                              onPressed: () {
+                                cubit.changePasswordVisibility();
+                              },
+                            ),
                             valid: (v) {
                               if (v!.isEmpty) {
                                 return 'password should not empty';
-                              } else {
+                              }else if(v.length<8){
+                                return 'password must be >= 8';
+                              }
+                              else {
                                 return null;
                               }
                             },

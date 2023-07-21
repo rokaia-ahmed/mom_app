@@ -1,4 +1,3 @@
-import '../../../core/models/user_model.dart';
 
 abstract class RegisterStates{}
 class InitRegisterState extends RegisterStates {}
@@ -37,4 +36,9 @@ class RestPasswordSuccessState extends RegisterStates {}
 class RestPasswordErrorState extends RegisterStates {
   String errorMessage;
   RestPasswordErrorState(this.errorMessage);
+}
+class GetTokenSuccessState extends RegisterStates {}
+class GetTokenErrorState extends RegisterStates {
+  String errorMessage;
+  GetTokenErrorState(this.errorMessage);
 }

@@ -1,9 +1,10 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
+import 'package:mom_app/core/utils/app_strings.dart';
 import 'package:mom_app/view/register/cubit/register_states.dart';
-import '../../../core/models/user_model.dart';
 import '../../../core/network/dio_helper.dart';
 import '../../../core/network/end_points.dart';
 
@@ -18,12 +19,11 @@ class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit() : super(InitRegisterState());
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-  UserModel ? userModel ;
+ // UserModel ? userModel ;
   Future<void> userSignIn({
     required String email ,
     required String password ,
   })async{
-    print('Done... ');
     emit(SignInLoadingState());
    await DioHelper.postData(
         url: LOGIN,
@@ -34,15 +34,15 @@ class RegisterCubit extends Cubit<RegisterStates>{
         }
     ).then((value){
       print(value.data['message']);
-      userModel= UserModel.fromJson(value.data);
-      print(userModel!.accessToken);
       emit(SignInSuccessState());
       print('success');
     }
     ).catchError((error){
-      print(error.toString());
-      emit(SignInErrorState(error.toString()));
-      print('error...');
+     if(error is DioException){
+       print(error.response!.data['message'].toString());
+       emit(SignInErrorState(error.toString()));
+     }
+
     });
 
   }
@@ -65,18 +65,22 @@ class RegisterCubit extends Cubit<RegisterStates>{
           'password':password,
         }
     ).then((value){
-      userModel= UserModel.fromJson(value.data);
-      print(userModel!.accessToken);
+      CacheHelper.saveData(key: AppStrings.userData,
+          value: value.data);
+       print('cache =${CacheHelper.getData()!.accessToken}');
       emit(SignUpSuccessState());
       print('success');
     }
     ).catchError((error){
-      print(error.toString());
-      emit(SignUpErrorState(error.toString()));
-      print('error...');
-    });
+      if(error is DioException){
+        print(error.response!.data['message'].toString());
+      }
+        emit(SignUpErrorState(error.toString()));
+        print('error...');
 
+    });
   }
+
 
  //TODO FORGET PASSWORD
   Future<void> sendEmail({
@@ -138,7 +142,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
         data:
         {
           'password': password,
-          'email': CacheHelper.getData(key: 'email'),
+          'email': CacheHelper.getData()!.email,
         }
     ).then((value){
       print(value.data);

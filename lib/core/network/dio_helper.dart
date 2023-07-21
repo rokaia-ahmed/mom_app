@@ -46,10 +46,6 @@ class DioHelper {
     required FormData  data,
     required String token ,
   }) async{
-    /*dio.options.headers={
-      'Content-Type' :'multipart/form-data',
-      'Authorization': 'Bearer $token',
-    };*/
     return await dio.post(
         url,
         data: data,
