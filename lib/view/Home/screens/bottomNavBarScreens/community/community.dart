@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mom_app/core/widgets/app_bar.dart';
 import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/events.dart';
 import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/groups.dart';
 import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/posts.dart';
-
 import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/navigator.dart';
-import '../../../../../core/widgets/custom_text_form_field.dart';
 import '../../cubit/Cubit.dart';
 import '../../cubit/states.dart';
 import '../../../../layout/layout_screen.dart';
@@ -27,114 +25,32 @@ class Community extends StatelessWidget {
           var cubit=HomeCubit.get(context);
           return  Scaffold(
             backgroundColor: Colors.white,
-              appBar: AppBar(
-                title: const Center(
-                  child: Text("Community",style: TextStyle(
-
-                  ),),
-                ),
-                leading: IconButton( onPressed: () {
-                  AppNavigator.push(context: context,
-                    screen:  LayoutScreen(),
-                  );
-                }, icon:Icon( Icons.arrow_back_ios)),
-              ),
+              appBar:defaultAppBar(context: context, title:"Community",screen: LayoutScreen()),
               body: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
                     //community sections
-                    Container(
-                      height:70.0 ,
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(child: Container(
-                              // color: Colors.white,
-                              decoration: BoxDecoration(
-                                color:cubit.communityIndex==0?  AppColors.primaryColor:Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: cubit.communityIndex==0?Colors.white: Colors.grey.shade400,
-                                  width: 1,
-                                ),
-                              ),
-                              child: TextButton(onPressed: (){
-                                cubit.changeCommunity(0);
-                              }, child: Text("Posts",
-                                style: GoogleFonts.poppins(
-                                    color: AppColors.green
-                                ),)),
-                            )),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Expanded(
-                              child: Container(
-                                // color: Colors.white,
-                                decoration: BoxDecoration(
-                                  color:cubit.communityIndex==1?  AppColors.primaryColor:Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: Border.all(
-                                    color: cubit.communityIndex==1?Colors.white: Colors.grey.shade400,
-                                    width: 1,
-                                  ),
-                                ),
-                                child: TextButton(onPressed: (){
-                                  cubit.changeCommunity(1);
-                                }, child: Text("Groups",
-                                  style: GoogleFonts.poppins(
-                                      color: AppColors.green
-                                  ),)),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Expanded(child: Container(
-                              // color: Colors.white,
-                              decoration: BoxDecoration(
-                                color:cubit.communityIndex==2?  AppColors.primaryColor:Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: cubit.communityIndex==2?Colors.white: Colors.grey.shade400,
-                                  width: 1,
-                                ),
-                              ),
-                              child: TextButton(onPressed: (){
-                                cubit.changeCommunity(2);
-                              }, child: Text("Events",
-                                style: GoogleFonts.poppins(
-                                    color: AppColors.green
-                                ),)),
-                            )),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Expanded(child: Container(
-                              // color: Colors.white,
-                              decoration: BoxDecoration(
-                                color:cubit.communityIndex==3?  AppColors.primaryColor:Colors.white,
-                                borderRadius: BorderRadius.circular(10.0),
-                                border: Border.all(
-                                  color: cubit.communityIndex==3?Colors.white: Colors.grey.shade400,
-                                  width: 1,
-                                ),
-                              ),
-                              child: TextButton(onPressed: (){
-                                cubit.changeCommunity(3);
-                              }, child: Text("Freinds",
-                                style: GoogleFonts.poppins(
-                                    color: AppColors.green
-                                ),)),
-                            )),
-                          ],
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          communitySections(cubit: cubit,text: "Posts",index: 0),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          communitySections(cubit: cubit,text: "Groups",index: 1),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          communitySections(cubit: cubit,text: "Events",index: 2),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          communitySections(cubit: cubit,text: "Friends",index: 3),
+                        ],
                       ),
                     ),
                     //divide line
@@ -144,10 +60,10 @@ class Community extends StatelessWidget {
                       color: Colors.grey.shade400,
                     ),
                      //search
-                    if(cubit.communityIndex==0) Posts(searchcontroller)
-                    else if (cubit.communityIndex==1) groups()
-                    else if (cubit.communityIndex==2) event()
-                      else if (cubit.communityIndex==3) friends()
+                    if(cubit.communityIndex==0) Posts(context: context,searchController: searchcontroller)
+                    else if (cubit.communityIndex==1) groups(context: context)
+                    else if (cubit.communityIndex==2) event(context: context)
+                      else if (cubit.communityIndex==3) friends(context: context)
                   ],
                 ),
               )
@@ -157,4 +73,31 @@ class Community extends StatelessWidget {
     );
 
   }
-}
+  Widget communitySections({required cubit,required int index,required String text})
+  {
+    return Expanded(child: InkWell(
+      onTap: (){
+        cubit.changeCommunity(index);
+      },
+      child: Container(
+        padding: EdgeInsets.all(5),
+        // color: Colors.white,
+        decoration: BoxDecoration(
+          color:cubit.communityIndex==index?  AppColors.primaryColor:Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: cubit.communityIndex==index?Colors.white: Colors.grey.shade400,
+            width: 1,
+          ),
+        ),
+        child: Center(
+          child: Text(text,
+            style: GoogleFonts.poppins(
+                color: AppColors.green
+            ),),
+        ),
+      ),
+    ));
+  }
+  }
+
