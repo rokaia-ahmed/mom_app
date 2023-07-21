@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
+import 'package:mom_app/core/widgets/custom_icon_button.dart';
 import 'package:mom_app/view/layout/layout_screen.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
@@ -28,16 +29,15 @@ class Learning extends StatelessWidget {
                 Expanded(
                   child: CustomTextFormField(
                     hintText: 'Search...',
-
                     controller: searchController,
                     backGroundColor: Colors.grey.shade200,
-                    height: 40,
+                    height: 30,
                     visible: false,
                     suffixIcon:Icon(Icons.search_outlined,color: AppColors.green,) ,
                   ),
                 ),
-                IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border_outlined,color: Colors.green,))
-
+                SizedBox(width: 10.0,),
+                customIconButton(onTap: (){}, isIcon:true,icon:Icons.favorite_border_outlined,color: Colors.green ),
               ],
             ),
           ),
@@ -54,10 +54,10 @@ class Learning extends StatelessWidget {
             child: GridView.count(
                 padding:EdgeInsets.all(20) ,
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: BouncingScrollPhysics(),
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: 1/1.05,
+                childAspectRatio: 1.07/1,
                 crossAxisCount: 2,children:List.generate(10, (index) => buildGridViewLernningList()
             )
             ),
@@ -93,18 +93,21 @@ class Learning extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Baby language",
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: GoogleFonts.poppins(
-                    color: AppColors.green,
+                Expanded(
+                  flex:3 ,
+                  child: Text("Baby language",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: GoogleFonts.poppins(
+                      color: AppColors.green,
+                    ),
                   ),
                 ),
-                Spacer(),
-                IconButton(onPressed: (){}, icon: Icon(Icons.favorite,
-                  color: Colors.white,
-                ))
+                Expanded(
+                    flex: 1,
+                    child: customIconButton(onTap: (){}, isIcon:true,icon:Icons.favorite,color: Colors.white )),
               ],
             ),
           ),

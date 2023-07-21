@@ -14,3 +14,4 @@ class SignInErrorState extends HomeStates{
   final String error;
   SignInErrorState(this.error);
 }
+class ChangeMedicalHistoryState extends HomeStates{}

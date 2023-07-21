@@ -5,9 +5,14 @@ import 'package:mom_app/core/utils/media_query_values.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/app_bar.dart';
+import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/overlay_entry_card.dart';
+import '../../../../../core/widgets/top_screen_color_line.dart';
 
-Widget babyTrackerDeafultScreens({required BuildContext context ,required bool image,required color,required String appBarText,required  icon,required String description,required String title}){
+Widget babyTrackerDeafultScreens({required BuildContext context ,required bool image,
+  required color,required String appBarText,required  icon,
+  required String description1,required String title,required bool isDated,
+    required onTap,description2}){
   return Scaffold(
     appBar: defaultAppBar(context: context,title: appBarText),
     backgroundColor: Colors.white,
@@ -16,16 +21,8 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
       child: Column(
         // scrollDirection: Axis.vertical,
         children: [
-          Container(
-            height: 10.0,
-            decoration:  BoxDecoration(
-                color: color,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                )
-            ),
-          ),
+          //top screen color
+          topScreenColorLine(color:color),
           SizedBox(
             height: context.height*0.05,
           ),
@@ -38,7 +35,7 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
                 border: Border.all(
-                  color: AppColors.teal, // set the color of the border here
+                  color: color, // set the color of the border here
                   width: 1, // set the width of the border here
                 ),
               ),
@@ -49,8 +46,8 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
                     children: [
                       CircleAvatar(
                         radius: 15.0,
-                        backgroundColor: AppColors.teal,
-                        child: Center(child: Icon(icon,size: 40.0,color: AppColors.green,)),
+                        backgroundColor: color,
+                        child: Center(child: Icon(icon,size: 30.0,color: Colors.black,)),
                       ),
                       SizedBox(width: 10.0,),
                       Text(title,style: GoogleFonts.poppins(
@@ -59,9 +56,7 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
                           fontWeight: FontWeight.bold
                       )),
                       Spacer(),
-                      IconButton(onPressed: (){
-                        overlayEntryCard(context: context,color:color);
-                      }, icon:Icon(Icons.create_outlined,color:AppColors.green,)),
+                      customIconButton(isIcon: true,icon: Icons.create_outlined,onTap: (){}),
                     ],
                   ),
                   SizedBox(height: 10.0,),
@@ -71,13 +66,47 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
                     fit: BoxFit.cover,
                   ): SizedBox(height: 0.0,),
                   SizedBox(height: 10.0,),
-                  Text(description,style: GoogleFonts.poppins(
+
+                  isDated?Row(
+                    children: [
+                      Text(description1,style: GoogleFonts.poppins(
+                        color: AppColors.green,
+                        fontSize: 12.0,
+                      ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Spacer(),
+                      Text("18/6/2023",style:GoogleFonts.poppins(
+                        color: AppColors.green,
+                        fontSize: 12.0,
+                      ) ,)
+                    ],
+                  ): Text(description1,style: GoogleFonts.poppins(
                     color: AppColors.green,
                     fontSize: 12.0,
                   ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  isDated?SizedBox(height: 10.0,):SizedBox(height: 0.0,),
+
+            isDated?Row(
+              children: [
+                Text(description2,style: GoogleFonts.poppins(
+                  color: AppColors.green,
+                  fontSize: 12.0,
+                ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Spacer(),
+                Text("12:35 pm",style:GoogleFonts.poppins(
+                  color: AppColors.green,
+                  fontSize: 12.0,
+                ) ,)
+              ],
+            ):SizedBox(height: 0.0,),
                 ],
               ),
             ),
@@ -86,14 +115,8 @@ Widget babyTrackerDeafultScreens({required BuildContext context ,required bool i
           SizedBox(height: 10.0,),
           Center(
             child: InkWell(
-              onTap: (){
-                overlayEntryCard(context: context,color:color);
-              },
-              child: CircleAvatar(
-                radius: 20.0,
-                backgroundColor: color,
-                child: Icon(Icons.add,size: 40.0,color: Colors.white,),
-              ),
+              onTap:onTap,
+              child: Icon(Icons.add_circle,size: 40.0,color: color,),
             ),
           ),
         ],

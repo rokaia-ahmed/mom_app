@@ -44,6 +44,7 @@ Widget groups({required BuildContext context}){
         SizedBox(height: 20.0,),
         //you groups list
         groupList(),
+        SizedBox(height: 20,),
         //recommended line
         Row(
           children: [
@@ -57,17 +58,14 @@ Widget groups({required BuildContext context}){
         ),
         SizedBox(height: 20.0,),
         //grid view
-        SizedBox(
-
-          child: GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1.05,
-              crossAxisCount: 2,children:List.generate(5, (index) => buildGridView()
-          )
-          ),
+        GridView.count(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            childAspectRatio: 1.07/1,
+            crossAxisCount: 2,children:List.generate(5, (index) => buildGridView()
+        )
         )
         //group style
 
@@ -106,7 +104,6 @@ Widget buildGridView(){
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text("Parent in vacation",
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,

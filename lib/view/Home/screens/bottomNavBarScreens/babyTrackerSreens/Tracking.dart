@@ -21,44 +21,40 @@ class Tracking extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.white,
-      appBar: defaultAppBar(context: context,screen: LayoutScreen(),title: "Tracking"),
+      appBar: defaultAppBar(context: context,screen: LayoutScreen(),title: "Baby Tracker"),
 
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child:  SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             child: Column(
-              // scrollDirection: Axis.vertical,
               children: [
-                SizedBox(
-                  height: context.height*0.05,
-                ),
-
                 //Reminder
                 babyTrackingList(context: context,colors: AppColors.teal,icon: Icons.timer,text: "Reminder",screen:Reminder()),
-                SizedBox(
-                  height: context.height*0.05,
-                ),
-                //Activity
-                babyTrackingList(context: context,colors: Colors.orange.shade600,icon: Icons.sports_baseball,text: "Activity",screen:Activity()),
-                SizedBox(
-                  height: context.height*0.05,
+                const SizedBox(
+                  height:5.0,
                 ),
                 //Health
                 babyTrackingList(context: context,colors: Colors.green.shade100,icon: Icons.face,text: "Health",screen:Health()),
-                SizedBox(
-                  height: context.height*0.05,
+                const SizedBox(
+                  height:5.0,
+                ),
+                //Activity
+                babyTrackingList(context: context,colors: Colors.orange.shade600,icon: Icons.sports_baseball,text: "Activity",screen:Activity()),
+                const SizedBox(
+                  height:5.0,
                 ),
                 //Food
                 babyTrackingList(context: context,colors: Colors.yellowAccent,icon: Icons.fastfood_outlined,text: "Food",screen:Feeding()),
-                SizedBox(
-                  height: context.height*0.05,
+                const SizedBox(
+                  height:5.0,
                 ),
                 //Growth
                 babyTrackingList(context: context,colors: Colors.tealAccent,icon: Icons.trending_up_outlined,text: "Growth",screen:Growth()),
-                SizedBox(
-                  height: context.height*0.05,
+                const SizedBox(
+                  height:5.0,
                 ),
                 //Baby First
                 babyTrackingList(context: context,colors: AppColors.redAcent,icon: Icons.wb_incandescent_outlined,text: "Baby First",screen:BabyFirsts()),
@@ -89,24 +85,24 @@ class Tracking extends StatelessWidget {
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
               // spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+              blurRadius: 1,
+              offset: Offset(0, 1),
             ),
           ],
         ),
         child: Container(
             width:context.width,
             height: context.height*.1,
+            // padding: EdgeInsets.all(20.0),
             // color: Colors.green,
             child:Row(
               children: [
+                //colored part
                 DecoratedBox(
-
                   decoration: BoxDecoration(
                       color: colors,
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(10.0),
-
                         topLeft: Radius.circular(10.0),
                       )
 

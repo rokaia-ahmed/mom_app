@@ -89,5 +89,9 @@ int  communityIndex =0;
   //     emit(SignInErrorState(error.toString()));
   //   });
   // }
-
+  int  medicalHistoryIndex =0;
+  void changeMedicalHistory(int index){
+    medicalHistoryIndex=index;
+    emit(ChangeMedicalHistoryState());
+  }
 }

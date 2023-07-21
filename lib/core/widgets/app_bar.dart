@@ -4,10 +4,10 @@ import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/widgets/custom_icon_button.dart';
 import '../utils/navigator.dart';
 
-PreferredSizeWidget defaultAppBar({required BuildContext context, screen,required title}){
+PreferredSizeWidget defaultAppBar({required BuildContext context, screen, title,isTitle}){
   return AppBar(
     title: Center(
-      child: Text(title,textAlign:TextAlign.start ,style: const TextStyle(
+      child: isTitle!=null?isTitle:Text(title,textAlign:TextAlign.start ,style: const TextStyle(
         color: AppColors.green,
       ),),
     ),
