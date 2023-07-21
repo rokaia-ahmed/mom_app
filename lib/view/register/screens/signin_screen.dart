@@ -2,7 +2,6 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
@@ -28,19 +27,12 @@ class SignInScreen extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (BuildContext context, RegisterStates state) {
         if (state is SignInSuccessState) {
-          var cubit = RegisterCubit.get(context);
           showToast(
             text: 'login is success',
             state: ToastStates.success,
           );
-          CacheHelper.saveData(key:'token',
-            value:cubit.userModel!.accessToken ,
-          );
-          CacheHelper.saveData(key:'email',
-            value:cubit.userModel!.email ,).then((value){
-            AppNavigator.push(context: context,
-                screen: const WelcomeScreen());
-          });
+          AppNavigator.push(context: context,
+              screen: const WelcomeScreen());
         } else if(state is SignInErrorState) {
           showToast(
             text: 'login is failed',

@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/network/dio_helper.dart';
+import 'package:mom_app/core/utils/component.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
 import '../../../core/network/end_points.dart';
 
@@ -31,7 +31,7 @@ class BabyCubit extends Cubit<BabyStates>{
     }
   }
 
- void addBaby({
+ Future<void> addBaby({
     required String babyName,
     required String gender,
     required String birthDate,
@@ -39,6 +39,7 @@ class BabyCubit extends Cubit<BabyStates>{
 })async {
    emit(AddBabyLoadingState());
    //String fileName = image!.path.split('/').last;
+    String token = await getToken();
    FormData formData = FormData.fromMap({
      'babyName':babyName,
      'gender':gender,
@@ -46,11 +47,10 @@ class BabyCubit extends Cubit<BabyStates>{
      //'weight': wight,
      'images':  await MultipartFile.fromFile(image!.path,),
    });
-
-   DioHelper.postFormData(
+ await  DioHelper.postFormData(
        url: ADDBABY,
        data:formData,
-       token:CacheHelper.getData(key:'token'),
+       token:token ,
    ).then((value){
      print(value.data);
      if(value.statusCode==400){
@@ -58,8 +58,10 @@ class BabyCubit extends Cubit<BabyStates>{
      }
      emit(AddBabySuccessState());
    }).catchError((error){
+     if(error is DioException){
+       print('error when add baby ${error.response}');
+     }
      emit(AddBabyErrorState(error.toString()));
-     print('error when add baby ${error.toString()}');
    });
  }
 }

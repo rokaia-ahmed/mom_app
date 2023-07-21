@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
@@ -5,6 +6,7 @@ import 'package:mom_app/core/network/dio_helper.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/view/register/cubit/register_cubit.dart';
 import 'package:mom_app/view/splash/splash_screen.dart';
+
 
 
 void main()async {
@@ -26,12 +28,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'My Baby',
         theme: ThemeData(
-            appBarTheme: const AppBarTheme(
+            appBarTheme:  const AppBarTheme(
                 backgroundColor: Colors.white,
                 elevation: 0.0,
                 foregroundColor: AppColors.green
             ),
-            primarySwatch: Colors.blue,
+            primarySwatch:Colors.green,
             bottomNavigationBarTheme: const BottomNavigationBarThemeData(
               backgroundColor: Colors.white,
               elevation: 2.0,
