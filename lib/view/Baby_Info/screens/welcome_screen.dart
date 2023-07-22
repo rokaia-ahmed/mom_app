@@ -6,6 +6,7 @@ import 'package:mom_app/core/utils/navigator.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
 import 'package:mom_app/view/Baby_Info/screens/baby_profile_screen.dart';
 
+
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
   @override

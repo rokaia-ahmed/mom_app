@@ -188,7 +188,7 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
                         CustomTextFormField(
                           controller: wightController,
                           visible: false,
-                          hintText: '12',
+                          hintText: '0',
                           width: context.width * 0.12,
                         )
                       ],
