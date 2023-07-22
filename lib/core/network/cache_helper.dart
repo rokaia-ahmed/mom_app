@@ -2,9 +2,8 @@
 
 import 'dart:convert';
 
+import 'package:mom_app/core/models/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/user_model.dart';
 import '../utils/app_strings.dart';
 
 class CacheHelper {
@@ -22,12 +21,12 @@ class CacheHelper {
 //************************
 
 
-  static UserModel? getData()
+  static LoginModel? getData()
    {
-     UserModel? userData;
+     LoginModel? userData;
     String? data = sharedPreferences.getString(AppStrings.userData);
     if(data !=null){
-      userData =  UserModel.fromJson(jsonDecode(data));
+      userData =  LoginModel.fromJson(jsonDecode(data));
     }
     return userData;
   }

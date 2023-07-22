@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mom_app/core/network/dio_helper.dart';
 import 'package:mom_app/core/utils/component.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
+import '../../../core/models/baby_info_model.dart';
 import '../../../core/network/end_points.dart';
 
 class BabyCubit extends Cubit<BabyStates>{
@@ -30,7 +31,7 @@ class BabyCubit extends Cubit<BabyStates>{
       emit(ErrorPickImageState());
     }
   }
-
+  BabyInfoModel? babyInfoModel ;
  Future<void> addBaby({
     required String babyName,
     required String gender,
@@ -39,7 +40,8 @@ class BabyCubit extends Cubit<BabyStates>{
 })async {
    emit(AddBabyLoadingState());
    //String fileName = image!.path.split('/').last;
-    String token = await getToken();
+    /*print("token =${await checkAndGetToken()}");
+   print("accessToken =$accessToken");*/
    FormData formData = FormData.fromMap({
      'babyName':babyName,
      'gender':gender,
@@ -50,9 +52,10 @@ class BabyCubit extends Cubit<BabyStates>{
  await  DioHelper.postFormData(
        url: ADDBABY,
        data:formData,
-       token:token ,
+       token: await checkAndGetToken() ,
    ).then((value){
-     print(value.data);
+     babyInfoModel = BabyInfoModel.fromJson(value.data);
+     print(babyInfoModel!.message);
      if(value.statusCode==400){
        print(value.data['message']);
      }

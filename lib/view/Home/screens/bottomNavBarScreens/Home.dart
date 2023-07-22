@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/view/Home/screens/setting/Setting.dart';
-
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/navigator.dart';
 import '../../notification/notification.dart';

@@ -1,12 +1,12 @@
 
-
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
-import 'package:mom_app/core/utils/app_strings.dart';
 import 'package:mom_app/view/register/cubit/register_states.dart';
+import '../../../core/models/user_model.dart';
 import '../../../core/network/dio_helper.dart';
 import '../../../core/network/end_points.dart';
+import '../../../core/utils/app_strings.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
 
@@ -19,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit() : super(InitRegisterState());
   static RegisterCubit get(context) => BlocProvider.of(context);
 
- // UserModel ? userModel ;
+
   Future<void> userSignIn({
     required String email ,
     required String password ,
@@ -34,6 +34,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
         }
     ).then((value){
       print(value.data['message']);
+      CacheHelper.saveData(key: AppStrings.userData,
+          value: value.data);
+      print('cache =${CacheHelper.getData()!.accessToken}');
       emit(SignInSuccessState());
       print('success');
     }
@@ -46,7 +49,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     });
 
   }
-
+  UserModel ? userModel ;
   Future<void> userSignUp({
     required String firstName ,
     required String lastName ,
@@ -65,9 +68,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
           'password':password,
         }
     ).then((value){
-      CacheHelper.saveData(key: AppStrings.userData,
-          value: value.data);
-       print('cache =${CacheHelper.getData()!.accessToken}');
+      userModel = UserModel.fromJson(value.data);
       emit(SignUpSuccessState());
       print('success');
     }

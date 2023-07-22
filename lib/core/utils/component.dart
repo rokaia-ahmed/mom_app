@@ -41,9 +41,8 @@ Color shoosToastColor(ToastStates state){
 }
 
 //TODO REFRESH TOKEN
-
+String accessToken ='';
 Future<String> getToken()async{
-  String token ='';
  await DioHelper.dio.post(REFRESHTOKEN,
     options: Options(
       headers: {
@@ -51,10 +50,24 @@ Future<String> getToken()async{
       },
     ),
   ).then((value){
-   token = value.data['access_token'] ;
-   //print(value.data['access_token']);
+   accessToken = value.data['access_token'] ;
+   print(value.data['access_token']);
   }).catchError((error){
     print('error when get token ${error.toString()}');
   });
-  return  token ;
+  return  accessToken ;
+}
+
+Future<String> checkAndGetToken()async{
+  String? token ;
+  if(CacheHelper.getData()!.accessToken != null){
+
+    token = CacheHelper.getData()!.accessToken;
+  }
+   else if(accessToken.isNotEmpty){
+    token = accessToken;
+  }else{
+    token = await getToken();
+  }
+  return token! ;
 }

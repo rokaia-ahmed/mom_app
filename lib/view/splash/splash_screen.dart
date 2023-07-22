@@ -5,6 +5,7 @@ import '../../core/network/cache_helper.dart';
 import '../../core/utils/navigator.dart';
 import '../Baby_Info/screens/welcome_screen.dart';
 import '../Onboarding/screens/onboarding_screen.dart';
+import '../layout/layout_screen.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -21,9 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    if(CacheHelper.getData() != null) {
+
+    if(CacheHelper.getData()!.accessToken != null &&
+        CacheHelper.getData()!.baby.isEmpty) {
       startScreen = const WelcomeScreen();
-    }else{
+    } else if (CacheHelper.getData()!.baby.isNotEmpty){
+      startScreen = const LayoutScreen();
+    }
+    else{
       startScreen = const OnBoardingScreen();
     }
       Timer(const Duration(seconds: 5),
