@@ -19,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit() : super(InitRegisterState());
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-
+  late String errorSignIn;
   Future<void> userSignIn({
     required String email ,
     required String password ,
@@ -43,6 +43,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     ).catchError((error){
      if(error is DioException){
        print(error.response!.data['message'].toString());
+       errorSignIn = error.response!.data['message'].toString();
        emit(SignInErrorState(error.toString()));
      }
 
@@ -50,6 +51,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   }
   UserModel ? userModel ;
+ late String errorSignUp;
   Future<void> userSignUp({
     required String firstName ,
     required String lastName ,
@@ -75,6 +77,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     ).catchError((error){
       if(error is DioException){
         print(error.response!.data['message'].toString());
+        errorSignUp = error.response!.data['message'].toString();
       }
         emit(SignUpErrorState(error.toString()));
         print('error...');
@@ -82,7 +85,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
     });
   }
 
-
+  late String errorSendEmail;
  //TODO FORGET PASSWORD
   Future<void> sendEmail({
     required String email ,
@@ -102,6 +105,10 @@ class RegisterCubit extends Cubit<RegisterStates>{
     }
     ).catchError((error){
       print(error.toString());
+      if(error is DioException){
+        print(error.response!.data['message'].toString());
+        errorSendEmail = error.response!.data['message'] ;
+      }
       emit(SendEmailErrorState(error.toString()));
       print('error...');
     });
@@ -134,6 +141,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   Future<void> resetPassword({
     required String password ,
+    required String email ,
     required String code ,
   })async{
     print('Done... ');
@@ -143,7 +151,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
         data:
         {
           'password': password,
-          'email': CacheHelper.getData()!.email,
+          'email':email ,
         }
     ).then((value){
       print(value.data);
@@ -151,6 +159,9 @@ class RegisterCubit extends Cubit<RegisterStates>{
       print('success');
     }
     ).catchError((error){
+      if(error is DioException){
+        print(error.response!.data['message'].toString());
+      }
       emit(RestPasswordErrorState(error.toString()));
       print('error when resetPassword ${error.toString()}');
     });
