@@ -31,7 +31,7 @@ class BabyCubit extends Cubit<BabyStates>{
       emit(ErrorPickImageState());
     }
   }
-
+ late String errorAddBaby;
   BabyInfoModel? babyInfoModel ;
  Future<void> addBaby({
     required String babyName,
@@ -46,7 +46,7 @@ class BabyCubit extends Cubit<BabyStates>{
      'babyName':babyName,
      'gender':gender,
      'birthDate':birthDate,
-     //'weight': wight ?? '30',
+      //'weight': wight??'0' ,
      'images': image != null?
      await MultipartFile.fromFile(image!.path,):'' ,
    });
@@ -63,7 +63,8 @@ class BabyCubit extends Cubit<BabyStates>{
      emit(AddBabySuccessState());
    }).catchError((error){
      if(error is DioException){
-       print('error when add baby ${error.response}');
+       errorAddBaby=error.response!.data['message'][0];
+       print('error when add baby ${error.response!.data['message']}');
      }
      emit(AddBabyErrorState(error.toString()));
    });

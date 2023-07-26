@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
+import 'package:mom_app/core/utils/component.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
 import 'package:mom_app/core/utils/validation.dart';
@@ -61,10 +62,17 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
             create: (context)=>BabyCubit(),
             child: BlocConsumer<BabyCubit, BabyStates>(
               listener: (context, state) {
+                var cubit = BabyCubit.get(context);
                 if(state is AddBabySuccessState){
+                 showToast(text: 'Baby info is added',
+                     state: ToastStates.success) ;
                  AppNavigator.push(
                      context: context,
                      screen: const LayoutScreen());
+                }
+                if(state is AddBabyErrorState){
+                  showToast(text: cubit.errorAddBaby,
+                      state: ToastStates.error) ;
                 }
               },
               builder: (context, state) {
