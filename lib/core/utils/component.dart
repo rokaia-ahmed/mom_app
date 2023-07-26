@@ -14,7 +14,7 @@ void showToast({
         msg:text ,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 5,
+        timeInSecForIosWeb: 10,
         backgroundColor: shoosToastColor(state),
         textColor: Colors.white,
         fontSize: 16.0
@@ -41,7 +41,7 @@ Color shoosToastColor(ToastStates state){
 }
 
 //TODO REFRESH TOKEN
-String accessToken ='';
+  String? accessToken  ;
 Future<String> getToken()async{
  await DioHelper.dio.post(REFRESHTOKEN,
     options: Options(
@@ -55,19 +55,6 @@ Future<String> getToken()async{
   }).catchError((error){
     print('error when get token ${error.toString()}');
   });
-  return  accessToken ;
+  return  accessToken! ;
 }
 
-Future<String> checkAndGetToken()async{
-  String? token ;
-  if(CacheHelper.getData()!.accessToken != null){
-
-    token = CacheHelper.getData()!.accessToken;
-  }
-   else if(accessToken.isNotEmpty){
-    token = accessToken;
-  }else{
-    token = await getToken();
-  }
-  return token! ;
-}

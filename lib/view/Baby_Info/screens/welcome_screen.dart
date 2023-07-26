@@ -16,69 +16,71 @@ class WelcomeScreen extends StatelessWidget {
       body:SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: context.height*0.04,
-              ),
-              Center(
-                   child: Column(
-                     children: [
-                       Text('Welcome to parent’s'
-                           .toUpperCase(),
-                          textAlign:TextAlign.center ,
-                       style:const TextStyle(
-                         color:Colors.white ,
-                         fontSize:20,
-                         fontWeight:FontWeight.w400,
-                       ) ,
-                       ),
-                       Text('world!!'
-                           .toUpperCase(),
-                         textAlign:TextAlign.center ,
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: context.height*0.04,
+                ),
+                Center(
+                     child: Column(
+                       children: [
+                         Text('Welcome to parent’s'
+                             .toUpperCase(),
+                            textAlign:TextAlign.center ,
                          style:const TextStyle(
                            color:Colors.white ,
                            fontSize:20,
                            fontWeight:FontWeight.w400,
                          ) ,
-                       ),
-                       Text('let’s create a profile for'
-                           .toUpperCase(),
-                         textAlign:TextAlign.center ,
-                         style:const TextStyle(
-                           color:Colors.white ,
-                           fontSize:20,
-                           fontWeight:FontWeight.w400,
-                         ) ,
-                       ),
-                       Text('your baby'
-                           .toUpperCase(),
-                         textAlign:TextAlign.center ,
-                         style:const TextStyle(
-                           color:Colors.white ,
-                           fontSize:20,
-                           fontWeight:FontWeight.w400,
-                         ) ,
-                       ),
-                     ],
+                         ),
+                         Text('world!!'
+                             .toUpperCase(),
+                           textAlign:TextAlign.center ,
+                           style:const TextStyle(
+                             color:Colors.white ,
+                             fontSize:20,
+                             fontWeight:FontWeight.w400,
+                           ) ,
+                         ),
+                         Text('let’s create a profile for'
+                             .toUpperCase(),
+                           textAlign:TextAlign.center ,
+                           style:const TextStyle(
+                             color:Colors.white ,
+                             fontSize:20,
+                             fontWeight:FontWeight.w400,
+                           ) ,
+                         ),
+                         Text('your baby'
+                             .toUpperCase(),
+                           textAlign:TextAlign.center ,
+                           style:const TextStyle(
+                             color:Colors.white ,
+                             fontSize:20,
+                             fontWeight:FontWeight.w400,
+                           ) ,
+                         ),
+                       ],
+                     ),
                    ),
-                 ),
-              Image.asset('assets/images/baby.png'),
-              CustomButton(
-                onTap:(){
-                  AppNavigator.push(context: context,
-                      screen:  BabyProfileScreen(),
-                  );
-                },
-                child:Center(
-                  child: Text('Add My Baby',
-                   style:GoogleFonts.poppins(
-                     fontSize: 16,
-                   ) ,
-                  ),
-                ) ,
-              ),
-            ],
+                Image.asset('assets/images/baby.png'),
+                CustomButton(
+                  onTap:(){
+                    AppNavigator.push(context: context,
+                        screen:  BabyProfileScreen(),
+                    );
+                  },
+                  child:Center(
+                    child: Text('Add My Baby',
+                     style:GoogleFonts.poppins(
+                       fontSize: 16,
+                     ) ,
+                    ),
+                  ) ,
+                ),
+              ],
+            ),
           ),
         ),
       ) ,

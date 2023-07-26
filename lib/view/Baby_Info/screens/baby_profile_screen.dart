@@ -6,13 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
+import 'package:mom_app/core/utils/validation.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_cubit.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
 import 'package:mom_app/view/layout/layout_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-
 import '../../../core/widgets/custom_appbar.dart';
 
 class BabyProfileScreen extends StatefulWidget {
@@ -28,6 +28,7 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
   final birthDateController =TextEditingController();
 
   final wightController =TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   void buildDatePicker (){
   showDatePicker(context: context,
@@ -35,8 +36,12 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
       firstDate: DateTime(2018),
       lastDate: DateTime(2025),
   ).then((value){
-    birthDateController.text = formatDate(value!, [yyyy, '-', mm, '-', dd]);
-    print(formatDate(value, [yyyy, '-', mm, '-', dd]));
+    if(value !=null){
+      birthDateController.text = formatDate(value, [yyyy, '-', mm, '-', dd]);
+      print(formatDate(value, [yyyy, '-', mm, '-', dd]));
+    }else {
+      birthDateController.text ='0000-00-00';
+    }
   });
 }
   @override
@@ -65,162 +70,188 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
               builder: (context, state) {
                 var cubit = BabyCubit.get(context);
                   String gender ='girl';
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child:
-                      (cubit.image ==null) ?
-                      Stack(
-                          alignment: Alignment.center,
-                          children: [
-                        const CircleAvatar(
+                return Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child:
+                        (cubit.image ==null) ?
+                        Stack(
+                            alignment: Alignment.center,
+                            children: [
+                          const CircleAvatar(
+                            backgroundColor: AppColors.gray,
+                            radius: 50,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              cubit.addImage();
+                            },
+                            icon: const Icon(
+                              Icons.add_a_photo_outlined,
+                              color: Colors.white,
+                              size: 35,
+                            ),
+                          ),
+                        ],
+                        ):
+                        CircleAvatar(
                           backgroundColor: AppColors.gray,
+                          backgroundImage:FileImage(cubit.imageShow!) ,
                           radius: 50,
                         ),
-                        IconButton(
-                          onPressed: () {
-                            cubit.addImage();
-                          },
-                          icon: const Icon(
-                            Icons.add_a_photo_outlined,
-                            color: Colors.white,
-                            size: 35,
-                          ),
-                        ),
-                      ],
-                      ):
-                      CircleAvatar(
-                        backgroundColor: AppColors.gray,
-                        backgroundImage:FileImage(cubit.imageShow!) ,
-                        radius: 50,
                       ),
-                    ),
-                    SizedBox(
-                      height: context.height * 0.02,
-                    ),
-                    Text(
-                      'What is your baby name?',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
+                      SizedBox(
+                        height: context.height * 0.02,
                       ),
-                    ),
-                    SizedBox(
-                      height: context.height * 0.01,
-                    ),
-                    CustomTextFormField(
-                      controller:nameBabyController ,
-                      visible: false,
-                      hintText: 'Baby name',
-                    ),
-                    SizedBox(
-                      height: context.height * 0.02,
-                    ),
-                    Text(
-                      'When is your baby birthday?',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      height: context.height * 0.01,
-                    ),
-                    CustomTextFormField(
-                      controller:birthDateController ,
-                      visible: false,
-                      hintText: 'DD/MM/YYYY',
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          print('done');
-                          buildDatePicker();
-                        },
-                        child: const Icon(Icons.date_range,
-                          size: 22,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: context.height * 0.02,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'What is your baby sex?',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                          ),
-                        ),
-                        const Spacer(),
-                        Text(
-                          'Wight',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: context.height * 0.01,
-                    ),
-                    Row(
-                      children: [
-                        ToggleSwitch(
-                          minWidth: 120.0,
-                          initialLabelIndex: 1,
-                          cornerRadius: 8.0,
-                          activeFgColor: AppColors.green,
-                          inactiveBgColor: AppColors.lightGreen,
-                          inactiveFgColor: Colors.grey,
-                          totalSwitches: 2,
-                          labels: const ['Boy', 'Girl'],
-                          activeBgColors: const [[Colors.white],[Colors.white]],
-                          onToggle: (index) {
-                            if(index==0){
-                              gender = 'boy';
-                            }else{
-                              gender = 'girl';
-                            }
-                            print('switched to: $index,$gender');
-                          },
-                        ),
-                        const Spacer(),
-                        CustomTextFormField(
-                          controller: wightController,
-                          visible: false,
-                          hintText: '0',
-                          width: context.width * 0.12,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: context.height * 0.1,
-                    ),
-                    CustomButton(
-                      onTap: () {
-                        cubit.addBaby(
-                            babyName: nameBabyController.text,
-                            gender: gender,
-                            birthDate: birthDateController.text,
-                            wight: wightController.text,
-                        );
-                      },
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: GoogleFonts.poppins(
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                    if(state is AddBabyLoadingState)
-                      const Center(
-                        child: CircularProgressIndicator(
+                      Text(
+                        'What is your baby name?',
+                        style: GoogleFonts.poppins(
                           color: Colors.white,
-                        )
+                        ),
                       ),
-                  ],
+                      SizedBox(
+                        height: context.height * 0.01,
+                      ),
+                      CustomTextFormField(
+                        controller:nameBabyController ,
+                        visible: false,
+                        hintText: 'Baby name',
+                        valid: (v) {
+                          if (v!.isEmpty) {
+                            return 'Name should not empty';
+                          }else if(!v.isValidName){
+                            return 'enter valid name ';
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: context.height * 0.02,
+                      ),
+                      Text(
+                        'When is your baby birthday?',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: context.height * 0.01,
+                      ),
+                      CustomTextFormField(
+                        controller:birthDateController ,
+                        visible: false,
+                        valid: (v) {
+                          if (v!.isEmpty) {
+                            return 'date should not empty';
+                          }else if(!v.isValidDate){
+                            return 'enter valid date (yyyy-mm-dd) ';
+                          } else {
+                            return null;
+                          }
+                        },
+                        hintText: 'YYYY-MM-DD',
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            print('done');
+                            buildDatePicker();
+                          },
+                          child: const Icon(Icons.date_range,
+                            size: 22,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: context.height * 0.02,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'What is your baby sex?',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            'Wight',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: context.height * 0.01,
+                      ),
+                      Row(
+                        children: [
+                          ToggleSwitch(
+                            minWidth: 120.0,
+                            initialLabelIndex: 1,
+                            cornerRadius: 8.0,
+                            activeFgColor: AppColors.green,
+                            inactiveBgColor: AppColors.lightGreen,
+                            inactiveFgColor: Colors.grey,
+                            totalSwitches: 2,
+                            labels: const ['Boy', 'Girl'],
+                            activeBgColors: const [[Colors.white],[Colors.white]],
+                            onToggle: (index) {
+                              if(index==0){
+                                gender = 'boy';
+                              }else{
+                                gender = 'girl';
+                              }
+                              print('switched to: $index,$gender');
+                            },
+                          ),
+                          const Spacer(),
+                          CustomTextFormField(
+                            controller: wightController,
+                            visible: false,
+                            hintText: '0',
+                            width: context.width * 0.12,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: context.height * 0.1,
+                      ),
+                      CustomButton(
+                        onTap: (){
+                          if(formKey.currentState!.validate()){
+                            cubit.addBaby(
+                              babyName: nameBabyController.text,
+                              gender: gender,
+                              birthDate: birthDateController.text,
+                              wight: wightController.text,
+                            );
+                          }
+                        },
+                        child: Center(
+                          child: Text(
+                            'Save',
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if(state is AddBabyLoadingState)
+                         const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        ),
+                    ],
+                  ),
                 );
               },
             ),

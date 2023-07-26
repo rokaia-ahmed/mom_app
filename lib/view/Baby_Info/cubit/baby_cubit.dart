@@ -31,6 +31,7 @@ class BabyCubit extends Cubit<BabyStates>{
       emit(ErrorPickImageState());
     }
   }
+
   BabyInfoModel? babyInfoModel ;
  Future<void> addBaby({
     required String babyName,
@@ -40,19 +41,19 @@ class BabyCubit extends Cubit<BabyStates>{
 })async {
    emit(AddBabyLoadingState());
    //String fileName = image!.path.split('/').last;
-    /*print("token =${await checkAndGetToken()}");
-   print("accessToken =$accessToken");*/
+  //  print("token =${await getToken()}");
    FormData formData = FormData.fromMap({
      'babyName':babyName,
      'gender':gender,
      'birthDate':birthDate,
-     //'weight': wight,
-     'images':  await MultipartFile.fromFile(image!.path,),
+     //'weight': wight ?? '30',
+     'images': image != null?
+     await MultipartFile.fromFile(image!.path,):'' ,
    });
  await  DioHelper.postFormData(
        url: ADDBABY,
        data:formData,
-       token: await checkAndGetToken() ,
+       token: await getToken() ,
    ).then((value){
      babyInfoModel = BabyInfoModel.fromJson(value.data);
      print(babyInfoModel!.message);

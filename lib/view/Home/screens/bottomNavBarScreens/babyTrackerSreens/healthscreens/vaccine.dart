@@ -46,7 +46,7 @@ class Vaccine extends StatelessWidget {
                           width: 100,
                           child: CircularProgressIndicator(
                             strokeWidth: 10,
-                            strokeCap: StrokeCap.round,
+                            //strokeCap: StrokeCap.round,
                             // set the width of the progress indicator
                             value: 0.3, // set the completion percentage
                             backgroundColor: Colors.white, // set the background color of the progress indicator
