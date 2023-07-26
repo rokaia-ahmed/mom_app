@@ -8,15 +8,14 @@ PreferredSizeWidget defaultAppBar(
     {required BuildContext context, screen, title, isTitle}) {
   return AppBar(
     centerTitle: true,
-    title: isTitle != null
-        ? isTitle
-        : Text(
-            title,
-            textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: AppColors.green,
-            ),
+    title: isTitle ??
+        Text(
+          title,
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            color: AppColors.green,
           ),
+        ),
     leading: customIconButton(
         onTap: () {
           screen == null
