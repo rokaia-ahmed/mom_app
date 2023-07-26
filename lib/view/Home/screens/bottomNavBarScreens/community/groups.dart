@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/navigator.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
-import '../../chats.dart';
+import '../../../chat/chats.dart';
 
 
 Widget groups({required BuildContext context}){

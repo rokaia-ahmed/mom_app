@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/navigator.dart';
-import 'package:mom_app/view/Home/screens/chats.dart';
+import 'package:mom_app/view/Home/chat/chats.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';

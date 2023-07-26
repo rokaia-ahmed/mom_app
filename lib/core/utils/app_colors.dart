@@ -8,4 +8,7 @@ class AppColors{
  static const gray=Color(0xffaeaeae);
  static const teal=Color(0xFF80CBC4);
  static const redAcent= Color(0xFFEF5350);
+ static const orange= Color(0xFFFF8B00);
+ static const liteOrange= Color(0xFFF9B400);
+ static const yellow= Color(0xFFffd45b);
 }

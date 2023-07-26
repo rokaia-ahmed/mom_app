@@ -12,7 +12,7 @@ class User{
   String? babyName ;
   String? gender ;
   String? birthDate ;
-  double? weight ;
+  int? weight ;
   String? image ;
   String? userId ;
 

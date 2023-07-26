@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_button.dart';
+import 'package:mom_app/view/layout/layout_screen.dart';
 import 'package:mom_app/view/register/screens/signup_screen.dart';
+import '../../../core/network/cache_helper.dart';
 import '../../../core/utils/component.dart';
 import '../../../core/utils/navigator.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
@@ -31,13 +33,27 @@ class SignInScreen extends StatelessWidget {
             text: 'login is success',
             state: ToastStates.success,
           );
-          AppNavigator.push(context: context,
-              screen: const WelcomeScreen());
+          if(CacheHelper.getData()!.baby.isEmpty){
+            AppNavigator.push(context: context,
+                screen: const WelcomeScreen());
+          }else{
+            AppNavigator.push(context: context,
+                screen: const LayoutScreen());
+          }
+
         } else if(state is SignInErrorState) {
-          showToast(
-            text: 'login is failed',
-            state: ToastStates.error,
-          );
+          var cubit = RegisterCubit.get(context);
+          if(cubit.errorSignIn.isNotEmpty){
+            showToast(
+              text: cubit.errorSignIn,
+              state: ToastStates.error,
+            );
+          }else{
+            showToast(
+              text: 'login is failed',
+              state: ToastStates.error,
+            );
+          }
         }
       },
       builder: (BuildContext context, RegisterStates state) {

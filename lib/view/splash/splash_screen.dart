@@ -23,11 +23,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    if(CacheHelper.getData()!.accessToken != null &&
-        CacheHelper.getData()!.baby.isEmpty) {
-      startScreen = const WelcomeScreen();
-    } else if (CacheHelper.getData()!.baby.isNotEmpty){
-      startScreen = const LayoutScreen();
+    if(CacheHelper.getData() != null ) {
+      if (CacheHelper.getData()!.baby.isEmpty) {
+        startScreen = const WelcomeScreen();
+      }
+      else {
+        startScreen = const LayoutScreen();
+      }
     }
     else{
       startScreen = const OnBoardingScreen();

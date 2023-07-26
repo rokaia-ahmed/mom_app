@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/utils/validation.dart';
 import 'package:mom_app/core/widgets/custom_text_form_field.dart';
 import 'package:mom_app/view/register/screens/signin_screen.dart';
 import '../../../core/utils/component.dart';
@@ -25,6 +26,7 @@ class SignupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterStates>(
       listener: (context, state) {
+        RegisterCubit cubit = BlocProvider.of(context);
         if(state is SignUpSuccessState) {
           showToast(
             text: 'Signup is success',
@@ -33,10 +35,18 @@ class SignupScreen extends StatelessWidget {
           AppNavigator.push(context: context,
               screen: SignInScreen());
         }else if(state is SignUpErrorState){
-          showToast(
-            text: 'Signup is failed',
-            state: ToastStates.error,
-          );
+          if(cubit.errorSignUp.isNotEmpty){
+            showToast(
+              text: cubit.errorSignUp,
+              state: ToastStates.error,
+            );
+          }
+         else {
+            showToast(
+              text: 'Signup is failed',
+              state: ToastStates.error,
+            );
+          }
         }
       },
       builder: (context, state) {
@@ -96,7 +106,9 @@ class SignupScreen extends StatelessWidget {
                                   controller: fNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
-                                      return 'fName should not empty';
+                                      return 'Name should not empty';
+                                    }else if(!v.isValidName){
+                                      return 'enter valid name ';
                                     } else {
                                       return null;
                                     }
@@ -112,7 +124,9 @@ class SignupScreen extends StatelessWidget {
                                   controller: lNameController,
                                   valid: (v) {
                                     if (v!.isEmpty) {
-                                      return 'lName should not empty';
+                                      return 'Name should not empty';
+                                    }else if(!v.isValidName){
+                                      return 'enter valid name ';
                                     } else {
                                       return null;
                                     }
@@ -132,7 +146,7 @@ class SignupScreen extends StatelessWidget {
                               if (v!.isEmpty) {
                                 return 'email should not empty';
                               }else if(!v.contains('@gmail.com')){
-                                return 'email should be email';
+                                return 'email should be an email';
                               }
                               else {
                                 return null;
@@ -159,7 +173,7 @@ class SignupScreen extends StatelessWidget {
                               if (v!.isEmpty) {
                                 return 'password should not empty';
                               }else if(v.length<8){
-                                return 'password must be >= 8';
+                                return 'password must be >= 8 character';
                               }
                               else {
                                 return null;
