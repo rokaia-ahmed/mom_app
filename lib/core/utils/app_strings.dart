@@ -1,8 +1,4 @@
-
-
-
-class AppStrings{
- static String userData ='userData';
-
-
+class AppStrings {
+  static String userData = 'userData';
+  static String babyDate = "babyDate";
 }

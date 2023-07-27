@@ -17,10 +17,8 @@ import '../cubit/register_states.dart';
 import '../widgets/divider.dart';
 import 'forget_password_screen.dart';
 
-
-
 class SignInScreen extends StatelessWidget {
-   SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -33,22 +31,19 @@ class SignInScreen extends StatelessWidget {
             text: 'login is success',
             state: ToastStates.success,
           );
-          if(CacheHelper.getData()!.baby.isEmpty){
-            AppNavigator.push(context: context,
-                screen: const WelcomeScreen());
-          }else{
-            AppNavigator.push(context: context,
-                screen: const LayoutScreen());
+          if (!CacheHelper.haveBaby()) {
+            AppNavigator.push(context: context, screen: const WelcomeScreen());
+          } else {
+            AppNavigator.push(context: context, screen: const LayoutScreen());
           }
-
-        } else if(state is SignInErrorState) {
+        } else if (state is SignInErrorState) {
           var cubit = RegisterCubit.get(context);
-          if(cubit.errorSignIn.isNotEmpty){
+          if (cubit.errorSignIn.isNotEmpty) {
             showToast(
               text: cubit.errorSignIn,
               state: ToastStates.error,
             );
-          }else{
+          } else {
             showToast(
               text: 'login is failed',
               state: ToastStates.error,
@@ -104,7 +99,7 @@ class SignInScreen extends StatelessWidget {
                               valid: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Email must not be empty';
-                                }else if(!value.contains('@gmail.com')){
+                                } else if (!value.contains('@gmail.com')) {
                                   return 'email should be email';
                                 }
                                 return null;
@@ -120,7 +115,7 @@ class SignInScreen extends StatelessWidget {
                               valid: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Password must not be empty';
-                                }else if(value.length<8){
+                                } else if (value.length < 8) {
                                   return 'password must be >= 8';
                                 }
                                 return null;
@@ -144,7 +139,7 @@ class SignInScreen extends StatelessWidget {
                               onTap: () {
                                 AppNavigator.push(
                                     context: context,
-                                    screen:  ForgetPasswordScreen());
+                                    screen: ForgetPasswordScreen());
                               },
                               child: Align(
                                 alignment: Alignment.topRight,
@@ -161,13 +156,13 @@ class SignInScreen extends StatelessWidget {
                               height: context.height * 0.01,
                             ),
                             ConditionalBuilder(
-                              condition: state is!  SignInLoadingState,
+                              condition: state is! SignInLoadingState,
                               builder: (BuildContext context) => CustomButton(
                                 onTap: () {
                                   if (formKey.currentState!.validate()) {
                                     cubit.userSignIn(
-                                        email: emailController.text,
-                                        password: passwordController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
                                     );
                                   }
                                 },
@@ -181,11 +176,10 @@ class SignInScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              fallback: (BuildContext context) =>
-                                  const Center(
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      )),
+                              fallback: (BuildContext context) => const Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.white,
+                              )),
                             ),
                             SizedBox(
                               height: context.height * 0.02,
