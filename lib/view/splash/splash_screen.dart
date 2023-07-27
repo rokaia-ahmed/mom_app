@@ -7,7 +7,6 @@ import '../Baby_Info/screens/welcome_screen.dart';
 import '../Onboarding/screens/onboarding_screen.dart';
 import '../layout/layout_screen.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -16,42 +15,40 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Widget? startScreen ;
-
+  Widget? startScreen;
 
   @override
   void initState() {
     super.initState();
 
-    if(CacheHelper.getData() != null ) {
-      if (CacheHelper.getData()!.baby.isEmpty) {
+    if (CacheHelper.getData() != null) {
+      if (!CacheHelper.haveBaby()) {
         startScreen = const WelcomeScreen();
-      }
-      else {
+      } else {
         startScreen = const LayoutScreen();
       }
-    }
-    else{
+    } else {
       startScreen = const OnBoardingScreen();
     }
-      Timer(const Duration(seconds: 5),
-            () =>
-            AppNavigator.push(
-              context: context,
-              screen:  startScreen!,
-            ),
-      );
+    Timer(
+      const Duration(seconds: 5),
+      () => AppNavigator.push(
+        context: context,
+        screen: startScreen!,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Image.asset('assets/images/splash.png',
-          width:context.width*0.6 ,
-           height:context.height*0.5 ,
-            fit: BoxFit.cover,
-          ),
+        child: Image.asset(
+          'assets/images/splash.png',
+          width: context.width * 0.6,
+          height: context.height * 0.5,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
