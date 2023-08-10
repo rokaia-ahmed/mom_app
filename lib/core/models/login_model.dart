@@ -8,7 +8,7 @@ class LoginModel {
   String? message;
   String? accessToken;
   String? refreshToken;
-  List<User>  baby =[];
+  List<User> baby = [];
 
   LoginModel({
     this.id,
@@ -27,8 +27,7 @@ class LoginModel {
     email = json['email'];
     accessToken = json['access_token'];
     refreshToken = json['refresh_token'];
-    message =json['message'];
-    baby = List.from(json['baby']).map((e)=>User.fromJson(e)).toList();
+    message = json['message'];
+    baby = List.from(json['baby']).map((e) => User.fromJson(e)).toList();
   }
 }
-

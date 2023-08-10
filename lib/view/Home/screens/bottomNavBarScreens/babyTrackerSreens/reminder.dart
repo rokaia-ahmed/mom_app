@@ -13,11 +13,11 @@ import '../../../../../core/models/all_reminder_model.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/overlay_entry_card.dart';
+
 import '../../../../../core/widgets/top_screen_color_line.dart';
 var startTimeController=TextEditingController();
 // var activityController=TextEditingController();
 var noteController=TextEditingController();
-
 class Reminder extends StatelessWidget {
   Reminder({super.key});
   final color =AppColors.lightblue;
@@ -244,5 +244,6 @@ class Reminder extends StatelessWidget {
             final formattedDate = DateFormat('yyyy-M-d').format(DateTime.now());
             cubit.addReminder(time: startTimeController.text, note: noteController.text, date: "${formattedDate}");
           }})!;
+
   }
 }
