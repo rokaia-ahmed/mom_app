@@ -47,7 +47,7 @@ class Tracking extends StatelessWidget {
                   height:5.0,
                 ),
                 //Food
-                babyTrackingList(context: context,colors: Colors.yellowAccent,icon: Icons.fastfood_outlined,text: "Food",screen:Feeding()),
+                babyTrackingList(context: context,colors:AppColors.yellow,icon: Icons.fastfood_outlined,text: "Food",screen:Feeding()),
                 const SizedBox(
                   height:5.0,
                 ),
@@ -57,7 +57,7 @@ class Tracking extends StatelessWidget {
                   height:5.0,
                 ),
                 //Baby First
-                babyTrackingList(context: context,colors: AppColors.redAcent,icon: Icons.wb_incandescent_outlined,text: "Baby First",screen:BabyFirsts()),
+                babyTrackingList(context: context,colors: AppColors.lightRed,icon: Icons.wb_incandescent_outlined,text: "Baby First",screen:BabyFirsts()),
               ],
             ),
           ),

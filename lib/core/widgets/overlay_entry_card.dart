@@ -7,87 +7,73 @@ import 'package:mom_app/core/widgets/custom_icon_button.dart';
 import '../utils/app_colors.dart';
 import 'add_button.dart';
 OverlayEntry? overlayEntry;
-OverlayEntry? overlayEntryCard({ required BuildContext context, color, isIcon1,isIcon2,isIcon3,
-  required String cardText,required String text1,required String text2,required String text3}){
+OverlayEntry? overlayEntryCard({ required BuildContext context,required Color color, icon1,icon2,icon3,
+  required String cardText,required String text1,required String text2,required String text3,formKey,
+   controller1,  controller2, controller3,addPhoto,
+  saveOnPressed}){
   overlayEntry=OverlayEntry(
     builder: (BuildContext context) {
-      return Positioned(
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        child: Container(
-          color: Colors.black.withOpacity(0.5),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: context.height*0.25,
-                  ),
-                  //bar design
-                  Container(
-                    // height: 100.0,
-                    width: double.infinity,
-                    color: color,
-                    // padding: EdgeInsets.all(10.0),
-                    child:  Row(
-                      children: [
-                        //close
-                        ElevatedButton(onPressed: (){
-                          dispose();
-                        },child:Icon(Icons.close_outlined,color: AppColors.green,) ,style: ElevatedButton.styleFrom(
-                      primary: color, // custom button color
-                      onPrimary: color, // text color
-                      elevation: 0.0),
-                        ),
-
-                         Text(cardText,style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.green,
-                          decoration: TextDecoration.none, // remove the underline here
-                        ),),
-                        Spacer(),
-                        //save
-                        ElevatedButton(onPressed: (){
-                          dispose();
-                        },child:Text("save",style: GoogleFonts.poppins(
-                          fontSize: 12.0,
-                          color: AppColors.green
-                        ),) ,style: ElevatedButton.styleFrom(
-                            primary: color, // custom button color
-                            onPrimary: color, // text color
-                            elevation: 0.0),
-                        ),
-                      ],
+      return Form(
+        key: formKey,
+        child: Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            color: Colors.black.withOpacity(0.5),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: context.height*0.25,
                     ),
-                  ),
-                  textField(  text: text1,color: color, isIcon: isIcon1),
+                    //bar design
+                    Container(
+                      // height: 100.0,
+                      width: double.infinity,
+                      color: color,
+                      // padding: EdgeInsets.all(10.0),
+                      child:  Row(
+                        children: [
+                          //close
+                          ElevatedButton(onPressed: (){
+                            disposeOverlay();
+                          },child:Icon(Icons.close_outlined,color: AppColors.green,) ,style: ElevatedButton.styleFrom(
+                        primary: color, // custom button color
+                        onPrimary: color, // text color
+                        elevation: 0.0),
+                          ),
 
-                  //separete line
-                  // Container(
-                  //   height: 1.0,
-                  //   width: double.infinity,
-                  //   color: Colors.grey.shade100,
-                  // ),
-                  textField(  text: text2,color: color, isIcon: isIcon2),
-                  Container(
-                    height: 1.0,
-                    width: double.infinity,
-                    color: Colors.grey.shade100,
-                  ),
-                  textField(  text:text3,color: color, isIcon: isIcon3),
-                  //separete line
-                  Container(
-                    height: 1.0,
-                    width: double.infinity,
-                    color: Colors.grey.shade100,
-                  ),
-                  //button add photo
-                  addButton(context: context,text: "Add photo",color: color),
+                           Text(cardText,style: const TextStyle(
+                            fontSize: 16,
+                            color: AppColors.green,
+                            decoration: TextDecoration.none, // remove the underline here
+                          ),),
+                          Spacer(),
+                          //save
+                          ElevatedButton(onPressed: saveOnPressed,child:Text("save",style: GoogleFonts.poppins(
+                            fontSize: 12.0,
+                            color: AppColors.green
+                          ),) ,style: ElevatedButton.styleFrom(
+                              primary: color, // custom button color
+                              onPrimary: color, // text color
+                              elevation: 0.0),
+                          ),
+                        ],
+                      ),
+                    ),
+                    textField(  text: text1,color: color, icon: icon1,controller: controller1),
+                    textField(  text: text2,color: color, icon: icon2,controller: controller2),
+                    textField(  text:text3,color: color, icon: icon3,controller: controller3),
+                    //separete line
+                    //button add photo
+                    addButton(context: context,text: "Add photo",color: color,addPhoto: addPhoto),
 
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -100,7 +86,7 @@ OverlayEntry? overlayEntryCard({ required BuildContext context, color, isIcon1,i
   return overlayEntry ;
 }
 
-Widget textField({required String text,required color,isIcon,}){
+Widget textField({required String text,required color,icon,required controller,String? initialValue}){
   return  Container(
     width: double.infinity,
     color: Colors.white,
@@ -108,10 +94,19 @@ Widget textField({required String text,required color,isIcon,}){
     child:  Material(
       color: Colors.white,
       child: TextFormField(
-        style:TextStyle(
+        validator: (value){
+  if (value == null || value.isEmpty) {
+  return 'this field must not be empty';
+  }
+  return null;
+        },
+        style:const TextStyle(
           color: AppColors.green,
         ) ,
+        controller: controller,
         cursorColor: color,
+        // initialValue:initialValue ,
+
         textAlign: TextAlign.left,
         decoration:  InputDecoration(
           focusColor: Colors.white,
@@ -123,7 +118,7 @@ Widget textField({required String text,required color,isIcon,}){
                 decoration: TextDecoration.none
             ) ,),
           ),
-           suffixIcon: isIcon
+           suffixIcon: icon
 
         ),
 
@@ -131,7 +126,7 @@ Widget textField({required String text,required color,isIcon,}){
     ),
   );
 }
-void dispose() {
+void disposeOverlay() {
   // Remove the overlay entry when the widget is disposed.
   overlayEntry?.remove();
   // super.dispose();

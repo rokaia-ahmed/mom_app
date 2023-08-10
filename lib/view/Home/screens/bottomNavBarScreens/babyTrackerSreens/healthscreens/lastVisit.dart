@@ -25,7 +25,7 @@ class LastVisit extends StatelessWidget {
           child: InkWell(
             onTap:(){
               overlayEntryCard(context: context,color:AppColors.lightGreen,
-                  isIcon1:customIconButton(onTap: (){}, isIcon: true,icon:Icons.date_range_outlined ),
+                  icon1:customIconButton(onTap: (){}, isIcon: true,icon:Icons.date_range_outlined ),
                   cardText: 'Last visit', text1: 'Date', text2: 'Dr.Name', text3: 'Diagnosis');
             },
             child: Icon(Icons.add_circle,size: 40.0,color:AppColors.lightGreen),
