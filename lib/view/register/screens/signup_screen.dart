@@ -146,7 +146,7 @@ class SignupScreen extends StatelessWidget {
                               if (v!.isEmpty) {
                                 return 'email should not empty';
                               }else if(!v.contains('@gmail.com')){
-                                return 'email should be an email';
+                                return 'email should be valid email';
                               }
                               else {
                                 return null;

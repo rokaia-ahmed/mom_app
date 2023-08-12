@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../utils/app_colors.dart';
 
 OutlineInputBorder _defaultBorder = OutlineInputBorder(
@@ -19,7 +20,8 @@ class CustomTextFormField extends StatelessWidget {
       this.valid,
       this.height,
        this.visible=false,
-      this.backGroundColor})
+      this.backGroundColor, this.keyboardType,
+        this.inputFormatters})
       : super(key: key);
 
   final double? width;
@@ -30,6 +32,8 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? valid;
   final double? height;
   final Color? backGroundColor;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -39,6 +43,8 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: visible,
         validator: valid,
         textAlign: TextAlign.left,
+        keyboardType:keyboardType ,
+        inputFormatters: inputFormatters,
         decoration: InputDecoration(
           filled: true,
           enabledBorder: _defaultBorder,

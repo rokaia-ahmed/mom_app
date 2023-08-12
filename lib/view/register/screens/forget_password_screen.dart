@@ -70,7 +70,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     if (value!.isEmpty) {
                       return 'email should not empty';
                     }else if(!value.contains('@gmail.com')){
-                      return 'email should be an email';
+                      return 'email should be valid email';
                     }
                     else {
                       return null;

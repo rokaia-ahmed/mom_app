@@ -2,13 +2,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mom_app/core/models/login_model.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/network/dio_helper.dart';
-import 'package:mom_app/core/utils/app_strings.dart';
 import 'package:mom_app/core/utils/component.dart';
 import 'package:mom_app/view/Baby_Info/cubit/baby_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/models/baby_info_model.dart';
 import '../../../core/network/end_points.dart';
 
@@ -41,23 +38,23 @@ class BabyCubit extends Cubit<BabyStates> {
     required String babyName,
     required String gender,
     required String birthDate,
-    String? wight,
+     String? wight,
   }) async {
     emit(AddBabyLoadingState());
     //String fileName = image!.path.split('/').last;
     //  print("token =${await getToken()}");
-    FormData formData = FormData.fromMap({
+     FormData formData = FormData.fromMap({
       'babyName': babyName,
       'gender': gender,
       'birthDate': birthDate,
-      //'weight': wight??'0' ,
+      'weight': wight!.isNotEmpty? wight : "0",
       'images': image != null
           ? await MultipartFile.fromFile(
               image!.path,
             )
           : '',
     });
-    await DioHelper.postFormData(
+      await DioHelper.postFormData(
       url: ADDBABY,
       data: formData,
       token: await getToken(),

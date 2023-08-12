@@ -100,7 +100,7 @@ class SignInScreen extends StatelessWidget {
                                 if (value == null || value.isEmpty) {
                                   return 'Email must not be empty';
                                 } else if (!value.contains('@gmail.com')) {
-                                  return 'email should be email';
+                                  return 'email should be valid email';
                                 }
                                 return null;
                               },

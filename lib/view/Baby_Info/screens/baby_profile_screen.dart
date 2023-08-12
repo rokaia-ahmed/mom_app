@@ -1,6 +1,7 @@
 
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
@@ -17,7 +18,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../../../core/widgets/custom_appbar.dart';
 
 class BabyProfileScreen extends StatefulWidget {
-    BabyProfileScreen({Key? key, }) : super(key: key);
+    const BabyProfileScreen({Key? key, }) : super(key: key);
 
   @override
   State<BabyProfileScreen> createState() => _BabyProfileScreenState();
@@ -35,7 +36,7 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
   showDatePicker(context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2018),
-      lastDate: DateTime(2025),
+      lastDate: DateTime.now(),
   ).then((value){
     if(value !=null){
       birthDateController.text = formatDate(value, [yyyy, '-', mm, '-', dd]);
@@ -222,6 +223,10 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
                             controller: wightController,
                             visible: false,
                             hintText: '0',
+                            inputFormatters: [FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9]'),
+                            ),],
+                            keyboardType: TextInputType.number,
                             width: context.width * 0.12,
                           )
                         ],
