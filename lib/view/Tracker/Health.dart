@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/utils/navigator.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/healthscreens/medical_history.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../../../../core/widgets/top_screen_color_line.dart';
-import 'baby_tracker_deafult_screens.dart';
+import 'healthscreens/medical_history.dart';
 import 'healthscreens/vaccine.dart';
 class Health extends StatelessWidget {
   const Health({super.key});

@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/community.dart';
-import 'package:mom_app/view/Home/screens/cubit/states.dart';
-import '../Home/screens/Home.dart';
-import '../bottomNavBarScreens/babyTrackerSreens/Tracking.dart';
-import '../learning/Learning.dart';
-import '../shop/Shop.dart';
+import 'package:mom_app/view/Home/cubit/states.dart';
+import '../../Tracker/Tracking.dart';
+import '../../community/community.dart';
+import '../../learning/Learning.dart';
+import '../../shop/Shop.dart';
+import '../screens/Home.dart';
+
 
 class HomeCubit extends Cubit<HomeStates>{
   HomeCubit():super(HomeInitialStates());

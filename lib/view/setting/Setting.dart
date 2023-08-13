@@ -5,8 +5,9 @@ import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/navigator.dart';
-import '../../../Baby_Info/screens/baby_profile_screen.dart';
-import '../../../register/screens/signin_screen.dart';
+import '../Baby_Info/screens/baby_profile_screen.dart';
+import '../register/screens/signin_screen.dart';
+
 
 class Setting extends StatelessWidget {
   const Setting({super.key});
@@ -109,7 +110,8 @@ class Setting extends StatelessWidget {
                   onTap:(){
                     AppNavigator.push(
                         context: context,
-                        screen: BabyProfileScreen(),
+                        screen: const BabyProfileScreen(),
+
                     );
                   } ,
                   child: DecoratedBox(

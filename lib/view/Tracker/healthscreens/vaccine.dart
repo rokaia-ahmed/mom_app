@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/custom_icon_button.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/healthscreens/vaccine_location.dart';
-
+import 'package:mom_app/view/Tracker/healthscreens/vaccine_location.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/navigator.dart';
 import '../../../../../../core/widgets/app_bar.dart';
@@ -248,7 +247,7 @@ class Vaccine extends StatelessWidget {
                     ) ,
                   ),
                   customIconButton(onTap: (){
-                    AppNavigator.push(context: context, screen: VaccineLocation());
+                    AppNavigator.push(context: context, screen: const VaccineLocation());
                   }, isIcon: true,icon: Icons.location_on_outlined,iconSize: 50.0)
                 ])));
   }

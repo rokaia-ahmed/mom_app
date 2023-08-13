@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
-import 'package:mom_app/view/Home/chat/personal%20chat.dart';
+import 'package:mom_app/view/chat/personal%20chat.dart';
+
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/navigator.dart';
