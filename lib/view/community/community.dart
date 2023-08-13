@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/events.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/groups.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/community/posts.dart';
+import 'package:mom_app/view/Home/cubit/Cubit.dart';
+import 'package:mom_app/view/community/posts.dart';
 import '../../../../../core/utils/app_colors.dart';
-import '../../cubit/Cubit.dart';
-import '../../cubit/states.dart';
-import '../../../../layout/layout_screen.dart';
+import '../Home/cubit/states.dart';
+import '../layout/layout_screen.dart';
+import 'events.dart';
 import 'freinds.dart';
+import 'groups.dart';
 var searchcontroller = TextEditingController();
 class Community extends StatelessWidget {
   const Community({super.key});
@@ -25,7 +25,7 @@ class Community extends StatelessWidget {
           var cubit=HomeCubit.get(context);
           return  Scaffold(
             backgroundColor: Colors.white,
-              appBar:defaultAppBar(context: context, title:"Community",screen: LayoutScreen()),
+              appBar:defaultAppBar(context: context, title:"Community",screen: const LayoutScreen()),
               body: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,

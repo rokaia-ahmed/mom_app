@@ -1,16 +1,12 @@
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
-import 'package:mom_app/view/Home/notification/HaveNotification.dart';
-import 'package:mom_app/view/Home/screens/cubit/Cubit.dart';
-import 'package:mom_app/view/Home/screens/cubit/states.dart';
-import 'package:mom_app/view/layout/layout_screen.dart';
 
-import '../../../core/utils/navigator.dart';
+import '../Home/cubit/Cubit.dart';
+import '../Home/cubit/states.dart';
+import 'HaveNotification.dart';
+
 
 class Notifications extends StatelessWidget {
   const Notifications({super.key});
@@ -28,7 +24,7 @@ class Notifications extends StatelessWidget {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: defaultAppBar(context: context, title: "Notification"),
-            body: cubit.notification?HaveNotification():Column(
+            body: cubit.notification?const HaveNotification():Column(
               children: [
 
                 Center(

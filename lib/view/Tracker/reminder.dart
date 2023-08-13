@@ -1,45 +1,38 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/healthscreens/cubit/tracker_cubit.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/healthscreens/cubit/tracker_states.dart';
-import '../../../../../core/models/activity_model.dart';
-import '../../../../../core/models/all_Meals_model.dart';
-import '../../../../../core/models/all_activity_model.dart';
-import '../../../../../core/network/end_points.dart';
+import '../../../../../core/models/all_reminder_model.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/overlay_entry_card.dart';
-import '../../../../../core/widgets/top_screen_color_line.dart';
-import 'baby_tracker_deafult_screens.dart';
-var startTimeController=TextEditingController();
-var mealController=TextEditingController();
-var noteController=TextEditingController();
 
-class Feeding extends StatelessWidget {
-  Feeding({super.key});
-  final color =AppColors.yellow;
-  // bool isInitialized = false; // Flag variable to track initialization
-  late TimeOfDay selectedTime;
-  var currentTime;
+import '../../../../../core/widgets/top_screen_color_line.dart';
+import 'healthscreens/cubit/tracker_cubit.dart';
+import 'healthscreens/cubit/tracker_states.dart';
+var startTimeController=TextEditingController();
+// var activityController=TextEditingController();
+var noteController=TextEditingController();
+class Reminder extends StatelessWidget {
+   Reminder({super.key});
+  final color =AppColors.lightblue;
+   late TimeOfDay selectedTime;
+   var currentTime;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context)=>TrackerCubit()..getAllLastFeeding(),
+      create: (context)=>TrackerCubit()..getAllReminder(),
       child: BlocConsumer<TrackerCubit, TrackerStates>(
         listener: (context, state) {
-
         },
         builder: (context, state) {
           var cubit = TrackerCubit.get(context);
           final formKey = GlobalKey<FormState>();
           return Scaffold(
-              appBar: defaultAppBar(context: context,title: "Last Feed"),
+              appBar: defaultAppBar(context: context,title: "Reminder"),
               backgroundColor: Colors.white,
               body: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
@@ -55,33 +48,35 @@ class Feeding extends StatelessWidget {
 
                           child:ConditionalBuilder(
                               builder: (context) {
+                                print(cubit.getAllReminderModel!.reminders!.length);
                                 return ListView.separated(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemBuilder:(context, index) =>  CardList(color: color,
                                         context: context,
                                         icon: Icons.sports_baseball,
-                                        title: "Feed",
+                                        title: "${cubit.getAllReminderModel!.reminders?[index].time}",
                                         image: false,
                                         index: index,
-                                        model: cubit.getAllMealModel,
+                                        model: cubit.getAllReminderModel,
                                         formKey: formKey,
                                         updateOnTap: () {
-                                          mealController.text = cubit.getAllMealModel!.meals![index].food.toString();
-                                          noteController.text = cubit.getAllMealModel!.meals![index].note.toString();
-                                          startTimeController.text = cubit.getAllMealModel!.meals![index].time.toString();
+                                          // activityController.text = cubit.getAllActivityModel!.activities![index].activity.toString();
+                                          noteController.text = cubit.getAllReminderModel!.reminders![index].note.toString();
+                                          startTimeController.text = cubit.getAllReminderModel!.reminders![index].time.toString();
                                           selectedTime = TimeOfDay.fromDateTime(DateTime.now());//TimeOfDay.now();
-                                          over(context, cubit, formKey, index,currentTime);
+                                          over(context, cubit, formKey, index);
+
                                         },
                                         deleteOnTap: (){
-                                          cubit.deleteLastFeeding(id: cubit.getAllMealModel!.meals?[index].id);
+                                          cubit.deleteReminder(id: cubit.getAllReminderModel!.reminders?[index].id);
                                           print("deleted");
                                         }
                                     ),
                                     separatorBuilder:(context, index) => Container(
                                       height: 20.0,
                                       color: Colors.white,
-                                    ), itemCount:cubit.getAllMealModel!.meals!.length);
+                                    ), itemCount:cubit.getAllReminderModel!.reminders!.length);
                               }, condition: (state is! AllActivityLoadingState),
                               fallback:(context)=> const Center(child: CircularProgressIndicator())),
                         ),
@@ -90,14 +85,10 @@ class Feeding extends StatelessWidget {
                           child: InkWell(
                             onTap:(){
                               selectedTime = TimeOfDay.fromDateTime(DateTime.now());//TimeOfDay.now();
-                              if(selectedTime.hour>12) currentTime="${selectedTime.hour-12}:${selectedTime.minute} pm";
-
-                              else currentTime="${selectedTime.hour}:${selectedTime.minute} am";
-                              mealController.clear();
                               noteController.clear();
                               startTimeController.text=currentTime;
-                              saveOverlay(context, cubit, formKey,currentTime);
-                              mealController.clear();
+                              saveOverlay(context, cubit, formKey);
+                              // activityController.clear();
                               noteController.clear();
                               startTimeController.clear();
                             },
@@ -120,7 +111,7 @@ class Feeding extends StatelessWidget {
     TrackerCubit? cubit,
     required updateOnTap,
     required index,
-    required GetAllMealModel? model,
+    required GetAllReminderModel? model,
     required BuildContext context,
     required deleteOnTap,
     formKey}){
@@ -164,39 +155,11 @@ class Feeding extends StatelessWidget {
             fit: BoxFit.cover,
           ): const SizedBox(height: 0.0,),
           const SizedBox(height: 10.0,),
-          Row(
-            children: [
-              Text(timeAgo(model!.meals![index].date.toString(),model.meals![index].time.toString()),style: GoogleFonts.poppins(
-                color: AppColors.green,
-                fontSize: 12.0,
-              ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const Spacer(),
-              Text("${model!.meals?[index].date}",style:GoogleFonts.poppins(
-                color: AppColors.green,
-                fontSize: 12.0,
-              ) ,)
-            ],
-          ),
-          const SizedBox(height: 10.0,),
-          Row(
-            children: [
-              Text("${model!.meals?[index].food}",style: GoogleFonts.poppins(
-                color: AppColors.green,
-                fontSize: 12.0,
-              ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const Spacer(),
-              Text("${model!.meals?[index].time}",style:GoogleFonts.poppins(
-                color: AppColors.green,
-                fontSize: 12.0,
-              ) ,)
-            ],
-          ),
+          Text("${model!.reminders?[index].note}",style:GoogleFonts.poppins(
+            color: AppColors.green,
+            fontSize: 12.0,
+          ) ,),
+          SizedBox(height: 10,),
           Center(child: customIconButton(onTap:deleteOnTap , isIcon: false,text: "delete"))
         ],
       ),
@@ -234,23 +197,23 @@ class Feeding extends StatelessWidget {
       currentTime="${selectedTime.hour}:${min} am";
     }
     if(index!=null) {//update
-      over(context, cubit, formKey, index,currentTime);
+      over(context, cubit, formKey, index);
     } else {//add activity
-      saveOverlay(context, cubit, formKey,currentTime);
+      saveOverlay(context, cubit, formKey);
       startTimeController.text=currentTime;
     }
     print('currentTime= $currentTime');
   }
-  OverlayEntry over(BuildContext context,cubit,formKey,index,currentTime){
+  OverlayEntry over(BuildContext context,cubit,formKey,index){
     return    overlayEntryCard(context: context,
-        cardText:"Last Feed",
-        text1: "Time",
-        text2: "Food",
+        cardText:"Reminder",
+        text1: "Reminder time",
+        text2: "Medication",
         text3: "note",
         color: color,
         formKey: formKey,
         controller1: startTimeController,
-        controller2: mealController,
+        // controller2: activityController,
         controller3: noteController,
         icon1:customIconButton(onTap: (){
           disposeOverlay();
@@ -259,11 +222,12 @@ class Feeding extends StatelessWidget {
         }, isIcon: true,icon:Icons.date_range_outlined ),
         saveOnPressed:(){
           if(formKey.currentState!.validate()){
-            cubit.updateLastFeeding(id:cubit.getAllMealModel.meals[index].id.toString(),
-                food: '${mealController.text}', time: '${startTimeController.text}', note: '${noteController.text}', date: ('${cubit.getAllMealModel?.meals?[index].date.toString()}'));
+            cubit.updateReminder(id:cubit.getAllReminderModel.reminders[index].id.toString(),
+               time: '${startTimeController.text}', note: '${noteController.text}', date: ('${cubit.getAllReminderModel?.reminders?[index].date.toString()}'));
+
           }})!;
   }
-  OverlayEntry saveOverlay(BuildContext context,cubit, formKey, currentTime){
+  OverlayEntry saveOverlay(BuildContext context,cubit, formKey){
 
     return     overlayEntryCard(context: context,
         color:color,
@@ -271,12 +235,13 @@ class Feeding extends StatelessWidget {
           disposeOverlay();
           selectTime(context, cubit, formKey);
         }, isIcon: true,icon:Icons.date_range_outlined ),
-        cardText: 'Last Feed', text1: 'Time', text2: 'Food', text3: 'note',controller1:startTimeController,
-        controller2: mealController,controller3: noteController,formKey: formKey,
+        cardText: 'Reminder', text1: 'Reminder time', text2: 'Medication', text3: 'note',controller1:startTimeController,
+        controller3: noteController,formKey: formKey,
         saveOnPressed: (){
           if(formKey.currentState!.validate()){
             final formattedDate = DateFormat('yyyy-M-d').format(DateTime.now());
-            cubit.addLastFeeding(food:mealController.text , time: startTimeController.text, note: noteController.text, date: "${formattedDate}");
+            cubit.addReminder(time: startTimeController.text, note: noteController.text, date: "${formattedDate}");
           }})!;
+
   }
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/navigator.dart';
-import '../../../notification/notification.dart';
+import '../../notification/notification.dart';
 import '../../setting/Setting.dart';
 
 class CustomAppBar extends StatelessWidget {

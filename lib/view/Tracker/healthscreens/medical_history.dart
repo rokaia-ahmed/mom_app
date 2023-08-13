@@ -1,16 +1,14 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/healthscreens/document.dart';
-
 import '../../../../../../core/utils/app_colors.dart';
-import '../../../../../../core/widgets/add_button.dart';
 import '../../../../../../core/widgets/app_bar.dart';
 import '../../../../../../core/widgets/top_screen_color_line.dart';
-import '../../../cubit/Cubit.dart';
-import '../../../cubit/states.dart';
+import '../../Home/cubit/Cubit.dart';
+import '../../Home/cubit/states.dart';
+import 'document.dart';
 import 'lastVisit.dart';
 
 class MedicalHistory extends StatelessWidget {

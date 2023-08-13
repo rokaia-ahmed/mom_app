@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mom_app/view/Home/screens/cubit/Cubit.dart';
-import '../Home/screens/cubit/states.dart';
+
+import '../Home/cubit/Cubit.dart';
+import '../Home/cubit/states.dart';
+
 
 class LayoutScreen extends StatelessWidget {
    const LayoutScreen({Key? key}) : super(key: key);

@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:mom_app/core/utils/media_query_values.dart';
-import 'package:mom_app/view/Home/screens/bottomNavBarScreens/babyTrackerSreens/reminder.dart';
 
+import 'package:flutter/material.dart';
+import 'package:mom_app/core/utils/media_query_values.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/navigator.dart';
 import '../../../../../core/widgets/app_bar.dart';
-import '../../../../layout/layout_screen.dart';
+import '../../core/models/reminder_model.dart';
+import '../layout/layout_screen.dart';
 import 'Activity.dart';
 import 'Growth.dart';
 import 'Health.dart';
@@ -32,12 +30,17 @@ class Tracking extends StatelessWidget {
             child: Column(
               children: [
                 //Reminder
-                babyTrackingList(context: context,colors: AppColors.teal,icon: Icons.timer,text: "Reminder",screen:Reminder()),
+/*                babyTrackingList(context: context,
+                    colors: AppColors.teal,
+                    icon: Icons.timer,text:"Reminder",
+                    screen: Reminder()),*/
                 const SizedBox(
                   height:5.0,
                 ),
                 //Health
-                babyTrackingList(context: context,colors: Colors.green.shade100,icon: Icons.face,text: "Health",screen:Health()),
+                babyTrackingList(context: context,
+                    colors: Colors.green.shade100,
+                    icon: Icons.face,text: "Health",screen:Health()),
                 const SizedBox(
                   height:5.0,
                 ),

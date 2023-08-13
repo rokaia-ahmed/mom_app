@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/navigator.dart';
-import 'package:mom_app/view/Home/chat/chats.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/custom_text_form_field.dart';
+import '../chat/chats.dart';
 
 Widget Posts({required BuildContext context,required TextEditingController searchController}){
   return Column(
