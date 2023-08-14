@@ -50,6 +50,18 @@ class Growth extends StatelessWidget {
 
                               builder: (context) {
                                 // print(cubit.getAllGrowthModel!.growthList!.length.toString());
+                                if(state is AddActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is AllActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is UpdateActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is DeleteActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
                                 return ListView.separated(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),

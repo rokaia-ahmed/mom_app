@@ -119,4 +119,20 @@ class DioHelper {
       url,
     );
   }
+
+  static Future<Response> updateFormData({
+    required String url,
+    required FormData  data,
+    required String token ,
+  }) async{
+    return await dio.patch(
+      url,
+      data: data,
+      options: Options(
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      ),
+    );
+  }
 }

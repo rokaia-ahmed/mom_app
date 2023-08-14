@@ -1,40 +1,92 @@
-import 'package:flutter/cupertino.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
-
+import '../../../../../../core/models/all_Medical_Record_model.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../../core/widgets/overlay_entry_card.dart';
+import 'cubit/tracker_cubit.dart';
+import 'cubit/tracker_states.dart';
 
 class LastVisit extends StatelessWidget {
-  const LastVisit({Key? key}) : super(key: key);
-
+   LastVisit({Key? key}) : super(key: key);
+  var dateController=TextEditingController();
+  var diagnosisController=TextEditingController();
+  var doctorNameController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListView.separated(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder:(context, index) =>  lastVisitCard(context), separatorBuilder:(context, index) => Container(
-          height: 2.0,
-          color: Colors.white,
-        ), itemCount: 2),
-        SizedBox(height: 20.0),
-        Center(
-          child: InkWell(
-            onTap:(){
-              overlayEntryCard(context: context,color:AppColors.lightGreen,
-                  icon1:customIconButton(onTap: (){}, isIcon: true,icon:Icons.date_range_outlined ),
-                  cardText: 'Last visit', text1: 'Date', text2: 'Dr.Name', text3: 'Diagnosis');
-            },
-            child: Icon(Icons.add_circle,size: 40.0,color:AppColors.lightGreen),
-          ),
-        ),
-      ],
+    return BlocProvider(
+      create: (context)=>TrackerCubit()..getAllMedicalHistory(),
+      child: BlocConsumer<TrackerCubit, TrackerStates>(
+        listener: (context, state) {
+        },
+        builder: (context, state) {
+          var cubit = TrackerCubit.get(context);
+          final formKey = GlobalKey<FormState>();
+          bool noData=false;
+          return ConditionalBuilder(
+            builder: (context) {
+              if(cubit.getAllMedicalHistoryModel!.medicalRecords!.isNotEmpty)noData=true;
+              if(state is AddActivityLoadingState){
+                return const Center(child: CircularProgressIndicator());
+              }
+              else if(state is AllActivityLoadingState){
+                return const Center(child: CircularProgressIndicator());
+              }
+              else if(state is UpdateActivityLoadingState){
+                return const Center(child: CircularProgressIndicator());
+              }
+              else if(state is DeleteActivityLoadingState){
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Column(
+                children: [
+
+                   noData? ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder:(context, index) =>
+                            lastVisitCard(context: context,index: index,model: cubit.getAllMedicalHistoryModel),
+                        separatorBuilder:(context, index) => Container(
+                          height: 2.0,
+                          color: Colors.white,
+                        ), itemCount: cubit.getAllMedicalHistoryModel!.medicalRecords!.length):const Center(child: Text("No Data set yet")),
+
+                  const SizedBox(height: 20.0),
+                  Center(
+                    child: InkWell(
+                      onTap:(){
+                        overlayEntryCard(context: context,
+                          color:AppColors.lightGreen,
+                            icon1:customIconButton(onTap: (){}, isIcon: true,icon:Icons.date_range_outlined ),
+                            cardText: 'Last visit',
+                          text1: 'Date',
+                          text2: 'Dr.Name',
+                          text3: 'Diagnosis',
+                          formKey: formKey,
+                            controller1:dateController,
+                            controller2: doctorNameController,
+                            controller3:diagnosisController,
+                            saveOnPressed: (){
+                          cubit.addMedicalHistory(doctorName: doctorNameController.text, date: dateController.text, diagnosis: diagnosisController.text);
+                            } );
+                      },
+                      child: const Icon(Icons.add_circle,size: 40.0,color:AppColors.lightGreen),
+                    ),
+                  ),
+                ],
+              );
+            }, condition:  (state is! AllActivityLoadingState),
+              fallback:(context)=> const Center(child: CircularProgressIndicator())
+          );
+
+
+        },
+      ),
     );
   }
-  Widget lastVisitCard(BuildContext context){
+  Widget lastVisitCard({required BuildContext context, GetAllMedicalHistoryModel? model,required int index}){
     return TextButton(
       onPressed: () {
         // AppNavigator.push(context: context,
@@ -55,11 +107,11 @@ class LastVisit extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               // spreadRadius: 2,
               blurRadius: 1,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),
-        child: Container(
+        child: SizedBox(
           width:context.width,
           height: context.height*.15,
           // padding: EdgeInsets.all(20.0),
@@ -69,7 +121,7 @@ class LastVisit extends StatelessWidget {
             children: [
               //colored part
               DecoratedBox(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: AppColors.lightGreen,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10.0),
@@ -87,15 +139,15 @@ class LastVisit extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(left: 10,top: 20,bottom: 20),
-                  child: const Column(
+                  padding: const EdgeInsets.only(left: 10,top: 20,bottom: 20),
+                  child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Dr.Name: Ahmed Ali",style: TextStyle(
+                      Text("Dr.Name:${model?.medicalRecords?[index].doctorName}",style: const TextStyle(
                           color: AppColors.green
                       )),
-                      Spacer(),
-                      Text("Diagnosis: Flu",style: TextStyle(
+                      const Spacer(),
+                      Text("Diagnosis:${model?.medicalRecords?[index].diagnosis}",style: const TextStyle(
                           color: Colors.green,
                           fontSize: 12.0
                       )),
@@ -106,19 +158,26 @@ class LastVisit extends StatelessWidget {
               // SizedBox(width: 5.0,),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 20,bottom: 20,right: 10),
-                  child: const Column(
+                  padding: const EdgeInsets.only(top: 20,bottom: 20,right: 10),
+                  child:  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("Age: 6 months",style: TextStyle(
+                      Text("Age:${model?.medicalRecords?[index].age}",style: const TextStyle(
                           color: Colors.green,
-                          fontSize: 12.0
-                      ),),
-                      Spacer(),
-                      Text("Due date:31/12/2023",style: TextStyle(
+                          fontSize: 12.0,
+                      ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const Spacer(),
+                      Text("Due date:${model?.medicalRecords?[index].date}",style: const TextStyle(
                           color: AppColors.green,
                           fontSize: 12.0
-                      )),
+                      ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
                     ],
                   ),
                 ),

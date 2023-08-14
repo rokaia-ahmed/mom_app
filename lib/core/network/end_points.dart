@@ -24,8 +24,8 @@ const GETALLREMINDER ='3002/api/users/allReminders/64ad22d223d2786cf2852250';
 const UPDATEREMINDER='3002/api/users/updateReminder/';
 const DELETEREMINDER='3002/api/users/reminder/';
 
-const ADDBABYFIRST ='3002/api/users/addFirst/64c283882d7f6f79d403c8a7';
-const GETALLBABYFIRST ='3002/api/users/allFirsts/64c283882d7f6f79d403c8a7';
+const ADDBABYFIRST ='3002/api/users/addFirst/64ad211c23d2786cf285224f';
+const GETALLBABYFIRST ='3002/api/users/allFirsts/64ad211c23d2786cf285224f';
 const UPDATEBABYFIRST='3002/api/users/updateFirst/';
 const DELETEBABYFIRST='3002/api/users/first/';
 
@@ -33,3 +33,13 @@ const ADDGROWTH ='3002/api/users/addGrowthMilestone/64d3d3934e9bca8f76dea5bb';
 const GETALLGROWTH ='3002/api/users/growthMilestones/64d3d3934e9bca8f76dea5bb';
 const UPDATEGROWTH='3002/api/users/updateGrowthMilestone/';
 const DELETEGROWTH='3002/api/users/growthMilestone/';
+
+const ADDMEDICALRECORD ='3002/api/users/addMedicalRecord/64d3d3934e9bca8f76dea5bb';
+const GETALLMEDICALRECORD ='3002/api/users/medicalHistory/64d3d3934e9bca8f76dea5bb';
+const UPDATEMEDICALRECORD='3002/api/users/updateMedicalRecord/';
+const DELETEMEDICALRECORD='3002/api/users/medicalRecord/';
+
+const ADDDOCUMENT ='3002/api/users/addMedicalDocument/64d3d3934e9bca8f76dea5bb';
+const GETALLDOCUMENT ='3002/api/users/allDocuments/64d3d3934e9bca8f76dea5bb';
+const UPDATEDOCUMENT='3002/api/users/updateMedicalDocument/';
+const DELETEDOCUMENT='3002/api/users/document/';

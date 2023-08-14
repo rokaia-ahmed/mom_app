@@ -4,15 +4,17 @@ class GetAllBabyFirstModel {
   String? message;
   List<Firsts>? firsts;
 
-  GetAllBabyFirstModel({this.message, List<Firsts>? firsts})
-      : firsts = firsts ?? [];
+  // GetAllBabyFirstModel({this.message, List<Firsts>? firsts})
+  //     : firsts = firsts ?? [];
 
   GetAllBabyFirstModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-
+    print(message);
     if (json['firsts'] != null) {
+
       firsts = [];
       json['firsts'].forEach((v) {
+        print(v);
         firsts?.add(new Firsts.fromJson(v));
       });
     } else {
@@ -30,11 +32,11 @@ class Firsts {
   String? usersId;
   Firsts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    babyFirst = json['babyFirst'];
     date = json['date'];
-    image = json['image'];
+    babyFirst = json['babyFirst'];
     note = json['note'];
     babyId = json['babyId'];
     usersId = json['usersId'];
+    image = json['image'];
   }
 }
