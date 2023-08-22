@@ -6,13 +6,13 @@ String? message;
 LastFeeding? lastFeeding;
 LastFeedingModel.fromJson(Map<String,dynamic> json){
 message = json['message'];
-lastFeeding =  LastFeeding.fromJson(json['lastFeeding']);
+lastFeeding =  LastFeeding.fromJson(json['meal']);
 }
 }
 
 class LastFeeding {
 String? id;
-String? activity;
+String? food;
 String? date;
 String? time;
 String? note;
@@ -23,19 +23,8 @@ id = json['id'];
 date = json['date'];
 time = json['time'];
 note = json['note'];
+food = json['food'];
 babyId = json['babyId'];
 usersId = json['usersId'];
-}
-
-Map<String, dynamic> toJson() {
-final Map<String, dynamic> data = new Map<String, dynamic>();
-data['id'] = this.id;
-data['activity'] = this.activity;
-data['date'] = this.date;
-data['time'] = this.time;
-data['note'] = this.note;
-data['babyId'] = this.babyId;
-data['usersId'] = this.usersId;
-return data;
 }
 }

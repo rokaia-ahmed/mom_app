@@ -1,14 +1,19 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:date_format/date_format.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/utils/navigator.dart';
+
 import '../../../../../core/models/all_baby_first_model.dart';
+import '../../../../../core/models/all_reminder_model.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
+import '../../../../../core/widgets/open_image.dart';
 import '../../../../../core/widgets/overlay_entry_card.dart';
 import '../../../../../core/widgets/top_screen_color_line.dart';
 import 'healthscreens/cubit/tracker_cubit.dart';
@@ -49,10 +54,23 @@ class BabyFirsts extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child:ConditionalBuilder(
                               builder: (context) {
-                                print(cubit.getAllBabyFirstModel!.firsts!.length);
+                                // print("${cubit?.getAllBabyFirstModel?.firsts?[0].image}");
+                                // print(cubit.getAllBabyFirstModel!.firsts!.length);
+                                if(state is AddActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is AllActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is UpdateActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is DeleteActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
                                 return ListView.separated(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder:(context, index) =>  CardList(color: color,
                                         context: context,
                                         icon: Icons.sports_baseball,
@@ -65,7 +83,8 @@ class BabyFirsts extends StatelessWidget {
                                           firstController.text =cubit.getAllBabyFirstModel!.firsts![index].babyFirst.toString();
                                           noteController.text =cubit.getAllBabyFirstModel!.firsts![index].note.toString();
                                           dateController.text = cubit.getAllBabyFirstModel!.firsts![index].date.toString();
-                                          imageURL=cubit.getAllBabyFirstModel!.firsts![index].image.toString();
+                                          // imageURL=cubit.getAllBabyFirstModel!.firsts![index].image.toString();
+                                          // print(imageURL);
                                           selectedTime = TimeOfDay.fromDateTime(DateTime.now());//TimeOfDay.now();
                                           over(context, cubit, formKey, index);
                                         },
@@ -90,7 +109,6 @@ class BabyFirsts extends StatelessWidget {
                               dateController.clear();
                               firstController.clear();
                               imageURL="";
-
                               saveOverlay(context, cubit, formKey);
                               noteController.clear();
                               dateController.clear();
@@ -153,13 +171,18 @@ class BabyFirsts extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10.0,),
-          image? Image.network("${cubit?.getAllBabyFirstModel?.firsts?[index].image}",
-            width: double.infinity,
-            height:context.height*0.25,
-            fit: BoxFit.cover,
+          image? InkWell(
+            onTap: (){
+              AppNavigator.push(context: context, screen:OpenFullImage(url: "${model!.firsts?[index].image}",));
+            },
+            child: Image.network("${model!.firsts?[index].image}",
+              width: double.infinity,
+              height:context.height*0.25,
+              fit: BoxFit.cover,
+            ),
           ): const SizedBox(height: 0.0,),
           const SizedBox(height: 10.0,),
-          Text("${model!.firsts ?[index].note}",style:GoogleFonts.poppins(
+          Text("${model!.firsts ?[index].babyFirst}",style:GoogleFonts.poppins(
             color: AppColors.green,
             fontSize: 12.0,
           ) ,),
@@ -182,6 +205,8 @@ class BabyFirsts extends StatelessWidget {
         }else {
           dateController.text ='0000-00-00';
         }
+        if(index==null) saveOverlay(context, cubit, formKey);
+        else over(context, cubit, formKey, index);
       });
     }
   }
@@ -196,6 +221,11 @@ class BabyFirsts extends StatelessWidget {
         controller1: dateController,
         controller2: firstController,
         controller3: noteController,
+        addPhoto: (){
+      cubit.addPureImage();
+      if(cubit.image!=null)imageURL=cubit.image.path;
+      // print(imageURL);
+        },
         icon1:customIconButton(onTap: (){
           disposeOverlay();
           selectDate(context, cubit, formKey,index: index);
@@ -203,9 +233,19 @@ class BabyFirsts extends StatelessWidget {
         }, isIcon: true,icon:Icons.date_range_outlined ),
         saveOnPressed:(){
           if(formKey.currentState!.validate()){
-            cubit.updateReminder(id:cubit.getAllBabyFirstModel.firsts[index].id.toString(),
-                time: '${dateController.text}', note: '${noteController.text}', date: ('${cubit.getAllBabyFirstModel?.firsts?[index].date.toString()}'));
-
+            if(imageURL!=null||imageURL!=""){
+              cubit.updateBabyFirst(id:cubit.getAllBabyFirstModel.firsts[index].id.toString(),
+                date: dateController.text,
+                note: noteController.text,
+                babyFirst: firstController.text,
+                image:imageURL,);
+            }
+            else {
+              cubit.updateBabyFirst(id:cubit.getAllBabyFirstModel.firsts[index].id.toString(),
+                date: dateController.text,
+                note: noteController.text,
+              babyFirst: firstController.text,);
+            }
           }})!;
   }
   OverlayEntry saveOverlay(BuildContext context,cubit, formKey){
@@ -219,12 +259,12 @@ class BabyFirsts extends StatelessWidget {
         cardText: 'Home', text1: 'Date', text2: 'Baby First', text3: 'note',controller1:dateController,controller2: firstController,
         controller3: noteController,formKey: formKey,
         addPhoto: (){
-          cubit.addImage();
+          cubit.addPureImage();
         },
         saveOnPressed: (){
           if(formKey.currentState!.validate()){
             final formattedDate = DateFormat('yyyy-M-d').format(DateTime.now());
-            cubit.addBabyFirst(date: dateController.text, note: noteController.text, babyFirst: firstController.text,image:"https://th.bing.com/th/id/R.8e220cdb5a70a3c9376685d35509a7e0?rik=9INY0TSzHLNjOw&pid=ImgRaw&r=0");
+            cubit.addBabyFirst(date: dateController.text, note: noteController.text, babyFirst: firstController.text,image:cubit.image.path);
           }})!;
   }
 }

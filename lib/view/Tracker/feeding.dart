@@ -51,6 +51,18 @@ class Feeding extends StatelessWidget {
 
                           child:ConditionalBuilder(
                               builder: (context) {
+                                if(state is AddActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is AllActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is UpdateActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is DeleteActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
                                 return ListView.separated(
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),

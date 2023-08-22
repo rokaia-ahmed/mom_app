@@ -1,36 +1,42 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+
 import '../../../../../core/models/all_reminder_model.dart';
 import '../../../../../core/widgets/app_bar.dart';
 import '../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../core/widgets/overlay_entry_card.dart';
-
 import '../../../../../core/widgets/top_screen_color_line.dart';
 import 'healthscreens/cubit/tracker_cubit.dart';
 import 'healthscreens/cubit/tracker_states.dart';
 var startTimeController=TextEditingController();
 // var activityController=TextEditingController();
 var noteController=TextEditingController();
-class Reminder extends StatelessWidget {
-   Reminder({super.key});
+
+class ReminderScreen extends StatelessWidget {
+  ReminderScreen({super.key});
   final color =AppColors.lightblue;
-   late TimeOfDay selectedTime;
-   var currentTime;
+  late TimeOfDay selectedTime;
+  var currentTime;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context)=>TrackerCubit()..getAllReminder(),
       child: BlocConsumer<TrackerCubit, TrackerStates>(
         listener: (context, state) {
+
+
+
         },
         builder: (context, state) {
           var cubit = TrackerCubit.get(context);
           final formKey = GlobalKey<FormState>();
+
           return Scaffold(
               appBar: defaultAppBar(context: context,title: "Reminder"),
               backgroundColor: Colors.white,
@@ -48,10 +54,24 @@ class Reminder extends StatelessWidget {
 
                           child:ConditionalBuilder(
                               builder: (context) {
-                                print(cubit.getAllReminderModel!.reminders!.length);
+                                // print(cubit.getAllReminderModel!.reminders!.length);
+                                if(state is AddActivityLoadingState){
+                                  // disposeOverlay();
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is AllActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is UpdateActivityLoadingState){
+                                  // disposeOverlay();
+                                  return const Center(child: CircularProgressIndicator());
+                                }
+                                else if(state is DeleteActivityLoadingState){
+                                  return const Center(child: CircularProgressIndicator());
+                                }
                                 return ListView.separated(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics: const NeverScrollableScrollPhysics(),
                                     itemBuilder:(context, index) =>  CardList(color: color,
                                         context: context,
                                         icon: Icons.sports_baseball,
@@ -85,6 +105,10 @@ class Reminder extends StatelessWidget {
                           child: InkWell(
                             onTap:(){
                               selectedTime = TimeOfDay.fromDateTime(DateTime.now());//TimeOfDay.now();
+                              if(selectedTime.hour>12) currentTime="${selectedTime.hour-12}:${selectedTime.minute} pm";
+
+                              else currentTime="${selectedTime.hour}:${selectedTime.minute} am";
+                              noteController.clear();
                               noteController.clear();
                               startTimeController.text=currentTime;
                               saveOverlay(context, cubit, formKey);
@@ -242,6 +266,5 @@ class Reminder extends StatelessWidget {
             final formattedDate = DateFormat('yyyy-M-d').format(DateTime.now());
             cubit.addReminder(time: startTimeController.text, note: noteController.text, date: "${formattedDate}");
           }})!;
-
   }
 }

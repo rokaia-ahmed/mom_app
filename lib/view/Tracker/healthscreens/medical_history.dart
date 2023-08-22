@@ -1,11 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/widgets/app_bar.dart';
 import '../../../../../../core/widgets/top_screen_color_line.dart';
+
 import '../../Home/cubit/Cubit.dart';
 import '../../Home/cubit/states.dart';
 import 'document.dart';
@@ -43,16 +44,16 @@ class MedicalHistory extends StatelessWidget {
                           child: Row(
                             children: [
                               medicalSections(cubit: cubit,text: "Last visit",index: 0),
-                              SizedBox(width: 10.0,),
+                              const SizedBox(width: 10.0,),
                               medicalSections(cubit: cubit,text: "Documents",index: 1),
-                              SizedBox(height: 20.0,),
+                              const SizedBox(height: 20.0,),
                             ],
                           ),
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(height: 20,),
 
                         if(cubit.medicalHistoryIndex==0)LastVisit()
-                        else if (cubit.medicalHistoryIndex==1) Document(),
+                        else if (cubit.medicalHistoryIndex==1) const Document(),
 
                       ])));
         },
@@ -68,7 +69,7 @@ class MedicalHistory extends StatelessWidget {
       },
       child: Container(
         height: 50.0,
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         // color: Colors.white,
         decoration: BoxDecoration(
           color:Colors.white,
@@ -82,7 +83,7 @@ class MedicalHistory extends StatelessWidget {
               color: Colors.grey.withOpacity(0.5),
               // spreadRadius: 2,
               // blurRadius: 1,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
         ),

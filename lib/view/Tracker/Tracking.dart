@@ -11,6 +11,7 @@ import 'Growth.dart';
 import 'Health.dart';
 import 'baby_firsts.dart';
 import 'feeding.dart';
+import 'reminder.dart';
 
 class Tracking extends StatelessWidget {
   const Tracking({super.key});
@@ -19,28 +20,31 @@ class Tracking extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Colors.white,
-      appBar: defaultAppBar(context: context,screen: LayoutScreen(),title: "Baby Tracker"),
+      appBar: defaultAppBar(context: context,screen: const LayoutScreen(),title: "Baby Tracker"),
 
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child:  SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                //Reminder
-/*                babyTrackingList(context: context,
+                // Reminder
+               // babyTrackingList(context: context,
+               //      colors: AppColors.teal,
+               //      icon: Icons.timer,text:"Reminder",
+               //      screen: Reminder()),
+                babyTrackingList(context: context,
                     colors: AppColors.teal,
-                    icon: Icons.timer,text:"Reminder",
-                    screen: Reminder()),*/
+                    icon: Icons.timer_outlined,text: "Reminder",screen:ReminderScreen()),
                 const SizedBox(
                   height:5.0,
                 ),
                 //Health
                 babyTrackingList(context: context,
                     colors: Colors.green.shade100,
-                    icon: Icons.face,text: "Health",screen:Health()),
+                    icon: Icons.face,text: "Health",screen:const Health()),
                 const SizedBox(
                   height:5.0,
                 ),

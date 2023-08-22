@@ -19,8 +19,8 @@ GrowthList.fromJson(Map<String, dynamic> json) {
 id = json['id'];
 age = json['age'];
 date = json['date'];
-height = json['height'];
-weight = json['weight'];
+height = json['height'].toString();
+weight = json['weight'].toString();
 babyId = json['babyId'];
 usersId = json['usersId'];
 }

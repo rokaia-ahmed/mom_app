@@ -1,7 +1,5 @@
 
 
-
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -11,17 +9,22 @@ import 'package:mom_app/core/models/activity_model.dart';
 import 'package:mom_app/core/models/all_Growth_model.dart';
 import 'package:mom_app/core/models/all_baby_first_model.dart';
 import 'package:mom_app/core/models/last_feeding_model.dart';
+import 'package:mom_app/core/models/medical_document_model.dart';
 import 'package:mom_app/core/network/dio_helper.dart';
 import 'package:mom_app/core/utils/component.dart';
-import 'package:mom_app/core/widgets/overlay_entry_card.dart';
 import 'package:mom_app/view/Tracker/healthscreens/cubit/tracker_states.dart';
+
 import '../../../../../../../core/models/Growth_model.dart';
 import '../../../../../../../core/models/all_Meals_model.dart';
+import '../../../../../../../core/models/all_Medical_Record_model.dart';
+import '../../../../../../../core/models/all_Medical_document_model.dart';
 import '../../../../../../../core/models/all_activity_model.dart';
 import '../../../../../../../core/models/all_reminder_model.dart';
 import '../../../../../../../core/models/baby_first_model.dart';
+import '../../../../../../../core/models/medical_record_model.dart';
 import '../../../../../../../core/models/reminder_model.dart';
 import '../../../../../../../core/network/end_points.dart';
+import '../../../../core/widgets/overlay_entry_card.dart';
 class TrackerCubit extends Cubit<TrackerStates>{
   TrackerCubit() : super(InitialActivityState());
   static TrackerCubit get(context)=>BlocProvider.of(context);
@@ -120,8 +123,9 @@ class TrackerCubit extends Cubit<TrackerStates>{
         // activityModel = ActivityModel.fromJson(value.data);
         if(value.statusCode==200){
           print(value.data['message']);
-          getAllActivity();
           disposeOverlay();
+          getAllActivity();
+
         }
         emit(UpdateActivitySuccessState());
       }).catchError((error){
@@ -183,8 +187,9 @@ class TrackerCubit extends Cubit<TrackerStates>{
       reminderModel = ReminderModel.fromJson(value.data);
       if(value.statusCode==201){
         print(value.data['message']);
-        getAllReminder();
         disposeOverlay();
+        getAllReminder();
+
       }
       emit(AddActivitySuccessState());
     }).catchError((error){
@@ -246,8 +251,9 @@ class TrackerCubit extends Cubit<TrackerStates>{
       // activityModel = ActivityModel.fromJson(value.data);
       if(value.statusCode==200){
         print(value.data['message']);
-        getAllReminder();
         disposeOverlay();
+        getAllReminder();
+
       }
       emit(UpdateActivitySuccessState());
     }).catchError((error){
@@ -288,7 +294,21 @@ class TrackerCubit extends Cubit<TrackerStates>{
       emit(DeleteActivityErrorState(error.toString()));
     });
   }
-
+  Future<void> addPureImage() async {
+    // image="" as XFile?;
+    final XFile? pickedFile =
+    await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      image = pickedFile ;
+      imageShow =File(pickedFile.path);
+      // print('image done $image');
+      // print('image done $imageShow');
+      emit(SuccessPickImageState());
+    } else {
+      // print('No image selected.');
+      emit(ErrorPickImageState());
+    }
+  }
   BabyFirstModel? babyFirstModel ;
   Future<void> addBabyFirst({
     required String babyFirst,
@@ -296,21 +316,22 @@ class TrackerCubit extends Cubit<TrackerStates>{
     required String date,
     required String image,
   })async {
-    emit(AddActivityLoadingState());
-    await  DioHelper.postDataWithToken(
-      url: ADDBABYFIRST,
-      token: await getToken(), data: {
+    FormData formData = FormData.fromMap({
       'date': date,
       'babyFirst': babyFirst,
       'note': note,
-      'image': image,
-    } ,
+      'images':await MultipartFile.fromFile(image) ,
+    });
+    emit(AddActivityLoadingState());
+    await  DioHelper.postFormData(
+      url: ADDBABYFIRST,
+      token: await getToken(), data: formData,
     ).then((value){
       babyFirstModel = BabyFirstModel.fromJson(value.data);
       if(value.statusCode==201){
         print(value.data['message']);
-        getAllBabyFirst();
         disposeOverlay();
+        getAllBabyFirst();
       }
       emit(AddActivitySuccessState());
     }).catchError((error){
@@ -358,23 +379,31 @@ class TrackerCubit extends Cubit<TrackerStates>{
     required String babyFirst,
     required String note,
     required String date,
-    required String image,
+    String? image,
   })async {
     emit(UpdateActivityLoadingState());
-    await  DioHelper.updateData(url: '$UPDATEBABYFIRST$id',
+    FormData formData = FormData.fromMap({
+      'date': date,
+      'babyFirst': babyFirst,
+      'note': note,
+      // 'images':await MultipartFile.fromFile(image) ,
+    });
+    if (image != null) {
+      formData.files.add(MapEntry(
+        'images',
+        await MultipartFile.fromFile(image),
+      ));
+    }
+    await  DioHelper.updateFormData(url: '$UPDATEBABYFIRST$id',
       token:await getToken(),
-      data: {
-        'date': date,
-        'babyFirst': babyFirst,
-        'note': note,
-        'image': image,
-      } ,
+      data:formData,
     ).then((value){
       // activityModel = ActivityModel.fromJson(value.data);
       if(value.statusCode==200){
         print(value.data['message']);
-        getAllBabyFirst();
         disposeOverlay();
+        getAllBabyFirst();
+
       }
       emit(UpdateActivitySuccessState());
     }).catchError((error){
@@ -422,11 +451,12 @@ class TrackerCubit extends Cubit<TrackerStates>{
   Future<void> addImage() async {
     final XFile? pickedFile =
     await picker.pickImage(source: ImageSource.gallery);
-
     if (pickedFile != null) {
       image = pickedFile ;
       imageShow =File(pickedFile.path);
-      print('image done');
+      print('image done $image');
+      print('image done $imageShow');
+      addMedicalDocument(image: image!.path);
       emit(SuccessPickImageState());
     } else {
       print('No image selected.');
@@ -440,6 +470,7 @@ class TrackerCubit extends Cubit<TrackerStates>{
     required String note,
     required String date
   })async {
+
     emit(AddActivityLoadingState());
     await  DioHelper.postDataWithToken(
       url: ADDMEAL,
@@ -452,10 +483,13 @@ class TrackerCubit extends Cubit<TrackerStates>{
     ).then((value){
       lastFeedingModel = LastFeedingModel.fromJson(value.data);
       // print(activityModel!.message);
+      // disposeOverlay();
+      // getAllLastFeeding();
       if(value.statusCode==201){
         print(value.data['message']);
-        getAllLastFeeding();
+        // getAllLastFeeding();
         disposeOverlay();
+        getAllLastFeeding();
       }
       emit(AddActivitySuccessState());
     }).catchError((error){
@@ -577,10 +611,11 @@ class TrackerCubit extends Cubit<TrackerStates>{
     ).then((value){
       growthModel = GrowthModel.fromJson(value.data);
       // print(activityModel!.message);
-      if(value.statusCode==201){
+      if(value.statusCode==200){
         print(value.data['message']);
-        getAllActivity();
         disposeOverlay();
+        getAllGrowth();
+
       }
       emit(AddActivitySuccessState());
     }).catchError((error){
@@ -606,6 +641,8 @@ class TrackerCubit extends Cubit<TrackerStates>{
       await  DioHelper.getData(url: GETALLGROWTH,
         token:await getToken() ,).then((value){
         getAllGrowthModel = GetAllGrowthModel.fromJson(value.data);
+        print("value=${value.data}");
+        print("value=${getAllGrowthModel!.growthMilestones}");
         // print("all activity");
         print(getAllGrowthModel!.message);
         if(value.statusCode==200){
@@ -671,7 +708,7 @@ class TrackerCubit extends Cubit<TrackerStates>{
       print("$id");
       if(value.statusCode==200){
         print(value.data['message']);
-        getAllActivity();
+        getAllGrowth();
       }
       emit(DeleteActivitySuccessState());
     }).catchError((error){
@@ -686,4 +723,191 @@ class TrackerCubit extends Cubit<TrackerStates>{
       emit(DeleteActivityErrorState(error.toString()));
     });
   }
+
+  MedicalHistoryModel? medicalHistoryModel ;
+  Future<void> addMedicalHistory({
+    required String doctorName,
+    required String date,
+    required String diagnosis,
+  })async {
+    emit(AddActivityLoadingState());
+    await  DioHelper.postDataWithToken(
+      url: ADDMEDICALRECORD,
+      token: await getToken(), data: {
+      'date': date,
+      'doctorName': doctorName,
+      'diagnosis': diagnosis,
+    } ,
+    ).then((value){
+      medicalHistoryModel = MedicalHistoryModel.fromJson(value.data);
+      if(value.statusCode==201){
+        print(value.data['message']);
+        getAllMedicalHistory();
+        disposeOverlay();
+      }
+      emit(AddActivitySuccessState());
+    }).catchError((error){
+      if(error is DioException){
+        // errorAddActivity=error.response!.data['message'][0];
+        print('error when add activity ${error.response!.data['message']}');
+        showToast(
+          text: '${error.response!.data['message']}',
+          state: ToastStates.error,
+        );
+      }
+      emit(AddActivityErrorState(error.toString()));
+    });
+  }
+
+  GetAllMedicalHistoryModel? getAllMedicalHistoryModel;
+  Future<void> getAllMedicalHistory()async {
+    print(isInitialized);
+    // if(!isInitialized)
+        {
+      emit(AllActivityLoadingState());
+      await  DioHelper.getData(url: GETALLMEDICALRECORD,
+        token:await getToken() ,).then((value){
+        getAllMedicalHistoryModel = GetAllMedicalHistoryModel.fromJson(value.data);
+        if(value.statusCode==200){
+          print(value.data['message']);
+          // changeIsInitialized();
+        }
+        emit(AllActivitySuccessState());
+      }).catchError((error){
+        if(error is DioException){
+          errorAddActivity=error.response!.data['message'][0];
+          print('error when get all activity ${error.response!.data['message']}');
+          showToast(
+            text: '${error.response!.data['message']}',
+            state: ToastStates.error,
+          );
+        }
+        emit(AllActivityErrorState(error.toString()));
+      });
+    }
+  }
+  Future<void> updateMedicalHistory({
+    required String id,
+    required String doctorName,
+    required String date,
+    required String diagnosis,
+    required String age,
+  })async {
+    emit(UpdateActivityLoadingState());
+    await  DioHelper.updateData(url: '$UPDATEMEDICALRECORD$id',
+      token:await getToken(),
+      data: {
+        'date': date,
+        'doctorName': doctorName,
+        'diagnosis': diagnosis,
+        'age': age,
+      } ,
+    ).then((value){
+      // activityModel = ActivityModel.fromJson(value.data);
+      if(value.statusCode==200){
+        print(value.data['message']);
+        getAllMedicalHistory();
+        disposeOverlay();
+      }
+      emit(UpdateActivitySuccessState());
+    }).catchError((error){
+      if(error is DioException){
+        print(error.type);
+        print(error.error);
+        // errorAddActivity=error.response!.data['message'][0]
+        print('error when update medical record ${error.response?.data['message'][0]}');
+        showToast(
+          text: '${error.response!.data['message']}',
+          state: ToastStates.error,
+        );
+      }
+      emit(UpdateActivityErrorState(error.toString()));
+    });
+  }
+
+  Future<void> deleteMedicalHistory({
+    String? id,
+  })async {
+    emit(DeleteActivityLoadingState());
+    await  DioHelper.deleteData(url:'$DELETEMEDICALRECORD$id',
+      token:await getToken() ,).then((value){
+      print("$id");
+      if(value.statusCode==200){
+        getAllMedicalHistory();
+      }
+      emit(DeleteActivitySuccessState());
+    }).catchError((error){
+      if(error is DioException){
+        // errorAddActivity=error.response!.data['message'][0];
+        print('error when delete medical record ${error.response!.data['message']}');
+      }
+      showToast(
+        text: '${error.response!.data['message']}',
+        state: ToastStates.error,
+      );
+      emit(DeleteActivityErrorState(error.toString()));
+    });
+  }
+
+  MedicalDocumentModel? medicalDocumentModel ;
+  Future<void> addMedicalDocument({
+    required String image,
+  })async {
+
+    emit(AddActivityLoadingState());
+    FormData formData = FormData.fromMap({
+      'images':await MultipartFile.fromFile(image),
+    });
+    await  DioHelper.postFormData(
+      url: ADDDOCUMENT,
+      token: await getToken(), data: formData,
+    ).then((value){
+      medicalDocumentModel = MedicalDocumentModel.fromJson(value.data);
+      if(value.statusCode==201){
+        print(value.data['message']);
+        getAllMedicalDocument();
+      }
+      emit(AddActivitySuccessState());
+    }).catchError((error){
+      if(error is DioException){
+        // errorAddActivity=error.response!.data['message'][0];
+        print('error when add activity ${error.response!.data['message']}');
+        showToast(
+          text: '${error.response!.data['message']}',
+          state: ToastStates.error,
+        );
+      }
+      emit(AddActivityErrorState(error.toString()));
+    });
+  }
+  // 'images': image != null?
+  // await MultipartFile.fromFile(image!.path,)
+  GetAllMedicalDocumentModel? getAllMedicalDocumentModel;
+  Future<void> getAllMedicalDocument()async {
+    print(isInitialized);
+    // if(!isInitialized)
+        {
+      emit(AllActivityLoadingState());
+      await  DioHelper.getData(url: GETALLDOCUMENT,
+        token:await getToken() ,).then((value){
+        getAllMedicalDocumentModel = GetAllMedicalDocumentModel.fromJson(value.data);
+        if(value.statusCode==200){
+          print(value.data['message']);
+          // changeIsInitialized();
+        }
+        emit(AllActivitySuccessState());
+      }).catchError((error){
+        if(error is DioException){
+          errorAddActivity=error.response!.data['message'][0];
+          print('error when get all activity ${error.response!.data['message']}');
+          showToast(
+            text: '${error.response!.data['message']}',
+            state: ToastStates.error,
+          );
+        }
+        emit(AllActivityErrorState(error.toString()));
+      });
+    }
+  }
+
 }
