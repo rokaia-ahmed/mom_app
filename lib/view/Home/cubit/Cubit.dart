@@ -6,7 +6,7 @@ import '../../Tracker/Tracking.dart';
 import '../../community/screens/community.dart';
 import '../../learning/Learning.dart';
 import '../../shop/Shop.dart';
-import '../screens/Home.dart';
+import '../screens/home.dart';
 
 
 class HomeCubit extends Cubit<HomeStates>{

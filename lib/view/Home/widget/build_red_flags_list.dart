@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 
-class BuildListFlagsList extends StatelessWidget {
-  const BuildListFlagsList({super.key});
+class BuildRedFlagsList extends StatelessWidget {
+  const BuildRedFlagsList({super.key});
 
   @override
   Widget build(BuildContext context) {

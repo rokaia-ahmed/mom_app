@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/utils/navigator.dart';
+import 'package:mom_app/view/Home/screens/food.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../widget/Build_new_Skils.dart';
 import '../widget/build_active_reminder_list.dart';
@@ -100,7 +102,7 @@ class Home extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            BuildActiveReminderList(),
+            const BuildActiveReminderList(),
             const SizedBox(
               height: 10,
             ),
@@ -137,14 +139,17 @@ class Home extends StatelessWidget {
               height: context.height*0.01,
             ),
              InkWell(
-              onTap:(){} ,
+              onTap:(){
+                AppNavigator.push(context: context,
+                    screen: const FoodScreen());
+              } ,
               child: Row(
                 children: [
-                  Text('know about 5 months milestones',
+                  Text('Get more information about baby food',
                     style:GoogleFonts.poppins(
                       color: AppColors.orange,
                       height: 0,
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ) ,
                   ),

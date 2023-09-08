@@ -81,7 +81,7 @@ class Milestones extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const BuildListFlagsList(),
+                  const BuildRedFlagsList(),
                   const SizedBox(height: 30),
                   Text('WHO Growth Guide',
                     style:GoogleFonts.poppins(
