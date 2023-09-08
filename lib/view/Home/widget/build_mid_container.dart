@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
+import 'package:mom_app/core/utils/navigator.dart';
+import 'package:mom_app/view/Home/screens/milestones.dart';
 
 class BuildMidContainer extends StatelessWidget {
   const BuildMidContainer({super.key});
@@ -66,7 +68,11 @@ class BuildMidContainer extends StatelessWidget {
             ) ,
           ),
           InkWell(
-            onTap:(){} ,
+            onTap:(){
+              AppNavigator.push(
+                  context: context,
+                  screen: const Milestones());
+            } ,
             child: Row(
               children: [
                 Text('know about 5 months milestones',

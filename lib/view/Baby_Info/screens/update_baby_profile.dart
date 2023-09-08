@@ -17,35 +17,35 @@ import 'package:mom_app/view/layout/layout_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import '../../../core/widgets/custom_appbar.dart';
 
-class BabyProfileScreen extends StatefulWidget {
-    const BabyProfileScreen({Key? key, }) : super(key: key);
+class UpdateBabyProfile extends StatefulWidget {
+  const UpdateBabyProfile({Key? key, }) : super(key: key);
 
   @override
-  State<BabyProfileScreen> createState() => _BabyProfileScreenState();
+  State<UpdateBabyProfile> createState() => _UpdateBabyProfileState();
 }
 
-class _BabyProfileScreenState extends State<BabyProfileScreen> {
+class _UpdateBabyProfileState extends State<UpdateBabyProfile> {
   final nameBabyController =TextEditingController();
-
   final birthDateController =TextEditingController();
-
   final wightController =TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
+
   void buildDatePicker (){
-  showDatePicker(context: context,
+    showDatePicker(context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2018),
       lastDate: DateTime.now(),
-  ).then((value){
-    if(value !=null){
-      birthDateController.text = formatDate(value, [yyyy, '-', mm, '-', dd]);
-      print(formatDate(value, [yyyy, '-', mm, '-', dd]));
-    }else {
-      birthDateController.text ='0000-00-00';
-    }
-  });
-}
+    ).then((value){
+      if(value !=null){
+        birthDateController.text = formatDate(value, [yyyy, '-', mm, '-', dd]);
+        print(formatDate(value, [yyyy, '-', mm, '-', dd]));
+      }else {
+        birthDateController.text ='0000-00-00';
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +63,13 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
             create: (context)=>BabyCubit(),
             child: BlocConsumer<BabyCubit, BabyStates>(
               listener: (context, state) {
-                //var cubit = BabyCubit.get(context);
+               // var cubit = BabyCubit.get(context);
                 if(state is AddBabySuccessState){
-                 showToast(text: 'Baby info is added',
-                     state: ToastStates.success) ;
-                 AppNavigator.push(
-                     context: context,
-                     screen: const LayoutScreen());
+                  showToast(text: 'Baby info is added',
+                      state: ToastStates.success) ;
+                  AppNavigator.push(
+                      context: context,
+                      screen: const LayoutScreen());
                 }
                 if(state is AddBabyErrorState){
                   showToast(text: 'error in data',
@@ -78,7 +78,13 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
               },
               builder: (context, state) {
                 var cubit = BabyCubit.get(context);
-                  String gender ='girl';
+                if(cubit.babyInfoModel!= null){
+                  nameBabyController.text = cubit.babyInfoModel!.user!.babyName!;
+                  print('baby name${cubit.babyInfoModel!.user!.babyName!}');
+                  birthDateController.text = cubit.babyInfoModel!.user!.birthDate!;
+                  wightController.text = cubit.babyInfoModel!.user!.weight.toString();
+                }
+                String gender ='girl';
                 return Form(
                   key: formKey,
                   child: Column(
@@ -88,23 +94,23 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
                         child:
                         (cubit.image ==null) ?
                         Stack(
-                            alignment: Alignment.center,
-                            children: [
-                          const CircleAvatar(
-                            backgroundColor: AppColors.gray,
-                            radius: 50,
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              cubit.addImage();
-                            },
-                            icon: const Icon(
-                              Icons.add_a_photo_outlined,
-                              color: Colors.white,
-                              size: 35,
+                          alignment: Alignment.center,
+                          children: [
+                            const CircleAvatar(
+                              backgroundColor: AppColors.gray,
+                              radius: 50,
                             ),
-                          ),
-                        ],
+                            IconButton(
+                              onPressed: () {
+                                cubit.addImage();
+                              },
+                              icon: const Icon(
+                                Icons.add_a_photo_outlined,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                            ),
+                          ],
                         ):
                         CircleAvatar(
                           backgroundColor: AppColors.gray,
@@ -221,11 +227,11 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
                           const Spacer(),
                           CustomTextFormField(
                             controller: wightController,
-                            visible: false,
                             textAlign: TextAlign.center,
+                            visible: false,
                             hintText: '0',
                             inputFormatters: [FilteringTextInputFormatter.allow(
-                                RegExp(r'[0-9]'),
+                              RegExp(r'[0-9]'),
                             ),],
                             keyboardType: TextInputType.number,
                             width: context.width * 0.12,
@@ -256,13 +262,13 @@ class _BabyProfileScreenState extends State<BabyProfileScreen> {
                         ),
                       ),
                       if(state is AddBabyLoadingState)
-                         const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                            ),
-                          )
+                        const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            )
                         ),
                     ],
                   ),

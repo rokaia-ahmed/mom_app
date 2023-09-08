@@ -41,8 +41,6 @@ class BabyCubit extends Cubit<BabyStates> {
      String? wight,
   }) async {
     emit(AddBabyLoadingState());
-    //String fileName = image!.path.split('/').last;
-    //  print("token =${await getToken()}");
      FormData formData = FormData.fromMap({
       'babyName': babyName,
       'gender': gender,
@@ -69,11 +67,13 @@ class BabyCubit extends Cubit<BabyStates> {
       emit(AddBabySuccessState());
     }).catchError((error) {
       if (error is DioException) {
-        errorAddBaby = error.response!.data['message'][0];
-        print('error when add baby ${error.response!.data['message']}');
+        if(error.response != null) {
+          errorAddBaby = error.response!.data['message'][0];
+          print('error when add baby ${error.response!.data['message']}');
+        }
       }
-
       emit(AddBabyErrorState(error.toString()));
+      print('error when add baby ${error.toString()}');
     });
   }
 }

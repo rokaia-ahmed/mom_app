@@ -5,6 +5,25 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../network/cache_helper.dart';
 import '../network/dio_helper.dart';
 import '../network/end_points.dart';
+import 'app_colors.dart';
+
+SnackBar snackBar =  SnackBar(
+  shape:OutlineInputBorder(
+    borderSide: const BorderSide(
+        color: Colors.transparent
+    ),
+    borderRadius: BorderRadius.circular(10),
+  ) ,
+  behavior:SnackBarBehavior.floating ,
+  backgroundColor:AppColors.lightGreen ,
+  content:const Center(child: Text('retry again',
+    style:TextStyle(
+      fontSize: 18,
+      color: Colors.black,
+    ) ,
+  ),
+  ) ,
+);
 
 void showToast({
   required String text,

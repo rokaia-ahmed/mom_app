@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/core/widgets/app_bar.dart';
+import 'package:mom_app/view/Baby_Info/screens/update_baby_profile.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/navigator.dart';
 import '../Baby_Info/screens/baby_profile_screen.dart';
 import '../register/screens/signin_screen.dart';
+import '../register/screens/update_parent_profile.dart';
 
 
 class Setting extends StatelessWidget {
@@ -31,7 +33,10 @@ class Setting extends StatelessWidget {
                       child: Column(
                         children: [
                            InkWell(
-                             onTap: (){},
+                             onTap: (){
+                               AppNavigator.push(context: context,
+                                   screen: const UpdateBabyProfile());
+                             },
                              child: const CircleAvatar(
                               radius: 45.0,
                               backgroundColor: Colors.green, // sets the background color of the circle
@@ -59,7 +64,10 @@ class Setting extends StatelessWidget {
                       child: Column(
                         children: [
                           InkWell(
-                            onTap: (){},
+                            onTap: (){
+                              AppNavigator.push(context: context,
+                                  screen: UpdateParentProfile());
+                            },
                             child: const CircleAvatar(
                               radius: 45.0,
                               backgroundColor: Colors.green, // sets the background color of the circle

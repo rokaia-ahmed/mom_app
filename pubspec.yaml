@@ -46,6 +46,7 @@ dependencies:
   toggle_switch: ^2.1.0
   date_format: ^2.0.7
   intl: ^0.18.1
+  flutter_shimmer: ^2.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
