@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/network/dio_helper.dart';
 import 'package:mom_app/core/utils/app_colors.dart';
+import 'package:mom_app/view/community/cubit/cubit.dart';
 import 'package:mom_app/view/register/cubit/register_cubit.dart';
 import 'package:mom_app/view/splash/splash_screen.dart';
 
@@ -27,8 +28,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RegisterCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => RegisterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CommunityCubit()..getAllPosts()
+            ..getMyGroups()..getRecommendedGroups()
+            ..getAllFriends()..getAllFriendsRequests()
+
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'My Baby',

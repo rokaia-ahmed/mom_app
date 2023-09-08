@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/view/Home/cubit/states.dart';
 import '../../Tracker/Tracking.dart';
-import '../../community/community.dart';
+import '../../community/screens/community.dart';
 import '../../learning/Learning.dart';
 import '../../shop/Shop.dart';
 import '../screens/Home.dart';
@@ -15,7 +15,7 @@ class HomeCubit extends Cubit<HomeStates>{
   int currentIndex=0;
   List<Widget> screens=[
     const Home(),
-    const Community(),
+     Community(),
     const Tracking(),
     const Learning(),
     const Shop(),
@@ -60,36 +60,7 @@ bool visible=true;
     visible=!visible;
     emit(ChangeVisibilityState());
   }
-int  communityIndex =0;
-  void changeCommunity(int index){
-    communityIndex=index;
-    emit(ChangeCommunityState());
-  }
-  // PlantRegisterModel? plantLoginModel;
-  // void userLogin({required String email,required String password}){
-  //
-  //   emit(SignInLoadingState());
-  //   DioHelper.postData(url: LOGIN, data:{
-  //     'email':email,
-  //     'password':password,
-  //   }).then((value){
-  //     //pass data
-  //     plantLoginModel= PlantRegisterModel.fromJson(value.data);
-  //
-  //     // print(plantLoginModel!.data?.userId);
-  //     emit(SignInSuccessState());
-  //     // print(plantLoginModel?.type);
-  //     print(plantLoginModel!.message);
-  //     print(plantLoginModel!.data?.firstName);
-  //     print(plantLoginModel!.data?.email);
-  //   }).catchError((error){
-  //     if (error is DioError){
-  //       print(error.response!.data['message']);
-  //     }
-  //     print(error.toString());
-  //     emit(SignInErrorState(error.toString()));
-  //   });
-  // }
+
   int  medicalHistoryIndex =0;
   void changeMedicalHistory(int index){
     medicalHistoryIndex=index;

@@ -59,7 +59,7 @@ class DioHelper {
   }
   static Future<Response> postDataWithToken({
     required String url,
-    required Map<String,dynamic> data,
+     Map<String,dynamic>? data,
     required String token  ,
   }) async{
     return await dio.post(
