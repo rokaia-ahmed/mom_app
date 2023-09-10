@@ -5,6 +5,7 @@ import 'package:mom_app/core/utils/navigator.dart';
 import 'package:mom_app/view/chat/chats.dart';
 import 'package:mom_app/view/community/cubit/cubit.dart';
 import 'package:mom_app/view/community/cubit/states.dart';
+import 'package:mom_app/view/community/screens/search_screen.dart';
 import 'package:mom_app/view/community/screens/send_post.dart';
 import '../../../../../../core/widgets/custom_icon_button.dart';
 import '../../../../../../core/widgets/custom_text_form_field.dart';
@@ -76,7 +77,11 @@ class Posts extends StatelessWidget {
                       customIconButton(
                           isIcon: true,
                           icon: Icons.search_outlined,
-                          onTap: () {}),
+                          onTap: () {
+                            AppNavigator.push(context: context,
+                                screen: SearchScreen());
+                          }
+                      ),
                       const SizedBox(
                         width: 5.0,
                       ),

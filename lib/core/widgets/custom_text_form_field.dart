@@ -25,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.maxLines,
     this.textAlign,
+    this.preIcon, this.OnChange, this.onSubmitted,
   }) : super(key: key);
 
   final double? width;
@@ -40,6 +41,9 @@ class CustomTextFormField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLines;
   final TextAlign? textAlign;
+  final Widget? preIcon;
+  final Function(String)? OnChange;
+  final Function(String)? onSubmitted;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -53,6 +57,8 @@ class CustomTextFormField extends StatelessWidget {
         inputFormatters: inputFormatters,
         onTap: onTap,
         maxLines: maxLines ?? 1,
+        onChanged:OnChange ,
+        onFieldSubmitted: onSubmitted,
         decoration: InputDecoration(
           filled: true,
           enabledBorder: _defaultBorder,
@@ -64,6 +70,7 @@ class CustomTextFormField extends StatelessWidget {
           contentPadding: const EdgeInsets.all(10),
           hintText: hintText,
           suffixIcon: suffixIcon,
+          prefixIcon: preIcon,
           suffixIconColor: Colors.black,
           hintStyle: const TextStyle(
             color: AppColors.green,

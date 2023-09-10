@@ -66,3 +66,4 @@ const UPDATEPROFILEIMAGE='3003/api/uploadProfileImage';
 const UPDATEPROFILECOVER='3003/api/uploadProfileCover';
 const UPDATEGROUPIMAGE='3003/api/uploadGroupImage/';
 const UPDATEGROUPCOVER='3003/api/uploadGroupCover/';
+const DELETEPOST='3003/api/post/';

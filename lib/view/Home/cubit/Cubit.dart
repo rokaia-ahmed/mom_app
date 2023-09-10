@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mom_app/view/Home/cubit/states.dart';
 import '../../Tracker/Tracking.dart';
 import '../../community/screens/community.dart';
-import '../../learning/Learning.dart';
+import '../../learning/screens/Learning.dart';
 import '../../shop/Shop.dart';
 import '../screens/home.dart';
 
@@ -17,7 +17,7 @@ class HomeCubit extends Cubit<HomeStates>{
     const Home(),
      Community(),
     const Tracking(),
-    const Learning(),
+     Learning(),
     const Shop(),
   ];
   List<String>titles=[
@@ -41,7 +41,7 @@ List<BottomNavigationBarItem> screenItems=[
   ),
       label:'Tracking' ),
   const BottomNavigationBarItem(icon:Icon(
-      Icons.book_outlined
+      Icons.menu_book_outlined
   ),
       label:'Learning' ),
   const BottomNavigationBarItem(icon:Icon(

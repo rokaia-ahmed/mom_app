@@ -448,5 +448,31 @@ class CommunityCubit extends Cubit<CommunityStates>{
       emit(UpdateGroupCoverError(error.toString()));
     });
   }
+  List<AllPostsModel> searchPosts = [];
+   void searchInPosts(String text){
+     searchPosts = [];
+     allPosts.forEach((element) {
+       if(element.caption!.contains(text)){
+         searchPosts.add(element);
+       }
+     });
+     emit(SearchSuccess());
+   }
 
+  void deletePost({
+    required String id,
+  })async{
+     emit(DeletePostLoading());
+    await DioHelper.deleteData(
+      url: DELETEPOST+id,
+      token:await getToken(),
+    ).then((value){
+      getAllPosts();
+      emit(DeletePostSuccess());
+      print('post deleted ${value.data}');
+    }).catchError((error){
+      print('post deleted error ${error.toString()}');
+      emit(DeletePostError(error.toString()));
+    });
+  }
 }

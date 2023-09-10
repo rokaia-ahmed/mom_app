@@ -32,15 +32,18 @@ class GroupDetails extends StatelessWidget {
           if (state is LikeSuccess || state is UnLikeSuccess) {
             cubit.getGroupDetails(id: id);
           }
-          if(cubit.isImageGroup && state is ImagePickedState){
+          else  if(cubit.isImageGroup && state is ImagePickedState){
             cubit.updateGroupImage(id: id);
           }
-          if(!cubit.isImageGroup && state is ImagePickedState){
+          else if(!cubit.isImageGroup && state is ImagePickedState){
             cubit.updateGroupCover(id: id);
           }
-          if(state is UpdateGroupCoverError ||state is UpdateGroupImageError){
+         else if(state is UpdateGroupCoverError ||state is UpdateGroupImageError){
             showToast(text: 'failed to upload image ',
                 state: ToastStates.error);
+          }
+         else if(state is DeletePostSuccess){
+           cubit.getGroupDetails(id: id);
           }
         },
         builder: (context, state) {
@@ -247,6 +250,8 @@ class GroupDetails extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
+                          if(state is DeletePostLoading)
+                          LinearProgressIndicator(),
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -366,13 +371,16 @@ class BuildItem extends StatelessWidget {
                           ],
                         ),
                         const Spacer(),
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.more_vert_outlined,
-                            color: AppColors.green,
+                        if(model.userId ==CacheHelper.getData()!.id)
+                          InkWell(
+                            onTap: () {
+                              cubit.deletePost(id: model.id!);
+                            },
+                            child: const Icon(
+                              Icons.delete,
+                              color: AppColors.redAcent,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),

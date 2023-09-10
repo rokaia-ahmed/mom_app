@@ -131,11 +131,14 @@ class PostCard extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
+                    if(post!.userId ==CacheHelper.getData()!.id)
                     InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          cubit.deletePost(id: post!.id!);
+                        },
                         child: const Icon(
-                          Icons.more_vert_outlined,
-                          color: AppColors.green,
+                          Icons.delete,
+                          color: AppColors.redAcent,
                         ),
                     ),
                   ],

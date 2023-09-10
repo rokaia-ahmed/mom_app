@@ -147,3 +147,12 @@ class UpdateGroupCoverError extends CommunityStates{
  String errorMessage;
  UpdateGroupCoverError(this.errorMessage);
 }
+
+class DeletePostLoading extends CommunityStates{}
+class DeletePostSuccess extends CommunityStates{}
+class DeletePostError extends CommunityStates{
+ String errorMessage;
+ DeletePostError(this.errorMessage);
+}
+
+class SearchSuccess extends CommunityStates{}
