@@ -49,10 +49,11 @@ class Groups extends StatelessWidget {
                 customIconButton(
                   isIcon: true,
                   icon: Icons.add,
-                  onTap: () => buildDialog(
-                    context,
-                    createGroupController,
-                  ),
+                  onTap: () =>
+                      buildDialog(
+                        context,
+                        createGroupController,
+                      ),
                 ),
               ],
             ),
@@ -77,9 +78,7 @@ class Groups extends StatelessWidget {
                   onTap: () {
                     AppNavigator.push(
                         context: context,
-                        screen: AllMyGroups(
-                          cubit: cubit,
-                        ));
+                        screen: AllMyGroups());
                   },
                 ),
               ],
@@ -88,13 +87,15 @@ class Groups extends StatelessWidget {
               height: 20.0,
             ),
             //you groups list
+            (cubit.myGroupsModel != null)?
             MyGroupsWidget(
               lengthList:
               (cubit.myGroupsModel!.groups!.length > 3)
                   ? 3
                   : cubit.myGroupsModel!.groups!.length,
               scrollPhysics: const NeverScrollableScrollPhysics(),
-            ),
+            ):
+             LinearProgressIndicator(),
             const SizedBox(
               height: 20,
             ),
@@ -130,23 +131,24 @@ class Groups extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 1.07 / 1,
+                      childAspectRatio: 1.07 / 1.1,
                       crossAxisCount: 2,
                       children: List.generate(
                           cubit.recommendedGroups.length,
-                          (index) => buildGridView(
-                              context, cubit.recommendedGroups[index])));
+                              (index) =>
+                              buildGridView(
+                                  context, cubit.recommendedGroups[index])));
                 },
                 fallback: (context) {
                   if (state is GetRecommendedGroupsLoading) {
-                   return const Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  }else{
-                     return const SizedBox();
+                  } else {
+                    return const SizedBox();
                   }
                 }
-                ),
+            ),
             //group style
           ]),
         );
@@ -171,27 +173,27 @@ class Groups extends StatelessWidget {
             ),
             child: (model.image != null)
                 ? Image.network(
-                    model.image!,
-                    width: double.infinity,
-                    height: context.height * 0.15,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, _, error) {
-                      return Image.asset(
-                        'assets/images/default_group.png',
-                        color: Colors.grey,
-                        fit: BoxFit.contain,
-                        width: double.infinity,
-                        height: context.height *0.15,
-                      );
-                    },
-                  )
+              model.image!,
+              width: double.infinity,
+              height: context.height * 0.15,
+              fit: BoxFit.cover,
+              errorBuilder: (context, _, error) {
+                return Image.asset(
+                  'assets/images/default_group.png',
+                  color: Colors.grey,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: context.height * 0.15,
+                );
+              },
+            )
                 : Image.asset(
-                    'assets/images/default_group.png',
-                    color: Colors.grey,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: context.height * 0.15,
-                  ),
+              'assets/images/default_group.png',
+              color: Colors.grey,
+              fit: BoxFit.contain,
+              width: double.infinity,
+              height: context.height * 0.15,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0, right: 5.0),

@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mom_app/core/network/cache_helper.dart';
 import 'package:mom_app/core/utils/media_query_values.dart';
 import 'package:mom_app/view/community/cubit/states.dart';
 
@@ -79,7 +80,7 @@ class MyGroupsWidget extends StatelessWidget {
         onTap:(){
           AppNavigator.push(context: context,
               screen:  GroupDetails(
-                  isMyGroups: true,
+                  isMyGroups: model.founder== CacheHelper.getData()!.id,
                   id: model.id!,
               ),
           );

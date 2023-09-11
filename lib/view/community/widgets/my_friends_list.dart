@@ -15,46 +15,60 @@ import '../screens/profile.dart';
 class MyFriendsList extends StatelessWidget {
   const MyFriendsList({super.key,
     required this.lengthList, required this.scrollPhysics});
-   final  int lengthList ;
-  final ScrollPhysics scrollPhysics  ;
+
+  final int lengthList;
+
+  final ScrollPhysics scrollPhysics;
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CommunityCubit, CommunityStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        var cubit = CommunityCubit.get(context);
-        return ConditionalBuilder(
-            condition: cubit.allFriends.isNotEmpty,
-            builder: (context) {
-              return ListView.separated(
-                shrinkWrap: true,
-                physics: scrollPhysics,
-                itemBuilder: (context, index) =>
-                    friendsList(cubit.allFriends[index], context),
-                separatorBuilder: (context, index) =>
-                    Container(
-                      height: 16.0,
-                    ),
-                itemCount: lengthList,
-              );
-            },
-            fallback: (context) {
-              if (cubit.allFriends.isEmpty) {
-                return const Text(
-                  'add friends to your list ',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: AppColors.primaryColor,
-                  ),
+    return BlocProvider(
+      create: (context) => CommunityCubit()..getAllFriends(),
+      child: BlocConsumer<CommunityCubit, CommunityStates>(
+        listener: (context, state) {
+          var cubit = CommunityCubit.get(context);
+          if (state is UnFriendSuccess ||
+              state is AddFriendSuccess ||
+              state is AcceptRequestSuccess) {
+            cubit.getAllFriends();
+          }
+        },
+        builder: (context, state) {
+          var cubit = CommunityCubit.get(context);
+          return ConditionalBuilder(
+              condition: cubit.allFriends.isNotEmpty,
+              builder: (context) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: scrollPhysics,
+                  itemBuilder: (context, index) =>
+                      friendsList(cubit.allFriends[index],
+                          context),
+                  separatorBuilder: (context, index) =>
+                      Container(
+                        height: 16.0,
+                      ),
+                  itemCount: lengthList,
                 );
-              } else {
-                return
-                  const
+              },
+              fallback: (context) {
+                if (state is GetAllFriendsLoading) {
+                  return const
                   Center(child: CircularProgressIndicator());
+                } else {
+                  return
+                    const Text(
+                      'add friends to your list ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.primaryColor,
+                      ),
+                    );
+                }
               }
-            }
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

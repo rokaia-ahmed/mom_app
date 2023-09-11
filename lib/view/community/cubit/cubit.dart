@@ -172,6 +172,7 @@ class CommunityCubit extends Cubit<CommunityStates>{
         token:await getToken(),
     ).then((value){
       getGroupDetails(id: id);
+      getMyGroups();
       emit(JoinGroupSuccess());
       print(value.data);
     }).catchError((error){
@@ -188,6 +189,7 @@ class CommunityCubit extends Cubit<CommunityStates>{
       token:await getToken(),
     ).then((value){
       getGroupDetails(id: id);
+      getMyGroups();
       emit(LeaveGroupSuccess());
       print(value.data);
     }).catchError((error){
@@ -204,6 +206,7 @@ class CommunityCubit extends Cubit<CommunityStates>{
       token:await getToken(),
     ).then((value){
       getProfileDetails(id: id);
+      //getAllFriends();
       emit(AddFriendSuccess());
       print(value.data);
     }).catchError((error){
@@ -249,6 +252,7 @@ class CommunityCubit extends Cubit<CommunityStates>{
 
    ProfileDetailsModel? profileDetails ;
   void getProfileDetails({required id})async{
+    profileDetails = null ;
     emit(GetProfileLoading());
     await DioHelper.getData(
       url: PROFILEBYID+id,
@@ -297,8 +301,8 @@ class CommunityCubit extends Cubit<CommunityStates>{
   }
     List<Users>  allFriends =[];
   void getAllFriends()async{
-    allFriends = [];
     emit(GetAllFriendsLoading());
+    allFriends = [];
     await DioHelper.getData(
       url: ALLFRIENDS,
       token: await getToken(),
