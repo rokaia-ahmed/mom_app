@@ -16,47 +16,50 @@ class FriendRequestWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CommunityCubit, CommunityStates>(
-            listener: (context, state) {
-             /* var cubit = CommunityCubit.get(context);
-              if (state is AcceptRequestSuccess
-                  ||state is RejectRequestSuccess){
-                   cubit.getAllFriendsRequests();
-              }*/
-            },
-            builder: (context, state) {
-              var cubit = CommunityCubit.get(context);
-              return ConditionalBuilder(
-                condition: cubit.allFriendsRequests.isNotEmpty,
-                builder: (context) {
-                  return ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => FriendsRequestList(
-                          model: cubit.allFriendsRequests[index],
-                      ),
-                      separatorBuilder: (context, index) => Container(
-                            height: 16.0,
-                          ),
-                      itemCount: cubit.allFriendsRequests.length);
-                },
-                fallback: (context) {
-                  if (state is GetAllFriendsRequestsLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if(cubit.allFriendsRequests.isEmpty){
-                    return const Text(
-                      'no friends request',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: AppColors.primaryColor,
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                },
-              );
-            },
-          );
+    return BlocProvider(
+  create: (context) => CommunityCubit()..getAllFriendsRequests(),
+  child: BlocConsumer<CommunityCubit, CommunityStates>(
+              listener: (context, state) {
+              /*  var cubit = CommunityCubit.get(context);
+                if (state is AcceptRequestSuccess
+                    ||state is RejectRequestSuccess){
+                     cubit.getAllFriendsRequests();
+                }*/
+              },
+              builder: (context, state) {
+                var cubit = CommunityCubit.get(context);
+                return ConditionalBuilder(
+                  condition: cubit.allFriendsRequests.isNotEmpty,
+                  builder: (context) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => FriendsRequestList(
+                            model: cubit.allFriendsRequests[index],
+                        ),
+                        separatorBuilder: (context, index) => Container(
+                              height: 16.0,
+                            ),
+                        itemCount: cubit.allFriendsRequests.length);
+                  },
+                  fallback: (context) {
+                    if (state is GetAllFriendsRequestsLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if(cubit.allFriendsRequests.isEmpty){
+                      return const Text(
+                        'no friends request',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                );
+              },
+            ),
+);
   }
 }
 

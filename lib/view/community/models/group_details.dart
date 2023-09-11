@@ -10,7 +10,7 @@ class GroupDetailsModel{
 
   GroupDetailsModel.fromJson(Map<String, dynamic> json) {
     group = Group.fromJson(json['group']);
-    existInGroup = json['userExistsInFriends'];
+    existInGroup = json['userExistsInGroup'];
     json['posts'].forEach((element){
       posts.add(Posts.fromJson(element));
     });
